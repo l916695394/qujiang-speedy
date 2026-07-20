@@ -315,23 +315,26 @@ function loadData(){
   });
 }
 
-/* 远程fetch数据（优先Gitee API，降级同源） */
+/* 加载数据：优先同源data.json（直接JSON无编码问题），降级Gitee API */
 function fetchData(){
-  return fetch(GITEE_API+'&access_token='+GITEE_TOKEN+'&t='+Date.now(),{cache:'no-store'})
+  return fetch(DATA_URL+'?t='+Date.now(),{cache:'no-store'})
     .then(function(r){return r.json();})
-    .then(function(apiResp){
-      /* Gitee API返回base64编码的content字段 */
-      if(apiResp&&apiResp.content){
-        var jsonStr=b64ToUtf8(apiResp.content);
-        var d=JSON.parse(jsonStr);
-        if(d&&d.Q&&d.TB){return d;}
-      }
-      throw new Error('invalid gitee response');
+    .then(function(d){
+      if(d&&d.Q&&d.TB){return d;}
+      throw new Error('invalid data.json');
     })
     .catch(function(){
-      /* 降级：从同源fetch data.json */
-      return fetch(DATA_URL+'?t='+Date.now(),{cache:'no-store'})
-        .then(function(r){return r.json();});
+      /* 降级：从Gitee API加载（需base64解码） */
+      return fetch(GITEE_API+'&access_token='+GITEE_TOKEN+'&t='+Date.now(),{cache:'no-store'})
+        .then(function(r){return r.json();})
+        .then(function(apiResp){
+          if(apiResp&&apiResp.content){
+            var jsonStr=b64ToUtf8(apiResp.content);
+            var d=JSON.parse(jsonStr);
+            if(d&&d.Q&&d.TB){return d;}
+          }
+          throw new Error('invalid gitee response');
+        });
     })
     .then(function(d){
       if(d&&d.Q&&d.TB){
