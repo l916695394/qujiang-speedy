@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,minimum-scale=1.0,user-scalable=yes">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffffff">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="HandheldFriendly" content="true">
+<meta name="MobileOptimized" content="width">
+<title>曲江速查手册</title>
+<link rel="manifest" href="manifest.json">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;background:#f5f5f5;color:#333;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;touch-action:manipulation}
+
+/* ═══ 加载屏 ═══ */
+.loader{position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .3s}
+.loader.hide{opacity:0;pointer-events:none}
+.loader .llogo{font-size:28px;font-weight:800;color:#C00000;letter-spacing:2px;margin-bottom:8px}
+.loader .llogo b{color:#333}
+.loader .lbar{width:140px;height:3px;background:#f0f0f0;border-radius:2px;overflow:hidden;margin-top:12px}
+.loader .lbar div{height:100%;background:linear-gradient(90deg,#C00000,#9B2335);border-radius:2px;animation:lbar 1s ease-in-out infinite}
+@keyframes lbar{0%{width:0;margin-left:0}50%{width:70%}100%{width:0;margin-left:100%}}
+
+/* ═══ 数据更新提示条 ═══ */
+.update-tip{position:fixed;top:0;left:0;right:0;z-index:9998;background:linear-gradient(90deg,#059669,#10B981);color:#fff;padding:10px 14px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;display:none;animation:slideDown .3s}
+.update-tip.show{display:block}
+@keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+
+.hdr{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;box-shadow:0 1px 0 #eee}
+.hdr-in{display:flex;align-items:center;padding:8px 12px;gap:8px}
+.logo{font-size:17px;font-weight:800;color:#C00000;letter-spacing:1px;white-space:nowrap}
+.logo b{color:#333}
+.vtag{font-size:9px;background:#FFF5F5;color:#C00000;padding:1px 6px;border-radius:8px;white-space:nowrap;border:1px solid #FFD4D4}
+.search-wrap{position:fixed;top:44px;left:0;right:0;z-index:99;background:#fff;padding:6px 14px 10px}
+.sbar{display:flex;align-items:center;background:#f5f5f5;border-radius:22px;padding:0 14px;height:42px;gap:8px;border:1.5px solid #eee;transition:all .15s}
+.sbar.focused{border-color:#C00000;background:#fff;box-shadow:0 0 0 2px rgba(192,0,0,.08)}
+.sbar svg{width:18px;height:18px;flex-shrink:0;stroke:#999;fill:none;stroke-width:2}
+.sbar input{flex:1;border:none;outline:none;background:none;font-size:15px;height:100%;color:#333}
+.sbar input::placeholder{color:#bbb;font-size:14px}
+.sbar .cls{display:none;width:20px;height:20px;border-radius:50%;background:#ddd;line-height:20px;text-align:center;font-size:12px;color:#fff;cursor:pointer;flex-shrink:0}
+.sbar.has-txt .cls{display:block}
+.cont{position:fixed;top:94px;left:0;right:0;bottom:52px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.cont::-webkit-scrollbar{display:none}
+.pg{display:none;padding:0 14px 24px;animation:fade .15s}
+.pg.show{display:block}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.upd-bar{background:linear-gradient(90deg,#C00000,#9B2335);color:#fff;padding:8px 14px;border-radius:10px;margin:6px 0 10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;letter-spacing:.3px}
+.upd-bar b{font-size:14px}
+.upd-bar .utag{margin-left:auto;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:8px;font-size:10px;font-weight:400}
+.greet{padding:2px 0 2px;font-size:13px;color:#999;line-height:1.6}
+.greet b{color:#C00000;font-weight:700}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 0}
+.citem{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;-webkit-user-select:none}
+.citem:active{opacity:.7}
+.citem .ci{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.citem .cl{font-size:11px;color:#666;font-weight:500}
+.ci-积分{background:#FFF0F0}.ci-套餐{background:#EBF3FF}.ci-权益{background:#EDFCF2}.ci-礼包{background:#FFF7EB}
+.ci-单卡{background:#F3EEFF}.ci-流程{background:#EBF3FF}.ci-政策{background:#FFF0F0}.ci-全部{background:#F5F5F5}
+.hot-hd{font-size:12px;color:#999;margin-bottom:8px;font-weight:500}
+.hot-list{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:12px}
+.hot-list span{padding:6px 13px;border-radius:16px;font-size:12px;cursor:pointer;background:#fff;border:1px solid #eee;color:#555;font-weight:500;transition:all .1s;-webkit-user-select:none}
+.hot-list span:active{background:#C00000;color:#fff;border-color:#C00000}
+.sec{font-size:13px;font-weight:700;color:#C00000;padding:14px 0 6px;display:flex;align-items:center;gap:5px}
+.sec::before{content:'';width:3px;height:14px;background:#C00000;border-radius:2px;flex-shrink:0}
+.cd{background:#fff;border-radius:12px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.cd-h{padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:8px;-webkit-user-select:none}
+.cd-h:active{opacity:.8}
+.cd-h .tg{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px;flex-shrink:0}
+.t-积分{background:#FFE8E8;color:#C00000}.t-套餐{background:#E0EDFF;color:#1A56DB}.t-权益{background:#DFFAEA;color:#0D8050}
+.t-礼包{background:#FFF0DB;color:#B45309}.t-单卡{background:#F0E6FF;color:#7C3AED}.t-流程{background:#DBEAFE;color:#1D5DB8}
+.t-政策{background:#FFE8E2;color:#B91C1C}
+.cd-h .qt{font-size:13.5px;font-weight:600;flex:1;line-height:1.5}
+.cd-h .ar{color:#ccc;font-size:10px;transition:transform .2s;flex-shrink:0}
+.cd.open .ar{transform:rotate(90deg)}
+.cd-b{max-height:0;overflow:hidden;transition:max-height .25s}
+.cd.open .cd-b{max-height:500px;transition:max-height .3s}
+.cd-bi{padding:0 14px 12px}
+.ans{font-size:13px;line-height:2;background:#FAFAFA;padding:10px 12px;border-radius:8px;border-left:3px solid #C00000;color:#444}
+.ans em{font-style:normal;color:#C00000;font-weight:700}
+.ans .nt{display:block;margin-top:5px;padding-top:5px;border-top:1px dashed #e0d0c0;font-size:11px;color:#b09070}
+.tbw{overflow-x:auto;margin-bottom:10px;-webkit-overflow-scrolling:touch}
+.tbw::-webkit-scrollbar{display:none}
+.tb{width:100%;border-collapse:separate;border-spacing:0;font-size:11px;border-radius:8px;overflow:hidden;border:1px solid #eee;min-width:480px}
+.tb th{background:#C00000;color:#fff;padding:7px 8px;font-weight:600;text-align:left;white-space:nowrap;font-size:10px;letter-spacing:.3px}
+.tb td{padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top;line-height:1.5}
+.tb tr:last-child td{border-bottom:none}
+.tb tr:nth-child(even) td{background:#FAFAFA}
+.tb td em{font-style:normal;color:#C00000;font-weight:700}
+.fml{background:#1a1a2e;color:#fff;border-radius:12px;padding:14px 16px;margin:8px 0 14px;font-size:12px;line-height:2.2}
+.fml .fl{color:#E8A840;font-weight:700;font-size:13px}
+.fml em{font-style:normal;color:#FF6B6B;font-weight:700}
+.sc{text-align:center;font-size:11px;color:#999;padding:2px 0 8px}
+.empty{text-align:center;padding:50px 20px}
+.empty p{color:#999;font-size:13px;margin-top:6px}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:#fff;border-top:0.5px solid #eee;display:flex;padding-bottom:env(safe-area-inset-bottom)}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;padding:6px 0 4px;color:#bbb;font-size:10px;cursor:pointer;transition:color .1s;-webkit-user-select:none}
+.ni .ic{font-size:20px;line-height:1;margin-bottom:2px}
+.ni.on{color:#C00000}
+
+/* ═══ 问答机器人 ═══ */
+.bot-btn{position:fixed;right:14px;bottom:62px;z-index:200;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(192,0,0,.35);transition:transform .15s;-webkit-user-select:none}
+.bot-btn:active{transform:scale(.9)}
+.bot-btn .dot{position:absolute;top:2px;right:2px;width:10px;height:10px;background:#FFD700;border-radius:50%;border:2px solid #C00000}
+.bot-mask{position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.35);display:none;opacity:0;transition:opacity .2s}
+.bot-mask.show{display:block;opacity:1}
+.bot-panel{position:fixed;left:0;right:0;bottom:0;z-index:300;background:#f5f5f5;border-radius:16px 16px 0 0;max-height:75vh;display:none;flex-direction:column;transform:translateY(100%);transition:transform .25s ease}
+.bot-panel.show{display:flex;transform:translateY(0)}
+.bot-hd{display:flex;align-items:center;padding:12px 16px;background:#fff;border-radius:16px 16px 0 0;border-bottom:1px solid #eee;flex-shrink:0}
+.bot-hd .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#C00000,#9B2335);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
+.bot-hd .bname{margin-left:10px;font-size:15px;font-weight:700;color:#333}
+.bot-hd .bname small{font-size:11px;color:#999;font-weight:400;margin-left:4px}
+.bot-hd .bcls{margin-left:auto;font-size:20px;color:#999;cursor:pointer;padding:4px 8px}
+.bot-msgs{flex:1;overflow-y:auto;padding:12px 14px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;min-height:180px;max-height:calc(75vh - 110px)}
+.bot-msgs::-webkit-scrollbar{display:none}
+.m-row{display:flex;margin-bottom:10px;animation:fade .15s}
+.m-row.user{justify-content:flex-end}
+.m-bubble{max-width:82%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.8;word-break:break-all}
+.m-row.bot .m-bubble{background:#fff;color:#333;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.m-row.user .m-bubble{background:#C00000;color:#fff;border-bottom-right-radius:4px}
+.m-bubble em{font-style:normal;font-weight:700}
+.m-row.bot .m-bubble em{color:#C00000}
+.m-bubble .ref{display:block;margin-top:6px;padding-top:6px;border-top:1px dashed #ddd;font-size:11px;color:#999}
+.bot-input{display:flex;gap:8px;padding:10px 14px 14px;background:#fff;border-top:1px solid #eee;flex-shrink:0;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+.bot-input input{flex:1;border:1.5px solid #eee;border-radius:20px;padding:0 14px;height:38px;font-size:14px;outline:none;background:#f5f5f5;transition:border-color .15s}
+.bot-input input:focus{border-color:#C00000;background:#fff}
+.bot-input .send{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bot-input .send:active{opacity:.8}
+.bot-quick{display:flex;gap:6px;padding:0 14px 8px;background:#fff;flex-wrap:wrap;flex-shrink:0}
+.bot-quick span{padding:4px 12px;border-radius:14px;font-size:11px;background:#FFF5F5;color:#C00000;border:1px solid #FFD4D4;cursor:pointer;white-space:nowrap}
+.bot-quick span:active{background:#C00000;color:#fff}
+.typing{display:flex;gap:4px;padding:10px 14px;background:#fff;border-radius:14px;border-bottom-left-radius:4px;width:60px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.typing span{width:6px;height:6px;border-radius:50%;background:#ccc;animation:blink 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+
+/* ═══ 反馈/吐槽功能 ═══ */
+.fb-btn{position:fixed;left:14px;bottom:62px;z-index:200;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#059669,#10B981);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(5,150,105,.35);transition:transform .15s;-webkit-user-select:none}
+.fb-btn:active{transform:scale(.9)}
+.fb-mask{position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.35);display:none;opacity:0;transition:opacity .2s}
+.fb-mask.show{display:block;opacity:1}
+.fb-panel{position:fixed;left:0;right:0;bottom:0;z-index:300;background:#f5f5f5;border-radius:16px 16px 0 0;max-height:75vh;display:none;flex-direction:column;transform:translateY(100%);transition:transform .25s ease}
+.fb-panel.show{display:flex;transform:translateY(0)}
+.fb-hd{display:flex;align-items:center;padding:12px 16px;background:#fff;border-radius:16px 16px 0 0;border-bottom:1px solid #eee;flex-shrink:0}
+.fb-hd .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#059669,#10B981);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
+.fb-hd .bname{margin-left:10px;font-size:15px;font-weight:700;color:#333}
+.fb-hd .bname small{font-size:11px;color:#999;font-weight:400;margin-left:4px}
+.fb-hd .bcls{margin-left:auto;font-size:20px;color:#999;cursor:pointer;padding:4px 8px}
+.fb-body{flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.fb-body::-webkit-scrollbar{display:none}
+.fb-type{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.fb-type span{padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer;border:1.5px solid #eee;background:#fff;color:#666;transition:all .15s}
+.fb-type span:active{opacity:.8}
+.fb-type span.on{background:#059669;color:#fff;border-color:#059669}
+.fb-ta{width:100%;border:1.5px solid #eee;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.7;resize:none;height:120px;outline:none;background:#fff;transition:border-color .15s;font-family:inherit}
+.fb-ta:focus{border-color:#059669}
+.fb-name{width:100%;border:1.5px solid #eee;border-radius:12px;padding:0 14px;height:38px;font-size:14px;outline:none;background:#fff;margin-bottom:12px;transition:border-color .15s}
+.fb-name:focus{border-color:#059669}
+.fb-submit{width:100%;height:42px;border-radius:21px;background:linear-gradient(135deg,#059669,#10B981);color:#fff;border:none;font-size:15px;font-weight:700;cursor:pointer;margin-top:12px;transition:opacity .15s}
+.fb-submit:active{opacity:.8}
+.fb-submit:disabled{opacity:.5;cursor:not-allowed}
+.fb-ok{text-align:center;padding:30px 20px}
+.fb-ok .icon{font-size:40px;margin-bottom:12px}
+.fb-ok .t1{font-size:16px;font-weight:700;color:#333;margin-bottom:8px}
+.fb-ok .t2{font-size:13px;color:#999;line-height:1.8}
+</style>
+</head>
+<body>
+
+<!-- 加载屏 -->
+<div class="loader" id="loader"><div class="llogo"><b>曲江</b>速查</div><div style="font-size:12px;color:#999;margin-top:4px">数据加载中…</div><div class="lbar"><div></div></div></div>
+
+<!-- 数据更新提示 -->
+<div class="update-tip" id="updateTip" onclick="applyUpdate()">数据已更新，点击刷新</div>
+
+<div class="hdr"><div class="hdr-in"><span class="logo"><b>曲江</b>速查</span><span class="vtag" id="vt"></span></div></div>
+
+<div class="search-wrap">
+  <div class="sbar" id="sbar">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="si" type="search" placeholder="搜套餐、积分、流程…" autocomplete="off">
+    <span class="cls" id="scls">×</span>
+  </div>
+</div>
+
+<div class="cont" id="cont">
+  <div class="pg show" id="pg-home">
+    <div class="upd-bar" id="ubar">🆕 <b id="utxt">加载中…</b><span class="utag" id="utag"></span></div>
+    <div class="greet">曲江发展<b>速查手册</b>，输入关键词即可搜索全部内容</div>
+    <div class="cgrid" id="cgrid"></div>
+    <div class="hot-hd">热门搜索</div>
+    <div class="hot-list" id="hlist"></div>
+    <div class="sec">全部速查</div>
+    <div id="home-cards"></div>
+  </div>
+  <div class="pg" id="pg-search"><div id="search-out"></div></div>
+  <div class="pg" id="pg-积分"></div>
+  <div class="pg" id="pg-套餐"></div>
+  <div class="pg" id="pg-流程"></div>
+  <div class="pg" id="pg-更多"></div>
+</div>
+
+<div class="bnav" id="bnav">
+  <div class="ni on" data-p="home"><span class="ic">🏠</span>首页</div>
+  <div class="ni" data-p="积分"><span class="ic">📊</span>积分</div>
+  <div class="ni" data-p="套餐"><span class="ic">📱</span>套餐</div>
+  <div class="ni" data-p="流程"><span class="ic">🔄</span>流程</div>
+  <div class="ni" data-p="更多"><span class="ic">📋</span>更多</div>
+</div>
+
+<!-- 反馈/吐槽 -->
+<div class="fb-btn" id="fbBtn" onclick="toggleFB()"><span>📢</span></div>
+<div class="fb-mask" id="fbMask" onclick="toggleFB()"></div>
+<div class="fb-panel" id="fbPanel">
+  <div class="fb-hd">
+    <div class="avatar">📢</div>
+    <div class="bname">意见反馈<small>吐槽·建议·问答</small></div>
+    <span class="bcls" onclick="toggleFB()">×</span>
+  </div>
+  <div class="fb-body" id="fbBody">
+    <div id="fbForm">
+      <div class="fb-type" id="fbType">
+        <span class="on" data-v="吐槽" onclick="selFbType(this)">💬 吐槽</span>
+        <span data-v="建议" onclick="selFbType(this)">💡 建议</span>
+        <span data-v="提问" onclick="selFbType(this)">❓ 提问</span>
+        <span data-v="纠错" onclick="selFbType(this)">✏️ 纠错</span>
+      </div>
+      <input class="fb-name" id="fbName" placeholder="你的名字（选填）" maxlength="20">
+      <textarea class="fb-ta" id="fbTa" placeholder="说点什么…吐槽、建议、业务问题、数据纠错都行" maxlength="500"></textarea>
+      <button class="fb-submit" id="fbSubmit" onclick="submitFB()">提交反馈</button>
+    </div>
+    <div class="fb-ok" id="fbOk" style="display:none">
+      <div class="icon">✅</div>
+      <div class="t1">感谢反馈！</div>
+      <div class="t2">你的反馈已提交，我们会尽快处理。<br>如有业务问题也可直接问机器人🤖</div>
+    </div>
+  </div>
+</div>
+
+<!-- 问答机器人 -->
+<div class="bot-btn" id="botBtn" onclick="toggleBot()"><span>🤖</span><span class="dot"></span></div>
+<div class="bot-mask" id="botMask" onclick="toggleBot()"></div>
+<div class="bot-panel" id="botPanel">
+  <div class="bot-hd">
+    <div class="avatar">🤖</div>
+    <div class="bname">曲江小助手<small>智能问答</small></div>
+    <span class="bcls" onclick="toggleBot()">×</span>
+  </div>
+  <div class="bot-msgs" id="botMsgs"></div>
+  <div class="bot-quick" id="botQuick">
+    <span onclick="askBot('199套餐内容')">199套餐</span>
+    <span onclick="askBot('239必选包')">239必选包</span>
+    <span onclick="askBot('升档积分怎么算')">升档积分</span>
+    <span onclick="askBot('智企199')">智企199</span>
+    <span onclick="askBot('美好家')">美好家</span>
+    <span onclick="askBot('橙分期续约')">橙分期续约</span>
+    <span onclick="askBot('升档审批流程')">审批流程</span>
+    <span onclick="askBot('副卡怎么收费')">副卡收费</span>
+    <span onclick="askBot('最便宜的融合')">最低融合</span>
+    <span onclick="askBot('宽带多少兆')">宽带速率</span>
+  </div>
+  <div class="bot-input">
+    <input id="botIn" type="text" placeholder="问点什么…" onkeydown="if(event.key==='Enter')sendBot()">
+    <button class="send" onclick="sendBot()">➤</button>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   数据加载层 - 远程+本地缓存
+   ═══════════════════════════════════════ */
+var DATA_URL='data.json';/* 同源数据文件 */
+var GITEE_API='https://gitee.com/api/v5/repos/qujiang-telecom-2026/qujiang-speedy/contents/data.json?ref=master';/* Gitee远程数据源 */
+var GITEE_TOKEN='8de7b77c455ee2f26ef5595fda3f248b';
+var VER='',VDATE='',EXPIRE='';
+var Q=[],TB={};
+var cachedData=null;
+var newData=null;
+
+function strip(s){return String(s).replace(/<[^>]+>/g,'')}
+
+/* 加载数据：优先localStorage缓存，后台fetch更新 */
+function loadData(){
+  return new Promise(function(resolve){
+    /* 1. 先从缓存加载（秒开） */
+    try{
+      var cached=localStorage.getItem('qj_data');
+      if(cached){
+        var d=JSON.parse(cached);
+        if(d&&d.Q&&d.TB){
+          Q=d.Q;TB=d.TB;VER=d.ver||'';VDATE=d.vdate||'';EXPIRE=d.expire||'';
+          cachedData=d;
+          resolve(true);
+          return;
+        }
+      }
+    }catch(e){}
+    
+    /* 2. 无缓存 → 直接fetch */
+    fetchData().then(function(ok){resolve(ok);});
+  });
+}
+
+/* 远程fetch数据（优先Gitee API，降级同源） */
+function fetchData(){
+  return fetch(GITEE_API+'&access_token='+GITEE_TOKEN+'&t='+Date.now(),{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(apiResp){
+      /* Gitee API返回base64编码的content字段 */
+      if(apiResp&&apiResp.content){
+        var jsonStr=atob(apiResp.content.replace(/\n/g,''));
+        var d=JSON.parse(jsonStr);
+        if(d&&d.Q&&d.TB){return d;}
+      }
+      throw new Error('invalid gitee response');
+    })
+    .catch(function(){
+      /* 降级：从同源fetch data.json */
+      return fetch(DATA_URL+'?t='+Date.now(),{cache:'no-store'})
+        .then(function(r){return r.json();});
+    })
+    .then(function(d){
+      if(d&&d.Q&&d.TB){
+        newData=d;
+        if(!cachedData||cachedData.ver!==d.ver){
+          Q=d.Q;TB=d.TB;VER=d.ver||'';VDATE=d.vdate||'';EXPIRE=d.expire||'';
+          try{localStorage.setItem('qj_data',JSON.stringify(d));}catch(e){}
+          return true;
+        }
+        return true;
+      }
+      return false;
+    })
+    .catch(function(){return false;});
+}
+
+/* 后台静默检查更新（通过Gitee API） */
+function checkUpdate(){
+  fetch(GITEE_API+'&access_token='+GITEE_TOKEN+'&t='+Date.now(),{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(apiResp){
+      if(apiResp&&apiResp.content){
+        var jsonStr=atob(apiResp.content.replace(/\n/g,''));
+        var d=JSON.parse(jsonStr);
+        if(d&&d.ver&&d.ver!==VER){
+          newData=d;
+          document.getElementById('updateTip').classList.add('show');
+        }
+      }
+    })
+    .catch(function(){});
+}
+
+/* 用户点击刷新按钮 */
+function applyUpdate(){
+  if(newData){
+    Q=newData.Q;TB=newData.TB;VER=newData.ver||'';VDATE=newData.vdate||'';EXPIRE=newData.expire||'';
+    try{localStorage.setItem('qj_data',JSON.stringify(newData));}catch(e){}
+    document.getElementById('updateTip').classList.remove('show');
+    /* 重新渲染 */
+    document.getElementById('vt').textContent=VER+' \u00b7 '+VDATE;
+    document.getElementById('utxt').textContent=VDATE+'更新';
+    document.getElementById('utag').textContent=VER;
+    homeInited=false;
+    initHome();
+    checkExpire();
+  }
+}
+
+/* ═══════════════════════════════════════
+   UI渲染 - 与原版逻辑一致
+   ═══════════════════════════════════════ */
+var CATS=[{c:"积分",icon:"📊"},{c:"套餐",icon:"📱"},{c:"权益",icon:"🎁"},{c:"礼包",icon:"🏠"},{c:"单卡",icon:"💳"},{c:"流程",icon:"🔄"},{c:"政策",icon:"📌"},{c:"全部",icon:"📋"}];
+var HOT=["智企199","升档积分","美好家","橙分期","79融合","超出资费","必选包","满5卡流量"];
+
+var SI=(function(){
+  var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
+  var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
+  return ci.concat(ti);
+})();
+
+function fm(tx,kw){
+  if(!kw)return true;
+  var t=tx.toLowerCase(),k=kw.toLowerCase().trim().replace(/[，、]/g,' ');
+  var ws=k.split(/\s+/).filter(Boolean),ws2=[];
+  ws.forEach(function(w){var m=w.match(/[\u4e00-\u9fa5]+|\d+/g);if(m&&m.length>1){ws2=ws2.concat(m);}else{ws2.push(w);}});
+  return ws2.every(function(w){return t.includes(w);});
+}
+
+function mkCard(d,open){return '<div class="cd'+(open?' open':'')+'" onclick="this.classList.toggle(\'open\')"><div class="cd-h"><span class="tg t-'+d.c+'">'+d.c+'</span><span class="qt">'+d.q+'</span><span class="ar">\u25b6</span></div><div class="cd-b"'+(open?' style="max-height:500px"':'')+'><div class="cd-bi"><div class="ans">'+d.a+'</div></div></div></div>';}
+function mkTable(d){var h='<table class="tb"><thead><tr>';d[0].forEach(function(t){h+='<th>'+t+'</th>';});h+='</tr></thead><tbody>';for(var i=1;i<d.length;i++){h+='<tr>';d[i].forEach(function(v){h+='<td>'+v+'</td>';});h+='</tr>';}return h+'</tbody></table>';}
+function mkTB(k){var t=TB[k];if(!t)return '';var h='<div class="sec">'+t.t+'</div><div class="tbw">'+mkTable(t.d)+'</div>';if(t.t2&&t.d2)h+='<div class="sec">'+t.t2+'</div><div class="tbw">'+mkTable(t.d2)+'</div>';return h;}
+
+var curPage='home',sv='';
+function showPg(id){document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('show');});document.getElementById('pg-'+id).classList.add('show');document.getElementById('cont').scrollTop=0;}
+
+var homeInited=false;
+function initHome(){
+  if(homeInited)return;
+  var gh='';CATS.forEach(function(c){gh+='<div class="citem" onclick="goCat(\''+c.c+'\')"><div class="ci ci-'+c.c+'">'+c.icon+'</div><span class="cl">'+c.c+'</span></div>';});document.getElementById('cgrid').innerHTML=gh;
+  var hh='';HOT.forEach(function(k){hh+='<span onclick="ds(\''+k+'\')">'+k+'</span>';});document.getElementById('hlist').innerHTML=hh;
+  var ch='';Q.forEach(function(d){ch+=mkCard(d);});document.getElementById('home-cards').innerHTML=ch;
+  homeInited=true;
+}
+
+function renderPage(id){
+  var pg=document.getElementById('pg-'+id),h='';
+  if(id==='积分'){h+=mkTB('系数表');h+='<div class="fml"><div class="fl">\ud83d\udcd0 积分计算公式</div>价值提升积分 = [迁转后(套餐值-优惠) - 迁转前(套餐值-优惠)] \u00d7 <em>系数</em><br><br>套餐优惠：<em>橙分期、翼支付、金豆合约、赠费</em><br>美好家另计：<em>10积分/单</em>（1分=1元）<br>新装积分：<em>月租×系数</em></div>';h+='<div class="sec">积分速查</div>';Q.filter(function(d){return d.c==='积分';}).forEach(function(d){h+=mkCard(d);});}
+  else if(id==='套餐'){h+=mkTB('融合表');h+=mkTB('单卡表');h+=mkTB('智企表');h+=mkTB('宽带表');h+='<div class="sec">套餐\u00b7权益\u00b7礼包速查</div>';Q.filter(function(d){return['套餐','权益','礼包','单卡'].indexOf(d.c)>=0;}).forEach(function(d){h+=mkCard(d);});}
+  else if(id==='流程'){h+='<div class="sec">业务流程（点击展开）</div>';Q.filter(function(d){return d.c==='流程';}).forEach(function(d,i){h+=mkCard(d,i===0);});}
+  else if(id==='更多'){h+=mkTB('政策表');h+=mkTB('宽带表');h+=mkTB('系数表');h+='<div class="sec">全部速查词条</div>';Q.forEach(function(d){h+=mkCard(d);});}
+  pg.innerHTML=h;
+}
+
+function renderSearch(){
+  var res=SI.filter(function(i){return fm(i.tx,sv);});
+  var cards=res.filter(function(r){return r.tp==='c';}),tabs=res.filter(function(r){return r.tp==='t';});
+  var h='<div class="sc">找到 '+res.length+' 项</div>';
+  if(!res.length){h+='<div class="empty"><p>没找到，换个词试试</p></div>';}
+  else{if(cards.length){h+='<div class="sec">速查 ('+cards.length+')</div>';cards.forEach(function(d){h+=mkCard(d.d);});}if(tabs.length){h+='<div class="sec">相关表格 ('+tabs.length+')</div>';tabs.forEach(function(t){h+=mkTB(t.k);});}}
+  document.getElementById('search-out').innerHTML=h;showPg('search');
+}
+
+var si=document.getElementById('si'),sbar=document.getElementById('sbar');
+si.addEventListener('focus',function(){sbar.classList.add('focused');});
+si.addEventListener('blur',function(){sbar.classList.remove('focused');});
+si.addEventListener('input',function(){sv=this.value.trim();sbar.classList.toggle('has-txt',sv.length>0);if(sv){renderSearch();}else{showPg('home');}});
+document.getElementById('scls').addEventListener('click',function(){si.value='';sv='';sbar.classList.remove('has-txt');showPg('home');si.focus();});
+function ds(kw){si.value=kw;sv=kw;sbar.classList.add('has-txt');renderSearch();}
+function goCat(c){if(c==='全部'){showPg('home');return;}var h='<div class="sec">'+c+'速查</div>';Q.filter(function(d){return d.c===c;}).forEach(function(d){h+=mkCard(d);});document.getElementById('search-out').innerHTML=h;showPg('search');si.value='';sv='';sbar.classList.remove('has-txt');}
+document.getElementById('bnav').addEventListener('click',function(e){var ni=e.target.closest('.ni');if(!ni)return;document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('on');});ni.classList.add('on');var p=ni.dataset.p;si.value='';sv='';sbar.classList.remove('has-txt');if(p==='home'){showPg('home');}else{renderPage(p);showPg(p);}});
+
+/* ═══ 版本过期检测 ═══ */
+function checkExpire(){
+  if(!EXPIRE)return;
+  var now=new Date(),exp=new Date(EXPIRE.replace(/-/g,'/'));
+  if(now>=exp){
+    var ov=document.createElement('div');ov.id='expired';
+    ov.style.cssText='position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center';
+    ov.innerHTML='<div style="font-size:26px;font-weight:800;color:#C00000;margin-bottom:24px">版本已过期</div>'
+      +'<div style="font-size:16px;color:#333;font-weight:600;margin-bottom:12px">请联系支局长领取最新版</div>'
+      +'<div style="font-size:13px;color:#999;margin-bottom:24px">当前版本 '+VER+' ('+VDATE+') · 过期日期 '+EXPIRE+'</div>'
+      +'<div style="width:80px;height:80px;border-radius:50%;background:#FFF0F0;display:flex;align-items:center;justify-content:center;margin-bottom:16px"><span style="font-size:40px">⚠</span></div>';
+    document.body.appendChild(ov);return;
+  }
+  var diff=Math.ceil((exp-now)/(86400000));
+  if(diff<=7){document.getElementById('ubar').style.background='linear-gradient(90deg,#D97706,#B45309)';document.getElementById('utxt').textContent='剩余'+diff+'天过期，请联系支局长更新';}
+}
+
+/* ═══════════════════════════════════════
+   智能问答机器人
+   ═══════════════════════════════════════ */
+var botOpen=false;
+function toggleBot(){
+  botOpen=!botOpen;
+  document.getElementById('botMask').classList.toggle('show',botOpen);
+  document.getElementById('botPanel').classList.toggle('show',botOpen);
+  document.getElementById('botBtn').style.display=botOpen?'none':'flex';
+  if(botOpen&&document.getElementById('botMsgs').children.length===0){
+    addBotMsg('你好！我是曲江小助手，问我任何业务问题，比如"199套餐内容""升档积分怎么算""最便宜的融合"等，我来帮你查~');
+  }
+  if(botOpen){setTimeout(function(){document.getElementById('botIn').focus();},300);}
+}
+
+function addBotMsg(html){
+  var d=document.createElement('div');d.className='m-row bot';
+  d.innerHTML='<div class="m-bubble">'+html+'</div>';
+  var msgs=document.getElementById('botMsgs');
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+function addUserMsg(txt){
+  var d=document.createElement('div');d.className='m-row user';
+  d.innerHTML='<div class="m-bubble">'+escHtml(txt)+'</div>';
+  var msgs=document.getElementById('botMsgs');
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function sendBot(){
+  var inp=document.getElementById('botIn');
+  var txt=inp.value.trim();if(!txt)return;
+  inp.value='';
+  addUserMsg(txt);
+  var typing=document.createElement('div');typing.className='m-row bot';typing.id='typing';
+  typing.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
+  var msgs=document.getElementById('botMsgs');
+  msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(function(){
+    var t=document.getElementById('typing');if(t)t.remove();
+    var reply=botAnswer(txt);
+    addBotMsg(reply);
+  },400+Math.random()*400);
+}
+
+function askBot(txt){
+  document.getElementById('botIn').value=txt;sendBot();
+}
+
+/* ═══ 问答大脑 ═══ */
+function botAnswer(raw){
+  var s=raw.trim().toLowerCase();
+  s=s.replace(/那个啥|就是|我想问|问下|问一下|了解下|说下|告诉我|查一下|看一下|看下|帮我查|帮我问/g,'');
+  s=s.replace(/是什么$|是啥$|有哪些$|有啥$|内容是啥$|怎么算$|怎么算的$|怎么样$|多少$|多少钱$|能告诉|请问|我想知道|的话|的呢/g,'');
+  s=s.replace(/[的是啥呢吧啊呀哦嘛咯哈呗哇噢]+$/g,'');
+  s=s.replace(/家庭5g[之\-]a?/g,'5ga');
+  s=s.replace(/5g[之\-]a/g,'5ga');
+  s=s.replace(/5g套餐/g,'5ga套餐');
+  s=s.replace(/最便宜|最低价|最底|入门|起步/g,'最低');
+  s=s.replace(/加卡|加号|加副卡/g,'副卡');
+  s=s.replace(/换套餐|改套餐|升级套餐|往上升/g,'升档');
+  s=s.replace(/到期了|到期续|续费|接着用/g,'续约');
+  s=s.replace(/几兆|多少兆|速率|网速|测速/g,'宽带');
+  s=s.replace(/流量多少|几个g|几个G|流量几G|一共多少流量/g,'流量');
+  s=s.replace(/送什么|送啥|带什么|包含啥|有什么内容/g,'套餐内容');
+  s=s.replace(/多少钱|费用|费用多少/g,'资费');
+  s=s.replace(/降级|往下降/g,'降档');
+  s=s.replace(/继续用|接着签/g,'续约');
+  s=s.replace(/iptv|电视/g,'云电视');
+  s=s.replace(/看家|监控|摄像/g,'智屏');
+  s=s.replace(/fttr[^b]|全屋|全屋光纤/g,'全光');
+
+  var kwList=[];
+  var prices=raw.match(/(59|79|99|129|139|169|199|239|299|399)/g);
+  if(prices)prices.forEach(function(p){kwList.push(p);});
+  var bizWords=['5ga','智企','融合','套餐','必选包','必选','积分','升档','升套','副卡','宽带',
+    '美好家','权益包','权益','橙分期','续约','审批','违约金','甩单','系数','月减','单卡',
+    '三秦卡','无忧卡','fttr','全光','云电视','智屏','天翼','尊选','优选','惠选',
+    '刘挺','刘娅','陶冶','不夜城','传奇','金辉','曲江池','曲江大道','西影路','杜邑','南苑','翡翠','新开门','大华',
+    '降档','提值','帮扶','食安','安全猫','双控','最低','资费','套餐内容','流量','新装','补贴'];
+  bizWords.forEach(function(w){if(s.includes(w))kwList.push(w);});
+  var synMap={
+    '套餐':['套餐内容','套餐详情','套餐信息','包含什么','有什么','包含哪些','什么内容','套餐是','里面有什么'],
+    '必选包':['必选','必须选','强制带','必须带','默认带'],
+    '积分':['积分怎么算','积分多少','积多少分','积分计算','积分标准','算积分','能得多少分'],
+    '升档':['升级','提档','迁转','换套餐','改套餐','升级套餐','升套','往上升'],
+    '副卡':['加卡','加号','加副卡','能加几张','多加号'],
+    '美好家':['美好家礼包','美好家活动'],
+    '橙分期续约':['橙分期到期','分期到期','到期续','分期到了','分期结束'],
+    '审批':['违约金','减免','审批流程','升档审批','减免审批'],
+    '系数':['积分系数','积分表','系数表'],
+    '单卡':['裸卡','只办卡'],
+    '宽带':['几兆','多少兆','速率','网速','宽带速率'],
+    '最低':['最便宜','最低价','最底','入门','起步'],
+    '资费':['多少钱','费用','要多少钱','月费'],
+    '流量':['几个g','几个G','流量几G','流量多少'],
+    '降档':['降级','往下降'],
+    '续约':['续费','接着用','续合同','继续签'],
+    '智屏':['看家','监控','摄像'],
+    '云电视':['iptv','电视','IPTV'],
+    '全光':['fttr','光纤','全屋'],
+    '补贴':['月减','减多少','优惠多少','补贴多少']
+  };
+  Object.keys(synMap).forEach(function(k){
+    synMap[k].forEach(function(kw){if(s.includes(kw)&&kwList.indexOf(k)<0)kwList.push(k);});
+  });
+  if(!kwList.length){
+    s.replace(/[，、？?！!。]/g,' ').split(/\s+/).filter(Boolean).forEach(function(w){kwList.push(w);});
+  }
+  var expanded=kwList.join(' ');
+  var results=SI.filter(function(i){return fm(i.tx,expanded);});
+  var cards=results.filter(function(r){return r.tp==='c';});
+  var tabs=results.filter(function(r){return r.tp==='t';});
+  if(!results.length&&prices){
+    results=[{tp:'t',c:'融合表',tx:'',k:'融合表'}];tabs=results;cards=[];
+  }
+  if(!results.length){return '抱歉，没找到相关信息。试试换个问法，比如"199套餐内容""升档积分""最便宜的融合""宽带速率"~<br><span style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:16px;background:#059669;color:#fff;font-size:12px;cursor:pointer" onclick="askToFb()">没找到？点击反馈给支局长</span>';}
+  var priceMatch=raw.match(/(79|99|139|169|199|239|299|399)/);
+  var isPackageQ=/套餐|内容|详情|包含|有什么|什么内容|必选|副卡|融合|家庭|最低|最便宜|起步|入门/.test(raw);
+  var isZqQ=/智企/.test(raw);
+  var reply='';
+  if(priceMatch&&(isPackageQ||isZqQ)){
+    var p=priceMatch[1];
+    var ptRows=TB.融合表.d;var ptIdx=-1;
+    for(var i=1;i<ptRows.length;i++){if(strip(String(ptRows[i][0]))===p){ptIdx=i;break;}}
+    if(ptIdx>=0){var pr=ptRows[ptIdx],ph=ptRows[0];reply+='<b>'+p+' 元5G畅享融合</b><br>';for(var j=0;j<ph.length;j++){reply+=ph[j]+'：<em>'+strip(String(pr[j]))+'</em>　';}reply+='<br>';}
+    var rhRows=TB.融合表.d2;var rhIdx=-1;
+    for(var i=1;i<rhRows.length;i++){if(strip(String(rhRows[i][0]))===p){rhIdx=i;break;}}
+    if(rhIdx>=0){var r=rhRows[rhIdx],hdr=rhRows[0];reply+='<b>'+p+' 元5G-A美好家融合</b><br>';for(var j=0;j<hdr.length;j++){reply+=hdr[j]+'：<em>'+strip(String(r[j]))+'</em>　';}reply+='<br>';}
+    if(isZqQ){var zqRows=TB.智企表.d;var zqIdx=-1;for(var i=1;i<zqRows.length;i++){if(strip(String(zqRows[i][0]))===p){zqIdx=i;break;}}if(zqIdx>=0){var z=zqRows[zqIdx],zh=zqRows[0];reply+='<b>'+p+' 元智企5G-A</b><br>';for(var j=0;j<zh.length;j++){reply+=zh[j]+'：<em>'+strip(String(z[j]))+'</em>　';}reply+='<br>';}}
+    var dkRows=TB.单卡表.d;for(var i=1;i<dkRows.length;i++){if(strip(String(dkRows[i][0])).includes(p)){var dk=dkRows[i],dh=dkRows[0];reply+='<b>'+strip(String(dk[0]))+'</b> 月费<em>'+strip(String(dk[1]))+'</em>元 语音<em>'+strip(String(dk[2]))+'</em> 流量<em>'+strip(String(dk[3]))+'</em>　';break;}}
+  }
+  var isJiFen=/积分|系数|算多少|算几个/.test(s);
+  if(isJiFen&&cards.length){var jfCards=cards.filter(function(c){return c.d.c==='积分';});if(jfCards.length){reply+=jfCards.slice(0,3).map(function(c){return '<b>'+escHtml(c.d.q)+'</b>：'+c.d.a;}).join('<br>');if(jfCards.length>3)reply+='<br><span class="ref">还有'+(jfCards.length-3)+'条相关积分规则，可在积分页查看</span>';}}
+  if(!reply){var top=cards.slice(0,3);reply=top.map(function(c){return '<b>'+escHtml(c.d.q)+'</b><br>'+c.d.a;}).join('<br><br>');if(cards.length>3)reply+='<br><span class="ref">还有'+(cards.length-3)+'条相关信息</span>';}
+  if(tabs.length){var tnames=tabs.map(function(t){return TB[t.k]&&TB[t.k].t||t.k;});reply+='<br><span class="ref">相关表格：'+tnames.join('、')+'</span>';}
+  return reply;
+}
+
+/* ═══ 反馈/吐槽功能 ═══ */
+var fbOpen=false,fbTypeVal='吐槽';
+function toggleFB(){
+  fbOpen=!fbOpen;
+  document.getElementById('fbMask').classList.toggle('show',fbOpen);
+  document.getElementById('fbPanel').classList.toggle('show',fbOpen);
+  document.getElementById('fbBtn').style.display=fbOpen?'none':'flex';
+  if(botOpen)toggleBot();
+}
+function selFbType(el){
+  document.querySelectorAll('#fbType span').forEach(function(s){s.classList.remove('on');});
+  el.classList.add('on');fbTypeVal=el.dataset.v;
+}
+function askToFb(){
+  toggleBot();
+  setTimeout(function(){toggleFB();},350);
+  document.getElementById('fbType').querySelector('[data-v="提问"]').click();
+}
+function submitFB(){
+  var ta=document.getElementById('fbTa');
+  var txt=ta.value.trim();if(!txt){ta.focus();return;}
+  var name=(document.getElementById('fbName').value||'匿名').trim();
+  var type=fbTypeVal;
+  var btn=document.getElementById('fbSubmit');
+  btn.disabled=true;btn.textContent='提交中…';
+  var title='【'+type+'】'+name+' - '+txt.substring(0,50);
+  var body='类型：'+type+'\n反馈人：'+name+'\n时间：'+new Date().toLocaleString('zh-CN')+'\n版本：'+VER+'\n\n内容：\n'+txt;
+  var apiUrl='https://gitee.com/api/v5/repos/qujiang-telecom-2026/qujiang-speedy/issues';
+  var params='access_token=8de7b77c455ee2f26ef5595fda3f248b&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body)+'&labels='+encodeURIComponent(type);
+  fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.id){
+      document.getElementById('fbForm').style.display='none';
+      document.getElementById('fbOk').style.display='block';
+    }else{
+      throw new Error('fail');
+    }
+  })
+  .catch(function(){
+    /* 降级方案：存localStorage + 提示手动发群 */
+    try{
+      var fbs=JSON.parse(localStorage.getItem('qj_fb')||'[]');
+      fbs.push({type:type,name:name,txt:txt,time:new Date().toISOString()});
+      localStorage.setItem('qj_fb',JSON.stringify(fbs));
+    }catch(e){}
+    document.getElementById('fbForm').style.display='none';
+    document.getElementById('fbOk').style.display='block';
+    var okEl=document.getElementById('fbOk');
+    okEl.querySelector('.t2').innerHTML='网络提交失败，反馈已保存本地。<br>请截图或复制内容发到微信群，谢谢！';
+  });
+}
+
+/* 阻止iOS双击缩放 */
+(function(){
+  var lastTouchEnd=0;
+  document.addEventListener('touchend',function(e){
+    var now=Date.now();if(now-lastTouchEnd<=300){e.preventDefault();}lastTouchEnd=now;
+  },{passive:false});
+})();
+
+/* ═══ 启动 ═══ */
+loadData().then(function(ok){
+  /* 隐藏加载屏 */
+  document.getElementById('loader').classList.add('hide');
+  setTimeout(function(){document.getElementById('loader').style.display='none';},350);
+  
+  if(ok){
+    document.getElementById('vt').textContent=VER+' \u00b7 '+VDATE;
+    document.getElementById('utxt').textContent=VDATE+'更新';
+    document.getElementById('utag').textContent=VER;
+    /* 重建搜索索引 */
+    SI=(function(){
+      var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
+      var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
+      return ci.concat(ti);
+    })();
+    initHome();
+    checkExpire();
+    /* 后台静默检查更新（5秒后） */
+    if(cachedData){setTimeout(checkUpdate,5000);}
+  }else{
+    document.getElementById('home-cards').innerHTML='<div class="empty"><p>数据加载失败，请检查网络后刷新</p></div>';
+  }
+});
+
+/* 首次访问无缓存时，fetch完成后也要初始化 */
+if(!cachedData){
+  fetchData().then(function(ok){
+    if(ok){
+      document.getElementById('vt').textContent=VER+' \u00b7 '+VDATE;
+      document.getElementById('utxt').textContent=VDATE+'更新';
+      document.getElementById('utag').textContent=VER;
+      SI=(function(){
+        var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
+        var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
+        return ci.concat(ti);
+      })();
+      initHome();
+      checkExpire();
+    }
+  });
+}
+</script>
+</body>
+</html>
