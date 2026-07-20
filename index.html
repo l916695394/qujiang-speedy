@@ -278,6 +278,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 var DATA_URL='data.json';/* 同源数据文件 */
 var GITEE_API='https://gitee.com/api/v5/repos/qujiang-telecom-2026/qujiang-speedy/contents/data.json?ref=master';/* Gitee远程数据源 */
 var GITEE_TOKEN='8de7b77c455ee2f26ef5595fda3f248b';
+
+/* UTF-8安全解码base64（atob默认是Latin-1，中文会乱码） */
+function b64ToUtf8(b64){
+  var binary=atob(b64.replace(/\n/g,''));
+  var bytes=new Uint8Array(binary.length);
+  for(var i=0;i<binary.length;i++){bytes[i]=binary.charCodeAt(i);}
+  return new TextDecoder('utf-8').decode(bytes);
+}
 var VER='',VDATE='',EXPIRE='';
 var Q=[],TB={};
 var cachedData=null;
@@ -314,7 +322,7 @@ function fetchData(){
     .then(function(apiResp){
       /* Gitee API返回base64编码的content字段 */
       if(apiResp&&apiResp.content){
-        var jsonStr=atob(apiResp.content.replace(/\n/g,''));
+        var jsonStr=b64ToUtf8(apiResp.content);
         var d=JSON.parse(jsonStr);
         if(d&&d.Q&&d.TB){return d;}
       }
@@ -346,7 +354,7 @@ function checkUpdate(){
     .then(function(r){return r.json();})
     .then(function(apiResp){
       if(apiResp&&apiResp.content){
-        var jsonStr=atob(apiResp.content.replace(/\n/g,''));
+        var jsonStr=b64ToUtf8(apiResp.content);
         var d=JSON.parse(jsonStr);
         if(d&&d.ver&&d.ver!==VER){
           newData=d;
