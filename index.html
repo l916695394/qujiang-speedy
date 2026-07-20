@@ -293,15 +293,25 @@ var newData=null;
 
 function strip(s){return String(s).replace(/<[^>]+>/g,'')}
 
-/* 加载数据：优先localStorage缓存，后台fetch更新 */
+/* 强制清除旧的乱码缓存（v3.1.1修复编码问题）*/
+var CACHE_VER='v3.1.1';/* 缓存版本号，升级时强制清除旧缓存 */
+try{
+  var lsVer=localStorage.getItem('qj_cache_ver');
+  if(lsVer!==CACHE_VER){
+    localStorage.removeItem('qj_data');
+    localStorage.setItem('qj_cache_ver',CACHE_VER);
+  }
+}catch(e){}
+
+/* 加载数据：优先同源data.json */
 function loadData(){
   return new Promise(function(resolve){
-    /* 1. 先从缓存加载（秒开） */
+    /* 1. 优先localStorage缓存（已在上方清除旧缓存） */
     try{
       var cached=localStorage.getItem('qj_data');
       if(cached){
         var d=JSON.parse(cached);
-        if(d&&d.Q&&d.TB){
+        if(d&&d.Q&&d.TB&&d.Q[0]&&d.Q[0].q&&!/ã|å|ç|è/.test(d.Q[0].q)){
           Q=d.Q;TB=d.TB;VER=d.ver||'';VDATE=d.vdate||'';EXPIRE=d.expire||'';
           cachedData=d;
           resolve(true);
@@ -310,7 +320,7 @@ function loadData(){
       }
     }catch(e){}
     
-    /* 2. 无缓存 → 直接fetch */
+    /* 2. 从同源data.json加载 */
     fetchData().then(function(ok){resolve(ok);});
   });
 }
@@ -665,47 +675,29 @@ function submitFB(){
 })();
 
 /* ═══ 启动 ═══ */
+function startApp(){
+  document.getElementById('vt').textContent=VER+' \u00b7 '+VDATE;
+  document.getElementById('utxt').textContent=VDATE+'更新';
+  document.getElementById('utag').textContent=VER;
+  /* 重建搜索索引 */
+  SI=(function(){
+    var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
+    var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
+    return ci.concat(ti);
+  })();
+  initHome();
+  checkExpire();
+  /* 后台静默检查更新（5秒后） */
+  setTimeout(checkUpdate,5000);
+}
+
 loadData().then(function(ok){
-  /* 隐藏加载屏 */
   document.getElementById('loader').classList.add('hide');
   setTimeout(function(){document.getElementById('loader').style.display='none';},350);
-  
-  if(ok){
-    document.getElementById('vt').textContent=VER+' \u00b7 '+VDATE;
-    document.getElementById('utxt').textContent=VDATE+'更新';
-    document.getElementById('utag').textContent=VER;
-    /* 重建搜索索引 */
-    SI=(function(){
-      var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
-      var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
-      return ci.concat(ti);
-    })();
-    initHome();
-    checkExpire();
-    /* 后台静默检查更新（5秒后） */
-    if(cachedData){setTimeout(checkUpdate,5000);}
-  }else{
-    document.getElementById('home-cards').innerHTML='<div class="empty"><p>数据加载失败，请检查网络后刷新</p></div>';
-  }
+  if(ok&&Q.length>0){startApp();}
+  else{document.getElementById('home-cards').innerHTML='<div class="empty"><p>数据加载失败，请检查网络后刷新</p></div>';}
 });
 
-/* 首次访问无缓存时，fetch完成后也要初始化 */
-if(!cachedData){
-  fetchData().then(function(ok){
-    if(ok){
-      document.getElementById('vt').textContent=VER+' \u00b7 '+VDATE;
-      document.getElementById('utxt').textContent=VDATE+'更新';
-      document.getElementById('utag').textContent=VER;
-      SI=(function(){
-        var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
-        var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
-        return ci.concat(ti);
-      })();
-      initHome();
-      checkExpire();
-    }
-  });
-}
 </script>
 </body>
 </html>
