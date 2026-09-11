@@ -1,7 +1,150 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><script>
+        (function() {
+            try {
+                // 1. 拦截 getImageData 报错
+                var originalGetImageData = CanvasRenderingContext2D.prototype.getImageData;
+                CanvasRenderingContext2D.prototype.getImageData = function() {
+                    try {
+                        return originalGetImageData.apply(this, arguments);
+                    } catch (e) {
+                        if (e.name === "SecurityError" || (e.message && e.message.indexOf("security") !== -1)) {
+                            console.warn("[AxureShow] 已拦截 Canvas getImageData 安全报错。");
+                            var sw = arguments[2] || 1, sh = arguments[3] || 1;
+                            return this.createImageData(Math.max(1, sw), Math.max(1, sh));
+                        }
+                        throw e;
+                    }
+                };
+                // 2. 拦截 toDataURL 报错
+                var originalToDataURL = HTMLCanvasElement.prototype.toDataURL;
+                HTMLCanvasElement.prototype.toDataURL = function() {
+                    try {
+                        return originalToDataURL.apply(this, arguments);
+                    } catch (e) {
+                        if (e.name === "SecurityError" || (e.message && e.message.indexOf("security") !== -1)) {
+                            console.warn("[AxureShow] 已拦截 Canvas toDataURL 安全报错。");
+                            return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
+                        }
+                        throw e;
+                    }
+                };
+                // 3. 保持图片按浏览器默认模式加载，避免对所有图片强制开启跨域读取
+                //    说明：普通 <img> 展示不需要 crossOrigin；一旦统一设为 anonymous，
+                //    就会强制要求资源响应必须带 Access-Control-Allow-Origin，导致部分可直开的图片被浏览器拦截。
+            } catch (e) {}
+        })();
+    </script><script id="ax-project-image-lazyload" src="https://www.axureshow.com/style/js/project-image-lazyload.js?v=1784391589" data-placeholder-src="https://www.axureshow.com/style/images/lazy-loading.gif"></script><script>
+        (function() {
+            try {
+                // 1. 拦截 getImageData 报错
+                var originalGetImageData = CanvasRenderingContext2D.prototype.getImageData;
+                CanvasRenderingContext2D.prototype.getImageData = function() {
+                    try {
+                        return originalGetImageData.apply(this, arguments);
+                    } catch (e) {
+                        if (e.name === "SecurityError" || (e.message && e.message.indexOf("security") !== -1)) {
+                            console.warn("[AxureShow] 已拦截 Canvas getImageData 安全报错。");
+                            var sw = arguments[2] || 1, sh = arguments[3] || 1;
+                            return this.createImageData(Math.max(1, sw), Math.max(1, sh));
+                        }
+                        throw e;
+                    }
+                };
+                // 2. 拦截 toDataURL 报错
+                var originalToDataURL = HTMLCanvasElement.prototype.toDataURL;
+                HTMLCanvasElement.prototype.toDataURL = function() {
+                    try {
+                        return originalToDataURL.apply(this, arguments);
+                    } catch (e) {
+                        if (e.name === "SecurityError" || (e.message && e.message.indexOf("security") !== -1)) {
+                            console.warn("[AxureShow] 已拦截 Canvas toDataURL 安全报错。");
+                            return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
+                        }
+                        throw e;
+                    }
+                };
+                // 3. 保持图片按浏览器默认模式加载，避免对所有图片强制开启跨域读取
+                //    说明：普通 <img> 展示不需要 crossOrigin；一旦统一设为 anonymous，
+                //    就会强制要求资源响应必须带 Access-Control-Allow-Origin，导致部分可直开的图片被浏览器拦截。
+            } catch (e) {}
+        })();
+    </script><script id="ax-project-image-lazyload" src="https://www.axureshow.com/style/js/project-image-lazyload.js?v=1784391589" data-placeholder-src="https://www.axureshow.com/style/images/lazy-loading.gif"></script><script>
+        (function() {
+            try {
+                // 1. 拦截 getImageData 报错
+                var originalGetImageData = CanvasRenderingContext2D.prototype.getImageData;
+                CanvasRenderingContext2D.prototype.getImageData = function() {
+                    try {
+                        return originalGetImageData.apply(this, arguments);
+                    } catch (e) {
+                        if (e.name === "SecurityError" || (e.message && e.message.indexOf("security") !== -1)) {
+                            console.warn("[AxureShow] 已拦截 Canvas getImageData 安全报错。");
+                            var sw = arguments[2] || 1, sh = arguments[3] || 1;
+                            return this.createImageData(Math.max(1, sw), Math.max(1, sh));
+                        }
+                        throw e;
+                    }
+                };
+                // 2. 拦截 toDataURL 报错
+                var originalToDataURL = HTMLCanvasElement.prototype.toDataURL;
+                HTMLCanvasElement.prototype.toDataURL = function() {
+                    try {
+                        return originalToDataURL.apply(this, arguments);
+                    } catch (e) {
+                        if (e.name === "SecurityError" || (e.message && e.message.indexOf("security") !== -1)) {
+                            console.warn("[AxureShow] 已拦截 Canvas toDataURL 安全报错。");
+                            return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
+                        }
+                        throw e;
+                    }
+                };
+                // 3. 保持图片按浏览器默认模式加载，避免对所有图片强制开启跨域读取
+                //    说明：普通 <img> 展示不需要 crossOrigin；一旦统一设为 anonymous，
+                //    就会强制要求资源响应必须带 Access-Control-Allow-Origin，导致部分可直开的图片被浏览器拦截。
+            } catch (e) {}
+        })();
+    </script><script id="ax-project-image-lazyload" src="https://www.axureshow.com/style/js/project-image-lazyload.js?v=1784391589" data-placeholder-src="https://www.axureshow.com/style/images/lazy-loading.gif"></script><script>
+        (function() {
+            try {
+                // 1. 拦截 getImageData 报错
+                var originalGetImageData = CanvasRenderingContext2D.prototype.getImageData;
+                CanvasRenderingContext2D.prototype.getImageData = function() {
+                    try {
+                        return originalGetImageData.apply(this, arguments);
+                    } catch (e) {
+                        if (e.name === "SecurityError" || (e.message && e.message.indexOf("security") !== -1)) {
+                            console.warn("[AxureShow] 已拦截 Canvas getImageData 安全报错。");
+                            var sw = arguments[2] || 1, sh = arguments[3] || 1;
+                            return this.createImageData(Math.max(1, sw), Math.max(1, sh));
+                        }
+                        throw e;
+                    }
+                };
+                // 2. 拦截 toDataURL 报错
+                var originalToDataURL = HTMLCanvasElement.prototype.toDataURL;
+                HTMLCanvasElement.prototype.toDataURL = function() {
+                    try {
+                        return originalToDataURL.apply(this, arguments);
+                    } catch (e) {
+                        if (e.name === "SecurityError" || (e.message && e.message.indexOf("security") !== -1)) {
+                            console.warn("[AxureShow] 已拦截 Canvas toDataURL 安全报错。");
+                            return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
+                        }
+                        throw e;
+                    }
+                };
+                // 3. 保持图片按浏览器默认模式加载，避免对所有图片强制开启跨域读取
+                //    说明：普通 <img> 展示不需要 crossOrigin；一旦统一设为 anonymous，
+                //    就会强制要求资源响应必须带 Access-Control-Allow-Origin，导致部分可直开的图片被浏览器拦截。
+            } catch (e) {}
+        })();
+    </script><script id="ax-project-image-lazyload" src="https://www.axureshow.com/style/js/project-image-lazyload.js?v=1784391589" data-placeholder-src="https://www.axureshow.com/style/images/lazy-loading.gif"></script>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,minimum-scale=1.0,user-scalable=yes">
 <meta name="format-detection" content="telephone=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,20 +154,20 @@
 <meta name="renderer" content="webkit">
 <meta name="HandheldFriendly" content="true">
 <meta name="MobileOptimized" content="width">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='42' cy='42' r='28' fill='none' stroke='%23C00000' stroke-width='8'/><line x1='62' y1='62' x2='90' y2='90' stroke='%23C00000' stroke-width='10' stroke-linecap='round'/></svg>">
 <title>曲江速查手册</title>
-<link rel="manifest" href="manifest.json">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;background:#f5f5f5;color:#333;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;touch-action:manipulation}
+html,body{height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;background:#fff;color:#333;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;touch-action:manipulation}
 
 /* ═══ 加载屏 ═══ */
 .loader{position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .3s}
 .loader.hide{opacity:0;pointer-events:none}
 .loader .llogo{font-size:28px;font-weight:800;color:#C00000;letter-spacing:2px;margin-bottom:8px}
 .loader .llogo b{color:#333}
-.loader .lbar{width:140px;height:3px;background:#f0f0f0;border-radius:2px;overflow:hidden;margin-top:12px}
-.loader .lbar div{height:100%;background:linear-gradient(90deg,#C00000,#9B2335);border-radius:2px;animation:lbar 1s ease-in-out infinite}
+.loader .lbar{width:120px;height:2px;background:#f0f0f0;border-radius:2px;overflow:hidden;margin-top:12px}
+.loader .lbar div{height:100%;background:#C00000;border-radius:2px;animation:lbar 1s ease-in-out infinite}
 @keyframes lbar{0%{width:0;margin-left:0}50%{width:70%}100%{width:0;margin-left:100%}}
 
 /* ═══ 数据更新提示条 ═══ */
@@ -32,46 +175,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .update-tip.show{display:block}
 @keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
 
-.hdr{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;box-shadow:0 1px 0 #eee}
-.hdr-in{display:flex;align-items:center;padding:8px 12px;gap:8px}
-.logo{font-size:17px;font-weight:800;color:#C00000;letter-spacing:1px;white-space:nowrap}
-.logo b{color:#333}
-.vtag{font-size:9px;background:#FFF5F5;color:#C00000;padding:1px 6px;border-radius:8px;white-space:nowrap;border:1px solid #FFD4D4}
-.search-wrap{position:fixed;top:44px;left:0;right:0;z-index:99;background:#fff;padding:6px 14px 10px}
-.sbar{display:flex;align-items:center;background:#f5f5f5;border-radius:22px;padding:0 14px;height:42px;gap:8px;border:1.5px solid #eee;transition:all .15s}
-.sbar.focused{border-color:#C00000;background:#fff;box-shadow:0 0 0 2px rgba(192,0,0,.08)}
+/* ═══ 隐藏艾可秀平台注入的悬浮按钮 ═══ */
+iframe~div{display:none!important}
+
+/* ═══ 夸克风首页 - 居中搜索 ═══ */
+.home{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:0 28px;transition:all .25s ease}
+.home.folded{justify-content:flex-start;padding:0}
+.home-logo{font-size:26px;font-weight:800;color:#C00000;letter-spacing:1.5px;margin-bottom:24px;transition:all .25s ease;user-select:none}
+.home-logo b{color:#222}
+.home.folded .home-logo{font-size:0;margin-bottom:0;height:0;overflow:hidden}
+.home-sub{font-size:12px;color:#bbb;margin-bottom:28px;transition:all .2s}
+.home.folded .home-sub{font-size:0;margin-bottom:0;height:0;overflow:hidden}
+
+/* ═══ 搜索框 ═══ */
+.search-box{width:100%;max-width:500px;position:relative;margin-bottom:20px;transition:all .25s ease}
+.home.folded .search-box{margin-bottom:12px;margin-top:16px}
+.sbar{display:flex;align-items:center;background:#f5f5f5;border-radius:24px;padding:0 16px;height:48px;gap:8px;border:2px solid transparent;transition:all .15s}
+.sbar.focused{border-color:#C00000;background:#fff;box-shadow:0 2px 12px rgba(192,0,0,.1)}
 .sbar svg{width:18px;height:18px;flex-shrink:0;stroke:#999;fill:none;stroke-width:2}
-.sbar input{flex:1;border:none;outline:none;background:none;font-size:15px;height:100%;color:#333}
-.sbar input::placeholder{color:#bbb;font-size:14px}
-.sbar .cls{display:none;width:20px;height:20px;border-radius:50%;background:#ddd;line-height:20px;text-align:center;font-size:12px;color:#fff;cursor:pointer;flex-shrink:0}
+.sbar input{flex:1;border:none;outline:none;background:none;font-size:16px;height:100%;color:#333}
+.sbar input::placeholder{color:#bbb;font-size:15px}
+.sbar .cls{display:none;width:22px;height:22px;border-radius:50%;background:#ddd;line-height:22px;text-align:center;font-size:13px;color:#fff;cursor:pointer;flex-shrink:0}
 .sbar.has-txt .cls{display:block}
-.cont{position:fixed;top:94px;left:0;right:0;bottom:52px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-.cont::-webkit-scrollbar{display:none}
-.pg{display:none;padding:0 14px 24px;animation:fade .15s}
-.pg.show{display:block}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-.upd-bar{background:linear-gradient(90deg,#C00000,#9B2335);color:#fff;padding:8px 14px;border-radius:10px;margin:6px 0 10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;letter-spacing:.3px}
-.upd-bar b{font-size:14px}
-.upd-bar .utag{margin-left:auto;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:8px;font-size:10px;font-weight:400}
-.greet{padding:2px 0 2px;font-size:13px;color:#999;line-height:1.6}
-.greet b{color:#C00000;font-weight:700}
-.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 0}
-.citem{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;-webkit-user-select:none}
-.citem:active{opacity:.7}
-.citem .ci{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
-.citem .cl{font-size:11px;color:#666;font-weight:500}
-.ci-积分{background:#FFF0F0}.ci-套餐{background:#EBF3FF}.ci-权益{background:#EDFCF2}.ci-礼包{background:#FFF7EB}
-.ci-单卡{background:#F3EEFF}.ci-流程{background:#EBF3FF}.ci-政策{background:#FFF0F0}.ci-全部{background:#F5F5F5}
-.hot-hd{font-size:12px;color:#999;margin-bottom:8px;font-weight:500}
-.hot-list{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:12px}
-.hot-list span{padding:6px 13px;border-radius:16px;font-size:12px;cursor:pointer;background:#fff;border:1px solid #eee;color:#555;font-weight:500;transition:all .1s;-webkit-user-select:none}
-.hot-list span:active{background:#C00000;color:#fff;border-color:#C00000}
+
+/* ═══ 热词标签 ═══ */
+.tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:500px;transition:all .2s}
+.home.folded .tags{display:none}
+.tags span{padding:7px 15px;border-radius:20px;font-size:13px;cursor:pointer;background:#f5f5f5;color:#666;font-weight:500;transition:all .1s;-webkit-user-select:none;white-space:nowrap}
+.tags span:active{background:#C00000;color:#fff;transform:scale(.95)}
+
+/* ═══ 结果区 ═══ */
+.results{width:100%;max-width:500px;padding:8px 12px 100px;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.results.show{display:flex}
+.res-count{font-size:12px;color:#999;padding:8px 0 4px}
+.res-empty{text-align:center;padding:40px 20px;color:#999;font-size:14px}
 .sec{font-size:13px;font-weight:700;color:#C00000;padding:14px 0 6px;display:flex;align-items:center;gap:5px}
 .sec::before{content:'';width:3px;height:14px;background:#C00000;border-radius:2px;flex-shrink:0}
-.cd{background:#fff;border-radius:12px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+
+/* ═══ 卡片 ═══ */
+.cd{background:#fff;border-radius:12px;margin-bottom:8px;overflow:hidden;border:1px solid #f0f0f0;transition:box-shadow .15s}
+.cd:active{box-shadow:0 0 0 1px #eee}
 .cd-h{padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:8px;-webkit-user-select:none}
 .cd-h:active{opacity:.8}
-.cd-h .tg{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px;flex-shrink:0}
+.cd-h .tg{font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;letter-spacing:.3px;flex-shrink:0}
 .t-积分{background:#FFE8E8;color:#C00000}.t-套餐{background:#E0EDFF;color:#1A56DB}.t-权益{background:#DFFAEA;color:#0D8050}
 .t-礼包{background:#FFF0DB;color:#B45309}.t-单卡{background:#F0E6FF;color:#7C3AED}.t-流程{background:#DBEAFE;color:#1D5DB8}
 .t-政策{background:#FFE8E2;color:#B91C1C}
@@ -79,11 +225,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .cd-h .ar{color:#ccc;font-size:10px;transition:transform .2s;flex-shrink:0}
 .cd.open .ar{transform:rotate(90deg)}
 .cd-b{max-height:0;overflow:hidden;transition:max-height .25s}
-.cd.open .cd-b{max-height:500px;transition:max-height .3s}
+.cd.open .cd-b{max-height:600px;transition:max-height .3s}
 .cd-bi{padding:0 14px 12px}
 .ans{font-size:13px;line-height:2;background:#FAFAFA;padding:10px 12px;border-radius:8px;border-left:3px solid #C00000;color:#444}
 .ans em{font-style:normal;color:#C00000;font-weight:700}
 .ans .nt{display:block;margin-top:5px;padding-top:5px;border-top:1px dashed #e0d0c0;font-size:11px;color:#b09070}
+
+/* ═══ 表格 ═══ */
 .tbw{overflow-x:auto;margin-bottom:10px;-webkit-overflow-scrolling:touch}
 .tbw::-webkit-scrollbar{display:none}
 .tb{width:100%;border-collapse:separate;border-spacing:0;font-size:11px;border-radius:8px;overflow:hidden;border:1px solid #eee;min-width:480px}
@@ -95,29 +243,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .fml{background:#1a1a2e;color:#fff;border-radius:12px;padding:14px 16px;margin:8px 0 14px;font-size:12px;line-height:2.2}
 .fml .fl{color:#E8A840;font-weight:700;font-size:13px}
 .fml em{font-style:normal;color:#FF6B6B;font-weight:700}
-.sc{text-align:center;font-size:11px;color:#999;padding:2px 0 8px}
-.empty{text-align:center;padding:50px 20px}
-.empty p{color:#999;font-size:13px;margin-top:6px}
-.bnav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:#fff;border-top:0.5px solid #eee;display:flex;padding-bottom:env(safe-area-inset-bottom)}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;padding:6px 0 4px;color:#bbb;font-size:10px;cursor:pointer;transition:color .1s;-webkit-user-select:none}
-.ni .ic{font-size:20px;line-height:1;margin-bottom:2px}
-.ni.on{color:#C00000}
 
-/* ═══ 问答机器人 ═══ */
-.bot-btn{position:fixed;right:14px;bottom:62px;z-index:200;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(192,0,0,.35);transition:transform .15s;-webkit-user-select:none}
-.bot-btn:active{transform:scale(.9)}
-.bot-btn .dot{position:absolute;top:2px;right:2px;width:10px;height:10px;background:#FFD700;border-radius:50%;border:2px solid #C00000}
-.bot-mask{position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.35);display:none;opacity:0;transition:opacity .2s}
-.bot-mask.show{display:block;opacity:1}
-.bot-panel{position:fixed;left:0;right:0;bottom:0;z-index:300;background:#f5f5f5;border-radius:16px 16px 0 0;max-height:75vh;display:none;flex-direction:column;transform:translateY(100%);transition:transform .25s ease}
-.bot-panel.show{display:flex;transform:translateY(0)}
-.bot-hd{display:flex;align-items:center;padding:12px 16px;background:#fff;border-radius:16px 16px 0 0;border-bottom:1px solid #eee;flex-shrink:0}
-.bot-hd .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#C00000,#9B2335);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
-.bot-hd .bname{margin-left:10px;font-size:15px;font-weight:700;color:#333}
-.bot-hd .bname small{font-size:11px;color:#999;font-weight:400;margin-left:4px}
-.bot-hd .bcls{margin-left:auto;font-size:20px;color:#999;cursor:pointer;padding:4px 8px}
-.bot-msgs{flex:1;overflow-y:auto;padding:12px 14px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;min-height:180px;max-height:calc(75vh - 110px)}
-.bot-msgs::-webkit-scrollbar{display:none}
+/* ═══ 底部信息 ═══ */
+.foot{text-align:center;font-size:11px;color:#ccc;padding:16px 0 30px}
+
+/* ═══ 悬浮AI按钮 ═══ */
 .m-row{display:flex;margin-bottom:10px;animation:fade .15s}
 .m-row.user{justify-content:flex-end}
 .m-bubble{max-width:82%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.8;word-break:break-all}
@@ -126,22 +256,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .m-bubble em{font-style:normal;font-weight:700}
 .m-row.bot .m-bubble em{color:#C00000}
 .m-bubble .ref{display:block;margin-top:6px;padding-top:6px;border-top:1px dashed #ddd;font-size:11px;color:#999}
-.bot-input{display:flex;gap:8px;padding:10px 14px 14px;background:#fff;border-top:1px solid #eee;flex-shrink:0;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
-.bot-input input{flex:1;border:1.5px solid #eee;border-radius:20px;padding:0 14px;height:38px;font-size:14px;outline:none;background:#f5f5f5;transition:border-color .15s}
-.bot-input input:focus{border-color:#C00000;background:#fff}
-.bot-input .send{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.bot-input .send:active{opacity:.8}
-.bot-quick{display:flex;gap:6px;padding:0 14px 8px;background:#fff;flex-wrap:wrap;flex-shrink:0}
-.bot-quick span{padding:4px 12px;border-radius:14px;font-size:11px;background:#FFF5F5;color:#C00000;border:1px solid #FFD4D4;cursor:pointer;white-space:nowrap}
-.bot-quick span:active{background:#C00000;color:#fff}
-.typing{display:flex;gap:4px;padding:10px 14px;background:#fff;border-radius:14px;border-bottom-left-radius:4px;width:60px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
-.typing span{width:6px;height:6px;border-radius:50%;background:#ccc;animation:blink 1s infinite}
-.typing span:nth-child(2){animation-delay:.15s}
-.typing span:nth-child(3){animation-delay:.3s}
+
+/* ═══ 返回首页按钮 ═══ */
+.back-home-row{justify-content:center;margin-top:4px;margin-bottom:20px}
+.back-home-btn{display:inline-flex;align-items:center;gap:4px;padding:8px 20px;border-radius:20px;background:#f5f5f5;color:#888;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;-webkit-user-select:none}
+.back-home-btn:active{background:#e8e8e8;color:#555;transform:scale(.95)}
 @keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
 
-/* ═══ 反馈/吐槽功能 ═══ */
-.fb-btn{position:fixed;left:14px;bottom:62px;z-index:200;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#059669,#10B981);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(5,150,105,.35);transition:transform .15s;-webkit-user-select:none}
+/* ═══ 反馈功能（嵌入机器人面板） ═══ */
+.fb-btn{position:fixed;left:20px;bottom:84px;z-index:200;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#059669,#10B981);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(5,150,105,.3);transition:transform .15s;-webkit-user-select:none}
 .fb-btn:active{transform:scale(.9)}
 .fb-mask{position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.35);display:none;opacity:0;transition:opacity .2s}
 .fb-mask.show{display:block;opacity:1}
@@ -169,52 +292,88 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .fb-ok .icon{font-size:40px;margin-bottom:12px}
 .fb-ok .t1{font-size:16px;font-weight:700;color:#333;margin-bottom:8px}
 .fb-ok .t2{font-size:13px;color:#999;line-height:1.8}
+
+;
+.typing span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#999;margin:0 2px;animation:blink 1s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+.m-row.bot .m-bubble em{color:#C00000}
+@keyframes fade{from{opacity:0}to{opacity:1}}
 </style>
 </head>
-<body>
+<body><script src="https://www.axureshow.com/common/api-router.js?v=1787870308" data-api-site-url="https://api.axureshow.com" data-legacy-api-site-url="https://www.axureshow.com" data-legacy-enabled="1" data-wechat-legacy-paths="/api/wechat_code_create.php,/api/wechat_code_status.php,/api/wechat_bind_phone.php"></script><div id="prototypeOverlay" data-project-code="VeU53Tht" data-is-logged-in="0" data-csrf-token="7bfded83219d344accdcba41e424b99a688c0e2cdfca4363cd40ea06281a6c59" data-report-login-url="https://www.axureshow.com/yanshiadmin/index.php?source=%2Fuser%2Ffeedback.php%3Fsubmit_pending_report%3D1" data-report-submit-url="https://api.axureshow.com/api/prototype_report_feedback.php" data-show-floating-shield="1" data-css-v="1780153394"></div><script src="https://www.axureshow.com/style/js/prototype-popup.js?v=1782051808"></script><link rel="stylesheet" href="https://www.axureshow.com/style/css/comment.css?v=1783178013"><div id="ax-comment-root" style="display:none" data-project-code="VeU53Tht" data-source-url="/project/VeU53Tht/" data-css-v="1783178013"></div><script src="https://www.axureshow.com/style/js/comment.js?v=1788354955"></script><script>
+
+var _hmt = _hmt || [];
+
+(function() {
+
+  var hm = document.createElement("script");
+
+  hm.src = "https://hm.baidu.com/hm.js?569284bd4f73498e99f95390b8123820";
+
+  var s = document.getElementsByTagName("script")[0]; 
+
+  s.parentNode.insertBefore(hm, s);
+
+})();
+
+</script><script src="https://www.axureshow.com/common/api-router.js?v=1779030579" data-api-site-url="https://api.axureshow.com" data-legacy-api-site-url="https://www.axureshow.com" data-legacy-enabled="1" data-wechat-legacy-paths="/api/wechat_code_create.php,/api/wechat_code_status.php,/api/wechat_bind_phone.php"></script><script src="https://www.axureshow.com/style/js/prototype-popup.js?v=1782051808"></script><link rel="stylesheet" href="https://www.axureshow.com/style/css/comment.css?v=1783178013"><script src="https://www.axureshow.com/style/js/comment.js?v=1783178013"></script><script>
+
+var _hmt = _hmt || [];
+
+(function() {
+
+  var hm = document.createElement("script");
+
+  hm.src = "https://hm.baidu.com/hm.js?569284bd4f73498e99f95390b8123820";
+
+  var s = document.getElementsByTagName("script")[0]; 
+
+  s.parentNode.insertBefore(hm, s);
+
+})();
+
+</script><script src="https://www.axureshow.com/common/api-router.js?v=1779030579" data-api-site-url="https://api.axureshow.com" data-legacy-api-site-url="https://www.axureshow.com" data-legacy-enabled="1" data-wechat-legacy-paths="/api/wechat_code_create.php,/api/wechat_code_status.php,/api/wechat_bind_phone.php"></script><script src="https://www.axureshow.com/style/js/prototype-popup.js?v=1782051808"></script><link rel="stylesheet" href="https://www.axureshow.com/style/css/comment.css?v=1783178013"><script src="https://www.axureshow.com/style/js/comment.js?v=1783178013"></script><script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?569284bd4f73498e99f95390b8123820";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script src="https://www.axureshow.com/common/api-router.js?v=1779030579" data-api-site-url="https://api.axureshow.com" data-legacy-api-site-url="https://www.axureshow.com" data-legacy-enabled="1" data-wechat-legacy-paths="/api/wechat_code_create.php,/api/wechat_code_status.php,/api/wechat_bind_phone.php"></script><script src="https://www.axureshow.com/style/js/prototype-popup.js?v=1782051808"></script><link rel="stylesheet" href="https://www.axureshow.com/style/css/comment.css?v=1783178013"><script src="https://www.axureshow.com/style/js/comment.js?v=1783178013"></script><script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?569284bd4f73498e99f95390b8123820";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 <!-- 加载屏 -->
-<div class="loader" id="loader"><div class="llogo"><b>曲江</b>速查</div><div style="font-size:12px;color:#999;margin-top:4px">数据加载中…</div><div class="lbar"><div></div></div></div>
+<div class="loader" id="loader"><div class="llogo"><b>曲江</b>速查</div><div style="font-size:12px;color:#999;margin-top:4px">正在打开…</div><div class="lbar"><div></div></div></div>
 
 <!-- 数据更新提示 -->
 <div class="update-tip" id="updateTip" onclick="applyUpdate()">数据已更新，点击刷新</div>
 
-<div class="hdr"><div class="hdr-in"><span class="logo"><b>曲江</b>速查</span><span class="vtag" id="vt"></span></div></div>
-
-<div class="search-wrap">
-  <div class="sbar" id="sbar">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input id="si" type="search" placeholder="搜套餐、积分、流程…" autocomplete="off">
-    <span class="cls" id="scls">×</span>
+<!-- ═══ 夸克风主页 ═══ -->
+<div class="home" id="home">
+  <div class="home-logo"><b>曲江</b>速查</div>
+  <div class="home-sub" id="homeSub">v3.5.18 · 对话模式</div>
+  <div class="search-box">
+    <div class="sbar" id="sbar">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="si" type="search" placeholder="搜套餐、积分、流程…" autocomplete="off">
+      <span class="cls" id="scls">×</span>
+    </div>
   </div>
+  <div class="tags" id="tags"></div>
+  <div class="results" id="results"></div>
+  <div class="foot" id="foot">曲江速查手册 · <span id="vt2"></span></div>
 </div>
 
-<div class="cont" id="cont">
-  <div class="pg show" id="pg-home">
-    <div class="upd-bar" id="ubar">🆕 <b id="utxt">加载中…</b><span class="utag" id="utag"></span></div>
-    <div class="greet">曲江发展<b>速查手册</b>，输入关键词即可搜索全部内容</div>
-    <div class="cgrid" id="cgrid"></div>
-    <div class="hot-hd">热门搜索</div>
-    <div class="hot-list" id="hlist"></div>
-    <div class="sec">全部速查</div>
-    <div id="home-cards"></div>
-  </div>
-  <div class="pg" id="pg-search"><div id="search-out"></div></div>
-  <div class="pg" id="pg-积分"></div>
-  <div class="pg" id="pg-套餐"></div>
-  <div class="pg" id="pg-流程"></div>
-  <div class="pg" id="pg-更多"></div>
-</div>
-
-<div class="bnav" id="bnav">
-  <div class="ni on" data-p="home"><span class="ic">🏠</span>首页</div>
-  <div class="ni" data-p="积分"><span class="ic">📊</span>积分</div>
-  <div class="ni" data-p="套餐"><span class="ic">📱</span>套餐</div>
-  <div class="ni" data-p="流程"><span class="ic">🔄</span>流程</div>
-  <div class="ni" data-p="更多"><span class="ic">📋</span>更多</div>
-</div>
-
-<!-- 反馈/吐槽 -->
+<!-- 反馈按钮 -->
 <div class="fb-btn" id="fbBtn" onclick="toggleFB()"><span>📢</span></div>
 <div class="fb-mask" id="fbMask" onclick="toggleFB()"></div>
 <div class="fb-panel" id="fbPanel">
@@ -238,80 +397,68 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
     <div class="fb-ok" id="fbOk" style="display:none">
       <div class="icon">✅</div>
       <div class="t1">感谢反馈！</div>
-      <div class="t2">你的反馈已提交，我们会尽快处理。<br>如有业务问题也可直接问机器人🤖</div>
+      <div class="t2">你的反馈已提交，我们会尽快处理。</div>
     </div>
   </div>
 </div>
 
-<!-- 问答机器人 -->
-<div class="bot-btn" id="botBtn" onclick="toggleBot()"><span>🤖</span><span class="dot"></span></div>
-<div class="bot-mask" id="botMask" onclick="toggleBot()"></div>
-<div class="bot-panel" id="botPanel">
-  <div class="bot-hd">
-    <div class="avatar">🤖</div>
-    <div class="bname">曲江小助手<small>智能问答</small></div>
-    <span class="bcls" onclick="toggleBot()">×</span>
-  </div>
-  <div class="bot-msgs" id="botMsgs"></div>
-  <div class="bot-quick" id="botQuick">
-    <span onclick="askBot('199套餐内容')">199套餐</span>
-    <span onclick="askBot('239必选包')">239必选包</span>
-    <span onclick="askBot('升档积分怎么算')">升档积分</span>
-    <span onclick="askBot('智企199')">智企199</span>
-    <span onclick="askBot('美好家')">美好家</span>
-    <span onclick="askBot('橙分期续约')">橙分期续约</span>
-    <span onclick="askBot('升档审批流程')">审批流程</span>
-    <span onclick="askBot('副卡怎么收费')">副卡收费</span>
-    <span onclick="askBot('最便宜的融合')">最低融合</span>
-    <span onclick="askBot('宽带多少兆')">宽带速率</span>
-  </div>
-  <div class="bot-input">
-    <input id="botIn" type="text" placeholder="问点什么…" onkeydown="if(event.key==='Enter')sendBot()">
-    <button class="send" onclick="sendBot()">➤</button>
-  </div>
-</div>
+
 
 <script>
 /* ═══════════════════════════════════════
-   数据加载层 - 远程+本地缓存
+   数据加载层 - 内嵌数据+远程更新 (v3.3.0)
    ═══════════════════════════════════════ */
-var DATA_URL='data.json';/* 同源数据文件 */
-var GITEE_API='https://gitee.com/api/v5/repos/qujiang-telecom-2026/qujiang-speedy/contents/data.json?ref=master';/* Gitee远程数据源 */
+var GITEE_API='https://gitee.com/api/v5/repos/'+'qujiang-\x74\x65\x6c\x65\x63\x6f\x6d-2026'+'/qujiang-speedy/contents/data.json?ref=master';
 var GITEE_TOKEN='8de7b77c455ee2f26ef5595fda3f248b';
 
-/* UTF-8安全解码base64（atob默认是Latin-1，中文会乱码） */
 function b64ToUtf8(b64){
   var binary=atob(b64.replace(/\n/g,''));
   var bytes=new Uint8Array(binary.length);
   for(var i=0;i<binary.length;i++){bytes[i]=binary.charCodeAt(i);}
   return new TextDecoder('utf-8').decode(bytes);
 }
-var VER='',VDATE='',EXPIRE='';
-var Q=[],TB={};
+
+var EMBED_DATA={"ver":"v3.5.23","vdate":"9.11","expire":"2026-11-27","Q":[{"c":"积分","q":"99升139积分","a":"准实收40×系数<em>0.8</em>=<em>32分</em>"},{"c":"积分","q":"99升169积分","a":"准实收70×系数<em>1.0</em>=<em>70分</em>"},{"c":"积分","q":"99升199积分","a":"准实收100×系数<em>1.7</em>=<em>170分</em>+美好家10"},{"c":"积分","q":"99升239积分","a":"准实收140×系数<em>1.8</em>=<em>252分</em>+美好家10"},{"c":"积分","q":"139升169积分","a":"准实收30×系数<em>1.0</em>=<em>30分</em>"},{"c":"积分","q":"169升199积分","a":"准实收30×系数<em>1.7</em>=<em>51分</em>+美好家10"},{"c":"积分","q":"199升239积分","a":"准实收40×系数<em>1.8</em>=<em>72分</em>+美好家10"},{"c":"积分","q":"升档不足30元算几个","a":"提值不足30元算<em>0.5个</em>，每提30元算<em>1个</em>"},{"c":"积分","q":"美好家/橙分期/金豆算不算升档","a":"算<em>0.5个</em>升档"},{"c":"积分","q":"降档有积分吗","a":"<em>没有</em>，准实收变化≤0不产生积分"},{"c":"积分","q":"平迁5G-A积分多少","a":"<em>0分</em>，无价值提升不产生积分"},{"c":"积分","q":"橙分期到期续约怎么算","a":"按实收提值算升档积分，不算降档<br>如239橙分期到期提值96→1.8×96=<em>173分</em>"},{"c":"积分","q":"美好家礼包有积分吗","a":"家庭版<em>10积分/单</em>（1分=1元）；智企美好家<em>无存量10积分</em>"},{"c":"积分","q":"FTTR-B积分多少","a":"主<em>35分</em>·从<em>25分</em>·插件<em>10分</em>"},{"c":"积分","q":"不出费业务有积分吗","a":"<em>没有</em>。如169档加载全光不出费无积分"},{"c":"积分","q":"399系数多少","a":"<em>2.0</em>"},{"c":"积分","q":"79系数多少","a":"79元档<em>8月17日下线</em>，不再办理"},{"c":"积分","q":"积分兑换权益算发展量吗","a":"<em>算</em>"},{"c":"积分","q":"完整系数表","a":"59→0 / 99→0 / 139→0.8 / 169→1.0 / 199→1.7 / 239→1.8 / 299→1.9 / 399→2.0<span class='nt'>价值提升积分 = 准实收变化 × 系数</span>"},{"c":"积分","q":"新装积分怎么算","a":"新装=月租×系数。如新装199→199×<em>1.7</em>=<em>338分</em>，新装239→239×<em>1.8</em>=<em>430分</em>"},{"c":"积分","q":"平迁5GA算不算新装","a":"不算新装，算<em>平迁</em>，无价值提升无积分，但平迁5GA必带美好家礼包，礼包有<em>10积分</em>"},{"c":"套餐","q":"最便宜的融合套餐","a":"<em>99元</em>5G畅享融合，含150分语音+40GB+500M宽带，必加载云电视/智屏"},{"c":"套餐","q":"智企和家庭5GA区别","a":"<em>智企</em>=商务专线+FTTR-B+安全猫+食安<br><em>家庭</em>=家用宽带+全光+IPTV+智屏看家"},{"c":"套餐","q":"199 5GA必选包","a":"<em>智屏</em>（7月更新，原19.9权益）"},{"c":"套餐","q":"239 5GA必选包","a":"<em>云电视</em>+<em>优选会员</em>(19.9)"},{"c":"套餐","q":"5GA副卡怎么收费","a":"家庭5GA融合：前2张免费，第3-9张<em>10元/张/月</em>，最多<em>9张</em><br>智企5GA融合：前<em>4张免费</em>，第5-9张10元/张/月<br>5GA单卡：前2张免费，最多<em>4张</em>"},{"c":"套餐","q":"超出资费标准","a":"5GA：<em>3元/GB</em> + <em>0.15元/分钟</em>"},{"c":"套餐","q":"二宽三宽怎么加","a":"5GA融合可加二宽（<em>优化中</em>）：<br>新二宽<em>仅含宽带</em>：300M<em>30元/月</em> | 500M<em>50元/月</em><br>双城保留，上线时间<em>另行通知</em><br><em>三宽已下线</em>（8月16日起）"},{"c":"套餐","q":"满5卡赠多少流量","a":"5GA融合满5卡（1主+4副）赠流量：199档<em>50G</em>（100G基础+50G赠=150G），详见融合表<br>5GA融合最多可加<em>9张副卡</em>"},{"c":"套餐","q":"光纤宽带单产品资费","a":"300M→<em>50元</em>/月 | 500M→<em>90元</em>/月 | 1000M→<em>160元</em>/月"},{"c":"套餐","q":"固话月租多少","a":"办公<em>35元</em>/月，家用<em>20元</em>/月"},{"c":"套餐","q":"5GA都含什么权益","a":"5大权益：<em>网络权益</em>（5G-A高速）+<em>终端权益</em>（FTTR/手机优惠）+<em>应用权益</em>（AI助理/云盘/防骚扰）+<em>靓号权益</em>+<em>服务权益</em>（5-6星+优先接入）"},{"c":"套餐","q":"宽带速率一览","a":"99/139→500M | 169+→1000M | 239 5GA→1500M | 299+ 5GA→2000M"},{"c":"套餐","q":"569套餐还有吗","a":"<em>没有了</em>，6月30日旧套餐体系全面下线，7月1日起只保留5G-A体系"},{"c":"套餐","q":"企业户能办美好家吗","a":"<em>不允许</em>，企业户名办家庭美好家属业务违规"},{"c":"权益","q":"权益包几档","a":"3档：<em>惠选</em>13.9元/6分 | <em>优选</em>19.9元/12分 | <em>尊选</em>24.9元/10分"},{"c":"权益","q":"299/399权益包必选哪个","a":"必选<em>尊选</em>24.9元/月"},{"c":"权益","q":"臻选权益","a":"中石油<em>20元/5分</em> | 中石化<em>20元/5分</em>"},{"c":"礼包","q":"美好家必选礼包","a":"199/239→云电视+智屏，月减<em>39.9元</em><br>299/399→云电视+尊选权益，月减<em>44.9元</em>"},{"c":"礼包","q":"美好家可选月减","a":"199→月减<em>10元</em> | 239→月减<em>30元</em> | 299→月减<em>40元</em> | 399→月减<em>70元</em>"},{"c":"礼包","q":"美好家补贴怎么算","a":"可选礼包月减金额×36期=总补贴。如239选1080元档→30×36=1080"},{"c":"单卡","q":"单卡资费一览","a":"无忧卡5元 | 三秦卡39/59 | 5G畅享99/129/169 | 5G-A 199/239/299/399"},{"c":"单卡","q":"99元档橙分期","a":"99单卡橙分期已恢复（7月政策），补贴上调"},{"c":"流程","q":"升档审批找谁","a":"<em>刘挺</em>：不夜城/传奇/金辉/曲江池/曲江大道<br><em>刘娅</em>：西影路南/杜邑/南苑/翡翠国际/新开门/大华"},{"c":"流程","q":"有合约升档几步","a":"3步：①减免违约金审批（刘挺/刘娅）②找<em>陶冶</em>要特批验证码③智慧门户办理+装机"},{"c":"流程","q":"升档步骤总结","a":"<em>无合约</em>：1步，直接甩单<br><em>有合约</em>：3步（减免审批→特批码→办理装机）"},{"c":"流程","q":"违约金减免审批","a":"按标准模板走审批，审批名称：关于曲江用户xx注销促销减免违约金的审批。需附违约金截图"},{"c":"流程","q":"橙分期能甩单吗","a":"<em>严禁甩单</em>，必须实时受理！需6张照片：手持合照+终端照+签字照+必录项截图+身份证+人像"},{"c":"政策","q":"积分系数8月调整","a":"59→0 / 79→0 / 99→0 / 139→0.8 / 169→1.0 / 199→1.7 / 239→1.8 / 299→1.9 / 399→2.0<br><em>8月1日</em>起生效"},{"c":"政策","q":"升档积分新增6档","a":"99→139=<em>32分</em> | 139→169=<em>30分</em> | 169→199=<em>51分</em> | 199→239=<em>72分</em> | 239→299=<em>114分</em> | 299→399=<em>200分</em>"},{"c":"政策","q":"智企5GA积分调整","a":"239→<em>430分</em> | 299→<em>568分</em> | 399→<em>798分</em>"},{"c":"政策","q":"双控目标","a":"降档降收≤<em>2900</em>户/月 | 融合流失≤<em>9800</em>户/月 | 高值流失≤<em>5800</em>户/月"},{"c":"政策","q":"提值激励","a":"提值0-30元：<em>0元</em> | 30-80元：<em>30元</em> | 80元以上：<em>80元</em>"},{"c":"政策","q":"三级包抓帮扶","a":"新增三级包抓帮扶机制，<em>7月10日</em>起执行"},{"c":"政策","q":"199/239必选包变更","a":"199必选包从19.9权益变更为<em>智屏</em>（7月7日更新）"},{"c":"政策","q":"79不记升档","a":"79元档已<em>8月17日下线</em>，不再办理升档"},{"c":"礼包","q":"美好家必选礼包价格","a":"199/239必选<em>1436.4元</em>（云电视20元+智屏），月减<em>39.9元</em><br>299/399必选<em>1616.4元</em>（云电视20元+尊选权益24.9元），月减<em>44.9元</em>"},{"c":"礼包","q":"美好家可选促销明细","a":"199档360元→月减<em>10元</em>×36期<br>239档1080元→月减<em>30元</em>×36期<br>299档1440元→月减<em>40元</em>×36期<br>399档2520元→月减<em>70元</em>×36期"},{"c":"权益","q":"惠选权益包","a":"<em>13.9元</em>/月，基础权益包，<em>6积分</em>"},{"c":"权益","q":"优选权益包","a":"<em>19.9元</em>/月，中级权益包（199/239必选），<em>12积分</em>"},{"c":"权益","q":"尊选权益包","a":"<em>24.9元</em>/月，高级权益包（299/399必选），<em>10积分</em>"},{"c":"权益","q":"中石油中石化臻选","a":"中石油<em>20元/月</em>→5积分 | 中石化<em>20元/月</em>→5积分"},{"c":"权益","q":"5GA网络权益","a":"5G-A网络服务，下行：199/239档<em>最高2Gbps</em>，299档<em>2Gbps</em>，399档<em>3Gbps</em>；上行：199/239档<em>200Mbps</em>，299档<em>300Mbps</em>"},{"c":"权益","q":"5GA终端权益","a":"可选<em>FTTR/AI手机/5G手机/智屏/AI摄像头</em>等终端优惠，按营销活动匹配规则执行"},{"c":"权益","q":"5GA应用权益","a":"免费赠送：<em>AI通信助理</em>+<em>AI视频彩铃</em>+<em>云盘(家庭版)</em>+<em>防骚扰</em>，全档位包含"},{"c":"权益","q":"5GA靓号权益","a":"按营销活动匹配规则，可选精品靓号/普通靓号等，需遵守靓号规则办理"},{"c":"权益","q":"5GA服务权益","a":"直享<em>5-6星客户权益</em>，含积分倍增+客服热线优先接入+营业厅优先办理，全档位包含"},{"c":"流程","q":"16项审批责任人","a":"违约金减免→<em>陶冶</em> | 终端特殊→<em>陶冶</em> | 利旧稽核→<em>陶冶</em> | CP积分→<em>陶冶</em> | 实名反诈→<em>张环</em> | 欠费强拆→<em>张环</em> | 资费类→<em>张环</em> | 号码类→<em>张环</em> | 红名单→<em>张环</em> | 同址多宽带→<em>贺龙</em> | 宽带撤单→<em>贺龙</em> | 质量稽核→<em>贺龙</em> | 退店建店→<em>周卫强</em> | 营销费→<em>张东升</em> | 低迁→<em>魏鑫</em> | 广宣→<em>刘挺</em>"},{"c":"流程","q":"审批找陶冶的有哪些","a":"违约金减免(2条/日) | 终端特殊申请(5条/月) | 利旧稽核减免(2条/月) | CP主协销售人积分(1条/季度)"},{"c":"流程","q":"审批找张环的有哪些","a":"实名制反诈(月均20条) | 欠费强拆(月均20条) | 资费类审批(月均20条) | 号码类审批(月均15条) | 红名单审批(月均15条)"},{"c":"流程","q":"审批找贺龙的有哪些","a":"同址装多宽带 | 宽带撤单(月均30条) | 宽带质量稽核(5条/月)"},{"c":"流程","q":"橙分期6张照片","a":"①<em>手持合照</em>：用户手持签字告知书+终端实物<br>②<em>终端单独照</em>：清晰显示名称类型<br>③<em>告知书签字照</em><br>④<em>必录项截图</em><br>⑤<em>身份证正反面</em><br>⑥<em>人像照片</em>"},{"c":"流程","q":"刘挺负责哪些支局","a":"<em>不夜城、传奇、金辉、曲江池、曲江大道</em>（5个）"},{"c":"流程","q":"刘娅负责哪些支局","a":"<em>西影路南、杜邑、南苑、翡翠国际、新开门、大华</em>（6个）"},{"c":"政策","q":"5G-A体系上线时间","a":"6月30日旧套餐体系<em>全面下线</em>，7月1日起只保留5G-A体系。含智慧企业5G-A 199/239/299/399四档+美好家5G-A融合"},{"c":"政策","q":"升高套折算规则","a":"准实收提升不足30元算<em>0.5个</em>，每提升30元算<em>1个</em>；美好家/橙分期/金豆另计<em>0.5个</em>，7月10日起"},{"c":"政策","q":"评价体系变化","a":"三级单位<em>双百制</em>(基础100+政企100)，支局四支队伍独立评价，<em>红黄牌机制</em>，7月起"},{"c":"政策","q":"堡垒店建设","a":"7月底改造门店<em>100%挂牌</em>，9月底<em>1支局1标杆</em>"},{"c":"政策","q":"单卡进攻策略","a":"新增<em>金豆存赠合约</em>，恢复<em>99元档橙分期</em>，补贴上调，7月起"},{"c":"政策","q":"企业户名办美好家","a":"<em>不允许</em>，属业务违规（6.9复盘会提出）"},{"c":"政策","q":"239元档5GA权益档位","a":"239元档5G-A套餐权益是<em>19.9元档</em>"},{"c":"政策","q":"不出费业务无积分","a":"169档套餐加载全光，全光实际不出费，<em>没有积分</em>。所有不出费的业务都没有积分"},{"c":"政策","q":"269升299极致商务积分","a":"<em>57分</em>=30×1.9，极致商务融合目前仅有299升档有系数"},{"c":"政策","q":"云电视软终端政策","a":"8月4日起，云电视一律将高清IPTV机顶盒变更为<em>软终端</em>，预存100元不变<br>①无电视用户直接回单<br>②电视不支持软终端→推荐<em>智屏</em>替代，暂用智屏自带超高清<br>③不支持且不办智屏→装维退单，重新受理插入式机顶盒<br>④装维上门必带：<em>机顶盒+U盘</em>，遥控器用客户电视自带"},{"c":"政策","q":"软终端不支持怎么办","a":"①推荐用<em>智屏</em>替代机顶盒，暂用智屏自带超高清<br>②不办智屏→装维退单重新受理为<em>插入式机顶盒</em>"},{"c":"流程","q":"装维上门带什么","a":"云电视装维必带：<em>机顶盒+U盘</em><br>遥控器用客户电视机自带遥控器"},{"c":"政策","q":"79元档受理权限收回","a":"<em>8月17日</em>起79元档<em>全面下线</em>，停止受理"},{"c":"政策","q":"单宽积分调整","a":"8月起单宽积分大幅下调：<br>300M：<em>50→0</em><br>500M：<em>90→20</em><br>1000M：<em>160→80</em><br>下周系统完成配置，8月积分月表回溯8月前几天的数据"},{"c":"流程","q":"线上办理流程","a":"<em>3步线上受理</em>：<br>1. 微信搜\"陕西营业厅\"小程序，登录<em>自己工号手机号</em><br>2. 找到对应业务，点\"立即办理\"→<em>微信分享给用户</em>（只能分享1次，再转发无效）<br>3. 用户填写信息提交即可<br><em>注意</em>：分享前下拉到底端，确认有自己<em>销售人信息</em>"},{"c":"流程","q":"线上能办什么业务","a":"5大类可受理：<em>宽带业务</em>（融合升级/单宽带/加装/全光WiFi）<br><em>号卡业务</em>（携号转网）<br><em>权益业务</em>（随翼享尊选/优选/惠选、加油包）<br><em>战新业务</em>（智看/卫星直连/智铃/防诈）<br><em>流量语音</em>（救急包/月月包/语音包）<br>详见下方\"线上可售产品\"表"},{"c":"流程","q":"线上分享给用户注意什么","a":"分享链接<em>只能分享1次</em>，再转发无效！<br>分享前务必<em>下拉到底端</em>，确认显示自己<em>销售人信息</em>，否则业绩不算自己"},{"c":"政策","q":"智企239停售","a":"智慧企业5G-A融合套餐<em>239元档</em>，<em style=\"color:#C00000\">9月1日起停售</em><br>停售后智企仅保留<em>299</em>、<em>399</em>两档<br>存量239用户续约/升档不受影响"},{"c":"政策","q":"智看资费切换","a":"<em style='color:#C00000'>8月26日23:59:59</em>下线：<br>①看家AI守护专用套餐(552509192)<br>②美好家-看家AI守护10元月付礼包(552509219)<br><br>新主推：<br>• 智看看家标准版(7天事件) <em>20元/月</em> 编码552511457<br>• 智看看家全天版 <em>25元/月</em><br><br>美好家可选包规则：<br>199档选标准版优惠10元，<em>需另交10元</em><br>239及以上<em>无须额外交费</em>"},{"c":"套餐","q":"智看看家标准版和全天版区别","a":"<em>标准版</em>20元/月：7天事件存储<br><em>全天版</em>25元/月：全天候存储<br><br>美好家可选包中：199档选标准版补10元，239以上全额抵扣"},{"c":"政策","q":"99融合受理权限","a":"99融合套餐<em>收回受理权限</em><br>8.27起<em style='color:#C00000'>仅主厅可受理</em>，其他渠道无法办理"},{"c":"政策","q":"二宽暂停营销","a":"暂停融合<em>二宽</em>的主动营销和宣传<br>待省公司二宽新政策上线后<em>再上架</em>"}],"TB":{"融合表":{"t":"5G畅享融合","d":[["档位","月费","语音","流量","副卡","IPTV","宽带","超出资费"],["99",99,"150分","40GB","10元/张,最多4张,首张免费","1路","500M","流量5元/GB,通话0.15元/分"],["139",139,"200分","60GB","10元/张,最多4张,首张免费","1路","500M","流量3元/GB,通话0.15元/分"],["169",169,"300分","80GB","10元/张,最多4张,首张免费","1路","1000M","流量3元/GB,通话0.15元/分"]],"t2":"5G-A美好家融合","d2":[["档位","语音","流量","副卡","翻倍后","宽带","全光","IPTV","必选","可选","补贴","满5卡赠流量"],["199","1000分","100G","前2张免费,最多9张副卡","-","1000M","1主1从","2路","<em>智屏</em>","-","10","50G"],["239","1000分","120G","前2张免费,最多9张副卡","400G","1500M","1主1从","2路","<em>云电视+优选</em>","智屏","30","280G"],["299","1500分","150G","前2张免费,最多9张副卡","500G","2000M","1主1从","2路","云电视+<em>尊选</em>","智屏+看家","40","350G"],["399","2000分","200G","前2张免费,最多9张副卡","600G","2000M","1主1从","2路","云电视+<em>尊选</em>","智屏+看家+AP×2","70","400G"]]},"单卡表":{"t":"单卡资费","d":[["名称","月费","语音","流量","副卡"],["无忧卡",5,0,"200MB","无法办理"],["三秦卡39",39,"100分","20G+30G定向","无法办理"],["三秦卡59",59,"200分","30G+50G定向","无法办理"],["99单卡",99,"400分","20GB","最多2张"],["129单卡",129,"500分","30GB","最多2张"],["169单卡",169,"800分","40GB","最多4张"],["5GA-199",199,"1000分","120GB","前2张免费,最多4张"],["5GA-239",239,"1000分","140GB","前2张免费,最多4张"],["5GA-299",299,"1500分","180GB","前2张免费,最多4张"],["5GA-399",399,"2000分","240GB","前2张免费,最多4张"]]},"智企表":{"t":"智企5G-A","d":[["档位","语音","流量→翻倍","副卡","专线","固话","FTTR-B","必选","可选","系数","积分"],["239","1000分","120→400","4张免费","1500M/100M","0-4部/300分钟","1主网关","1从网关+安全猫","一键食安","<em style=\"color:#C00000\">已下线</em>","<em style=\"color:#C00000\">9.1起停售</em>"],["299","1500分","150→500","4张免费","2000M/100M","0-4部/300分钟","1主网关","2从网关+安全猫","一键食安、智铃","<em>1.9</em>","<em>568</em>"],["399","2000分","200→600","4张免费","2000M/100M","0-4部/300分钟","1主网关","3从网关+安全猫","一键食安、智铃、应用控制","<em>2.0</em>","<em>798</em>"]]},"系数表":{"t":"积分系数（8月执行）","d":[["档位","系数","备注"],["59","<em>0</em>","8月新增"],["79","<em>0</em>","原0.5"],["99","<em>0</em>","原1.0"],["139","<em>0.8</em>","原1.0"],["169","<em>1.0</em>","原1.6"],["199","1.7",""],["239","1.8",""],["299","1.9",""],["399","2.0",""]]},"宽带表":{"t":"光纤宽带单产品+固话","d":[["名称","月费","速率/内容","IPTV","固话"],["宽带300M","<em>50</em>","下行300M/上行40M","无法办理","可加1部免月租"],["宽带500M","<em>90</em>","下行500M/上行40M","可加1路10元/月","可加1部免月租"],["宽带1000M","<em>160</em>","下行1000M/上行50M","可加1路10元/月","可加1部免月租"],["办公固话","<em>35</em>","本市0.20元/分(前3分)→0.10元/分","/","/"],["家用固话","<em>20</em>","本市0.20元/分(前3分)→0.10元/分","/","/"]]},"政策表":{"t":"政策变化点（29条）","d":[["#","变化点","说明","备注"],["1","不出费无积分","169全光不出费无积分",""],["2","239权益档位","239的权益是19.9档",""],["3","权益包3档","惠选/优选/尊选",""],["4","橙分期到期不算降档","按实收计算",""],["5","积分兑换算发展量","-",""],["6","269升299极致","57分","30×1.9"],["7","FTTR-B积分","主35/从25/插件10","6.4会议"],["8","美好家有积分","10积分/单","1分=1元"],["9","399系数→2.0","8月1日",""],["10","企业户不能升美好家","业务违规","6.9复盘"],["11","系数8月调整","79→0…399→2.0","8月1日"],["12","升档积分新增6档","40/48/51/72/114/200",""],["13","智企积分调整","430/568/798","8月1日"],["14","升套不足30算0.5","每30元算1个",""],["15","美好家/橙分期另计0.5","-",""],["16","双控目标","降档≤2900/融合≤9800/高值≤5800",""],["17","提值激励","0-30:0/30-80:30/80+:80",""],["18","三级包抓帮扶","7月10日起",""],["19","199/239必选包调整","199→云电视+智屏、239→云电视+优选","7.30起；智看为可选包"],["20","79不计升档","系数0","8月1日"],["21","199满5卡赠流量调整","199满5卡赠50G（100G+50G=150G），翻倍促销8.18停售","8.15原促销停售"],["22","三宽下线","融合第三路宽带下线","8月16日23:59:59"],["23","二宽优化中","新二宽仅含宽带：300M 30元/500M 50元","双城保留，上线另行通知"],["24","79套餐下线","79元档停止办理","8月17日"],["25","199流量翻倍下线","赠送200G促销停售","8月18日"],["26","智企239停售","智慧企业5G-A融合239元档9月1日起停售，仅保留299/399两档","2026-09-01"],["27","智看资费切换","8.26 23:59下线看家AI守护专用套餐(552509192)+10元月付礼包(552509219)，主推智看看家标准版20元(552511457/7天事件)和全天版25元","2026-08-26"],["28","99融合受理限制","99融合套餐收回受理权限，8.27起仅主厅可受理","2026-08-27"],["29","二宽暂停营销","暂停融合二宽主动营销和宣传，待省公司二宽新政策上线后再上架","2026-08-27"]]},"礼包表":{"t":"美好家礼包（5G-A融合专属）","d":[["类型","适用套餐","内容","价格(元)","月减优惠"],["必选","199/239","云电视20元+智屏","1436.4","月减39.9元"],["必选","299/399","云电视20元+尊选权益24.9元","1616.4","月减44.9元"],["可选促销","199","360元档","360","月减10元×36期"],["可选促销","239","1080元档","1080","月减30元×36期"],["可选促销","299","1440元档","1440","月减40元×36期"],["可选促销","399","2520元档","2520","月减70元×36期"]]},"权益包表":{"t":"随翼享权益包 & 臻选权益","d":[["类型","名称","月费(元/月)","内容","积分"],["随翼享","惠选","13.9","基础权益包","6分"],["随翼享","优选","19.9","中级权益包(199/239必选)","12分"],["随翼享","尊选","24.9","高级权益包(299/399必选)","10分"],["臻选","中石油","20","中国石油","5分"],["臻选","中石化","20","中国石化","5分"]]},"五大权益表":{"t":"5G-A融合套餐五大权益","d":[["权益类型","权益内容","适用说明","价值"],["网络权益","5G-A网络:199/239下行最高2Gbps上行200Mbps;299下行2Gbps上行300Mbps;399下行3Gbps","全档位包含","基础权益"],["终端权益","可选FTTR/AI手机/5G手机/智屏/AI摄像头等终端优惠","按营销活动匹配规则执行","视终端而定"],["应用权益","AI通信助理+AI视频彩铃+云盘(家庭版)+防骚扰","全档位包含","免费赠送"],["靓号权益","可选精品靓号、普通靓号等","需按靓号规则办理","视号码等级而定"],["服务权益","直享5-6星客户权益+积分倍增+客服热线优先接入+营业厅优先办理","全档位包含","高价值服务"]]},"审批表":{"t":"本局16项审批责任人","d":[["审批事项","工作量","审批分类","责任人","备注"],["违约金减免","2条/日","包抓支局主管","陶冶","刘挺/刘娅先按支局对接"],["终端类特殊申请","5条/月","业务主管","陶冶","需单点沟通"],["利旧稽核减免考核","2条/月","业务主管","陶冶","需一事一议"],["CP主/协销售人积分","1条/季度","业务主管","陶冶",""],["实名制反诈类审批","月均20条","包抓支局主管","张环",""],["欠费强拆类审批","月均20条","包抓支局主管","张环",""],["资费类审批","月均20条","包抓支局主管","张环","翼房/装移机减免等"],["号码类审批","月均15条","业务主管","张环","新装/过户/降低消"],["红名单审批","月均15条","业务主管","张环",""],["同址装多条宽带","-","业务主管","贺龙",""],["宽带撤单申请","月均30条","业务主管","贺龙",""],["宽带质量稽核申诉","5条/月","业务主管","贺龙","需单点沟通"],["退店、建店退押金","-","业务主管","周卫强",""],["营销活动费报账审批","-","业务主管","张东升",""],["低迁审批","1条/月","业务主管","魏鑫",""],["广宣审批","10次/年","业务主管","刘挺",""]]},"橙分期规范表":{"t":"橙分期业务稽核规范 & 重要提醒","d":[["项目","要求"],["核心禁令","严禁甩单办理，必须实时受理"],["照片1","手持合照：用户手持签字告知书+终端实物合照"],["照片2","终端单独照：清晰显示名称类型"],["照片3","告知书签字照：签字的业务告知书单独拍照"],["照片4","必录项信息：系统必录项截图"],["照片5","身份证正反面照片"],["照片6","人像照片：用户人像比对照片"]],"t2":"重要提醒(4条)","d2":[["序号","提醒内容"],["1","违约金减免必须先审批再办理，严禁先办理后补审批"],["2","橙分期业务严禁甩单，必须实时受理"],["3","老设备串码必须及时发装维群录入回收，否则影响新设备领用"],["4","所有审批事项，先确认对应责任人，避免找错人耽误时间"]]},"云电视软终端":{"t":"云电视软终端政策（8.4起执行）","d":[["场景","处理方式","备注"],["无电视用户","直接回单","预存100元不变"],["电视不支持软终端","推荐智屏替代","暂用智屏自带超高清"],["不支持且不办智屏","装维退单→重新受理插入式机顶盒","需重新走装维流程"],["装维上门必带","机顶盒+U盘","遥控器用客户电视自带"]]},"线上可售产品":{"t":"线上营业厅小程序·线上可售产品","d":[["一级业务大类","二级业务分类","具体产品名称"],["宽带业务","融合升级","5G-A老用户升级-169融合套餐<br>5G-A老用户升级-199融合套餐<br>5G-A老用户升级-239融合套餐<br>5G-A老用户升级-299融合套餐<br>5G-A老用户升级-399融合套餐"],["宽带业务","单宽带","单宽带300Mbps<br>单宽带500Mbps<br>单宽带1000Mbps<br>天天宽带"],["宽带业务","加装宽带","二路电视场景宽带<br>二路全光电视场景宽带<br>三路全光电视场景宽带<br>线上专用_二路场景宽带全光电视套餐<br>二路场景宽带电视套餐<br>线上专用_三路场景宽带全光电视套餐"],["宽带业务","全光WiFi","全光WiFi1+1月付合约<br>美好家-全光WiFi单AP10元月付礼包"],["号卡业务","携号转网","携号转网"],["权益业务","随翼享","随翼享-尊选会员权益<br>随翼享-优选会员权益<br>随翼享-惠选会员权益<br>尊享会员（12期）"],["权益业务","加油包","中石油权益包<br>中石化权益包"],["战新业务","智看","看家AI守护<br>智屏基础包<br>视联AI一键关爱<br>云电视20元包<br>视联AI一键报警<br>视联AI一键食安<br>智能门锁<br>桌面机器人"],["战新业务","卫星直连","手机直连卫星权益包<br>直连卫星功能<br>卫星+流量包组合<br>直连卫星50分钟语音包<br>直连卫星200分钟语音包"],["战新业务","智铃","智铃基础版<br>智铃高级叠加包"],["战新业务","防诈","智能防诈基础版"],["流量语音业务","救急包","7日短期流量包10GB<br>5日短期流量包7GB<br>3日短期流量包4GB<br>1日短期流量包5GB<br>1日短期流量包2GB<br>假日流量1天包1GB<br>20GB暖心升级包"],["流量语音业务","月月包","20元10GB特惠流量包<br>包月大流量包10元5GB<br>5G套餐分档流量包<br>19.9元10GB流量月包<br>9.9元3GB流量月包<br>39元20GB流量月包<br>60元40GB流量月包"],["流量语音业务","语音包","语音包1元包100分钟<br>语音包2元包200分钟<br>语音包5元包500分钟<br>语音包100元包1200分钟<br>语音包150元包2000分钟"]]}}};
+var VER=EMBED_DATA.ver||'',VDATE=EMBED_DATA.vdate||'',EXPIRE=EMBED_DATA.expire||'';
+var Q=EMBED_DATA.Q,TB=EMBED_DATA.TB;
+var EMBED_VER=EMBED_DATA.ver||'v3.5.21';
 var cachedData=null;
 var newData=null;
 
-function strip(s){return String(s).replace(/<[^>]+>/g,'')}
-
-/* 强制清除旧的乱码缓存（v3.1.1修复编码问题）*/
-var CACHE_VER='v3.1.1';/* 缓存版本号，升级时强制清除旧缓存 */
+var CACHE_VER='v3.5.17';
 try{
   var lsVer=localStorage.getItem('qj_cache_ver');
-  if(lsVer!==CACHE_VER){
+  if(lsVer&&lsVer!==CACHE_VER){
     localStorage.removeItem('qj_data');
     localStorage.setItem('qj_cache_ver',CACHE_VER);
   }
+  if(!lsVer){
+    localStorage.setItem('qj_cache_ver',CACHE_VER);
+  }
+  // 缓存破坏：版本不对时强制刷新一次（最多1次）
+  var reloadKey='qj_reloaded_'+CACHE_VER;
+  if(lsVer&&lsVer!==CACHE_VER&&!sessionStorage.getItem(reloadKey)){
+    sessionStorage.setItem(reloadKey,'1');
+    location.reload(true);
+  }
 }catch(e){}
 
-/* 加载数据：优先同源data.json */
+function strip(s){return String(s).replace(/<[^>]+>/g,'')}
+
+function fetchTimeout(url,ms){
+  return new Promise(function(resolve,reject){
+    var timer=setTimeout(function(){reject(new Error('timeout'));},ms);
+    fetch(url,{cache:'no-store'}).then(function(r){clearTimeout(timer);return r.json();}).then(resolve).catch(function(rej_e){clearTimeout(timer);reject(rej_e);});
+  });
+}
+
 function loadData(){
   return new Promise(function(resolve){
-    /* 1. 优先localStorage缓存（已在上方清除旧缓存） */
     try{
       var cached=localStorage.getItem('qj_data');
       if(cached){
         var d=JSON.parse(cached);
-        if(d&&d.Q&&d.TB&&d.Q[0]&&d.Q[0].q&&!/ã|å|ç|è/.test(d.Q[0].q)){
+        if(d&&d.Q&&d.TB&&d.ver&&d.ver>=EMBED_VER&&d.Q[0]&&d.Q[0].q&&!/ã|å|ç|è/.test(d.Q[0].q)){
           Q=d.Q;TB=d.TB;VER=d.ver||'';VDATE=d.vdate||'';EXPIRE=d.expire||'';
           cachedData=d;
           resolve(true);
@@ -319,92 +466,50 @@ function loadData(){
         }
       }
     }catch(e){}
-    
-    /* 2. 从同源data.json加载 */
-    fetchData().then(function(ok){resolve(ok);});
+    resolve(true);
   });
 }
 
-/* 加载数据：优先同源data.json（直接JSON无编码问题），降级Gitee API */
-function fetchData(){
-  return fetch(DATA_URL+'?t='+Date.now(),{cache:'no-store'})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      if(d&&d.Q&&d.TB){return d;}
-      throw new Error('invalid data.json');
-    })
-    .catch(function(){
-      /* 降级：从Gitee API加载（需base64解码） */
-      return fetch(GITEE_API+'&access_token='+GITEE_TOKEN+'&t='+Date.now(),{cache:'no-store'})
-        .then(function(r){return r.json();})
-        .then(function(apiResp){
-          if(apiResp&&apiResp.content){
-            var jsonStr=b64ToUtf8(apiResp.content);
-            var d=JSON.parse(jsonStr);
-            if(d&&d.Q&&d.TB){return d;}
-          }
-          throw new Error('invalid gitee response');
-        });
-    })
-    .then(function(d){
-      if(d&&d.Q&&d.TB){
-        newData=d;
-        if(!cachedData||cachedData.ver!==d.ver){
-          Q=d.Q;TB=d.TB;VER=d.ver||'';VDATE=d.vdate||'';EXPIRE=d.expire||'';
-          try{localStorage.setItem('qj_data',JSON.stringify(d));}catch(e){}
-          return true;
-        }
-        return true;
-      }
-      return false;
-    })
-    .catch(function(){return false;});
-}
-
-/* 后台静默检查更新（通过Gitee API） */
 function checkUpdate(){
-  fetch(GITEE_API+'&access_token='+GITEE_TOKEN+'&t='+Date.now(),{cache:'no-store'})
-    .then(function(r){return r.json();})
+  fetchTimeout(GITEE_API+'&access_token='+GITEE_TOKEN+'&t='+Date.now(),3000)
     .then(function(apiResp){
       if(apiResp&&apiResp.content){
-        var jsonStr=b64ToUtf8(apiResp.content);
-        var d=JSON.parse(jsonStr);
-        if(d&&d.ver&&d.ver!==VER){
-          newData=d;
-          document.getElementById('updateTip').classList.add('show');
-        }
+        try{
+          var jsonStr=b64ToUtf8(apiResp.content);
+          var d=JSON.parse(jsonStr);
+          if(d&&d.Q&&d.TB&&d.ver&&d.ver!==VER&&d.Q[0]&&!/ã|å|ç|è/.test(d.Q[0].q)){
+            newData=d;
+            try{localStorage.setItem('qj_data',JSON.stringify(d));}catch(e){}
+            document.getElementById('updateTip').classList.add('show');
+          }
+        }catch(ex){}
       }
     })
     .catch(function(){});
 }
 
-/* 用户点击刷新按钮 */
 function applyUpdate(){
   if(newData){
     Q=newData.Q;TB=newData.TB;VER=newData.ver||'';VDATE=newData.vdate||'';EXPIRE=newData.expire||'';
     try{localStorage.setItem('qj_data',JSON.stringify(newData));}catch(e){}
     document.getElementById('updateTip').classList.remove('show');
-    /* 重新渲染 */
-    document.getElementById('vt').textContent=VER+' \u00b7 '+VDATE;
-    document.getElementById('utxt').textContent=VDATE+'更新';
-    document.getElementById('utag').textContent=VER;
-    homeInited=false;
-    initHome();
+    document.getElementById('vt2').textContent=VER+' · '+VDATE;
+    rebuildIndex();
     checkExpire();
   }
 }
 
-/* ═══════════════════════════════════════
-   UI渲染 - 与原版逻辑一致
-   ═══════════════════════════════════════ */
-var CATS=[{c:"积分",icon:"📊"},{c:"套餐",icon:"📱"},{c:"权益",icon:"🎁"},{c:"礼包",icon:"🏠"},{c:"单卡",icon:"💳"},{c:"流程",icon:"🔄"},{c:"政策",icon:"📌"},{c:"全部",icon:"📋"}];
-var HOT=["智企199","升档积分","美好家","橙分期","79融合","超出资费","必选包","满5卡流量"];
+/* ═══ 搜索核心 ═══ */
+var HOT=["最新政策","积分","升档","199","239","美好家","橙分期","智企","副卡","宽带","审批","线上受理"];
+var SI=[];
 
-var SI=(function(){
-  var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
-  var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
-  return ci.concat(ti);
-})();
+function rebuildIndex(){
+  SI=(function(){
+    var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
+    var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
+    return ci.concat(ti);
+  })();
+}
 
 function fm(tx,kw){
   if(!kw)return true;
@@ -414,48 +519,71 @@ function fm(tx,kw){
   return ws2.every(function(w){return t.includes(w);});
 }
 
-function mkCard(d,open){return '<div class="cd'+(open?' open':'')+'" onclick="this.classList.toggle(\'open\')"><div class="cd-h"><span class="tg t-'+d.c+'">'+d.c+'</span><span class="qt">'+d.q+'</span><span class="ar">\u25b6</span></div><div class="cd-b"'+(open?' style="max-height:500px"':'')+'><div class="cd-bi"><div class="ans">'+d.a+'</div></div></div></div>';}
+function mkCard(d,open){return '<div class="cd'+(open?' open':'')+'" onclick="this.classList.toggle(\'open\')"><div class="cd-h"><span class="tg t-'+d.c+'">'+d.c+'</span><span class="qt">'+d.q+'</span><span class="ar">\u25b6</span></div><div class="cd-b"'+(open?' style="max-height:600px"':'')+'><div class="cd-bi"><div class="ans">'+d.a+'</div></div></div></div>';}
 function mkTable(d){var h='<table class="tb"><thead><tr>';d[0].forEach(function(t){h+='<th>'+t+'</th>';});h+='</tr></thead><tbody>';for(var i=1;i<d.length;i++){h+='<tr>';d[i].forEach(function(v){h+='<td>'+v+'</td>';});h+='</tr>';}return h+'</tbody></table>';}
 function mkTB(k){var t=TB[k];if(!t)return '';var h='<div class="sec">'+t.t+'</div><div class="tbw">'+mkTable(t.d)+'</div>';if(t.t2&&t.d2)h+='<div class="sec">'+t.t2+'</div><div class="tbw">'+mkTable(t.d2)+'</div>';return h;}
 
-var curPage='home',sv='';
-function showPg(id){document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('show');});document.getElementById('pg-'+id).classList.add('show');document.getElementById('cont').scrollTop=0;}
-
-var homeInited=false;
-function initHome(){
-  if(homeInited)return;
-  var gh='';CATS.forEach(function(c){gh+='<div class="citem" onclick="goCat(\''+c.c+'\')"><div class="ci ci-'+c.c+'">'+c.icon+'</div><span class="cl">'+c.c+'</span></div>';});document.getElementById('cgrid').innerHTML=gh;
-  var hh='';HOT.forEach(function(k){hh+='<span onclick="ds(\''+k+'\')">'+k+'</span>';});document.getElementById('hlist').innerHTML=hh;
-  var ch='';Q.forEach(function(d){ch+=mkCard(d);});document.getElementById('home-cards').innerHTML=ch;
-  homeInited=true;
-}
-
-function renderPage(id){
-  var pg=document.getElementById('pg-'+id),h='';
-  if(id==='积分'){h+=mkTB('系数表');h+='<div class="fml"><div class="fl">\ud83d\udcd0 积分计算公式</div>价值提升积分 = [迁转后(套餐值-优惠) - 迁转前(套餐值-优惠)] \u00d7 <em>系数</em><br><br>套餐优惠：<em>橙分期、翼支付、金豆合约、赠费</em><br>美好家另计：<em>10积分/单</em>（1分=1元）<br>新装积分：<em>月租×系数</em></div>';h+='<div class="sec">积分速查</div>';Q.filter(function(d){return d.c==='积分';}).forEach(function(d){h+=mkCard(d);});}
-  else if(id==='套餐'){h+=mkTB('融合表');h+=mkTB('单卡表');h+=mkTB('智企表');h+=mkTB('宽带表');h+='<div class="sec">套餐\u00b7权益\u00b7礼包速查</div>';Q.filter(function(d){return['套餐','权益','礼包','单卡'].indexOf(d.c)>=0;}).forEach(function(d){h+=mkCard(d);});}
-  else if(id==='流程'){h+='<div class="sec">业务流程（点击展开）</div>';Q.filter(function(d){return d.c==='流程';}).forEach(function(d,i){h+=mkCard(d,i===0);});}
-  else if(id==='更多'){h+=mkTB('政策表');h+=mkTB('宽带表');h+=mkTB('系数表');h+='<div class="sec">全部速查词条</div>';Q.forEach(function(d){h+=mkCard(d);});}
-  pg.innerHTML=h;
-}
-
-function renderSearch(){
-  var res=SI.filter(function(i){return fm(i.tx,sv);});
-  var cards=res.filter(function(r){return r.tp==='c';}),tabs=res.filter(function(r){return r.tp==='t';});
-  var h='<div class="sc">找到 '+res.length+' 项</div>';
-  if(!res.length){h+='<div class="empty"><p>没找到，换个词试试</p></div>';}
-  else{if(cards.length){h+='<div class="sec">速查 ('+cards.length+')</div>';cards.forEach(function(d){h+=mkCard(d.d);});}if(tabs.length){h+='<div class="sec">相关表格 ('+tabs.length+')</div>';tabs.forEach(function(t){h+=mkTB(t.k);});}}
-  document.getElementById('search-out').innerHTML=h;showPg('search');
-}
-
+/* ═══ 夸克风交互 ═══ */
+var homeEl=document.getElementById('home');
 var si=document.getElementById('si'),sbar=document.getElementById('sbar');
+var resultsEl=document.getElementById('results');
+var tagsEl=document.getElementById('tags');
+var isFolded=false;
+var sv='';
+
+function doSearch(kw){
+  if(!kw)return;
+  if(!isFolded){homeEl.classList.add('folded');isFolded=true;}
+  tagsEl.style.display='none';
+  // 用户气泡
+  var ub='<div class="m-row user"><div class="m-bubble">'+escHtml(kw)+'</div></div>';
+  // typing占位
+  var tid='tp_'+Date.now();
+  var tb='<div class="m-row bot" id="'+tid+'"><div class="m-bubble"><span class="typing"><span></span><span></span><span></span></span></div></div>';
+  resultsEl.innerHTML=ub+tb;
+  resultsEl.classList.add('show');
+  setTimeout(function(){resultsEl.scrollTop=resultsEl.scrollHeight;},50);
+  setTimeout(function(){
+    var reply=smartAnswer(kw);
+    var te=document.getElementById(tid);
+    if(te){
+      var nb=document.createElement('div');nb.className='m-row bot';
+      nb.innerHTML='<div class="m-bubble">'+reply+'</div>';
+      te.replaceWith(nb);
+      // 返回首页按钮
+      var backRow=document.createElement('div');
+      backRow.className='m-row back-home-row';
+      backRow.innerHTML='<div class="back-home-btn" onclick="goHome()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> 返回首页</div>';
+      resultsEl.appendChild(backRow);
+    }
+    setTimeout(function(){resultsEl.scrollTop=resultsEl.scrollHeight;},50);
+  },300+Math.random()*200);
+}
+
+function goHome(){
+  si.value='';sv='';sbar.classList.remove('has-txt');
+  resultsEl.classList.remove('show');resultsEl.innerHTML='';
+  tagsEl.style.display='';
+  if(isFolded){homeEl.classList.remove('folded');isFolded=false;}
+  si.focus();
+}
+
 si.addEventListener('focus',function(){sbar.classList.add('focused');});
 si.addEventListener('blur',function(){sbar.classList.remove('focused');});
-si.addEventListener('input',function(){sv=this.value.trim();sbar.classList.toggle('has-txt',sv.length>0);if(sv){renderSearch();}else{showPg('home');}});
-document.getElementById('scls').addEventListener('click',function(){si.value='';sv='';sbar.classList.remove('has-txt');showPg('home');si.focus();});
-function ds(kw){si.value=kw;sv=kw;sbar.classList.add('has-txt');renderSearch();}
-function goCat(c){if(c==='全部'){showPg('home');return;}var h='<div class="sec">'+c+'速查</div>';Q.filter(function(d){return d.c===c;}).forEach(function(d){h+=mkCard(d);});document.getElementById('search-out').innerHTML=h;showPg('search');si.value='';sv='';sbar.classList.remove('has-txt');}
-document.getElementById('bnav').addEventListener('click',function(e){var ni=e.target.closest('.ni');if(!ni)return;document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('on');});ni.classList.add('on');var p=ni.dataset.p;si.value='';sv='';sbar.classList.remove('has-txt');if(p==='home'){showPg('home');}else{renderPage(p);showPg(p);}});
+si.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&this.value.trim()){
+    e.preventDefault();
+    doSearch(this.value.trim());
+    this.value='';sbar.classList.remove('has-txt');
+  }
+});
+document.getElementById('scls').addEventListener('click',function(){
+  si.value='';sv='';sbar.classList.remove('has-txt');
+  resultsEl.classList.remove('show');resultsEl.innerHTML='';
+  tagsEl.style.display='';
+  if(isFolded){homeEl.classList.remove('folded');isFolded=false;}
+  si.focus();
+});
 
 /* ═══ 版本过期检测 ═══ */
 function checkExpire(){
@@ -470,68 +598,26 @@ function checkExpire(){
       +'<div style="width:80px;height:80px;border-radius:50%;background:#FFF0F0;display:flex;align-items:center;justify-content:center;margin-bottom:16px"><span style="font-size:40px">⚠</span></div>';
     document.body.appendChild(ov);return;
   }
-  var diff=Math.ceil((exp-now)/(86400000));
-  if(diff<=7){document.getElementById('ubar').style.background='linear-gradient(90deg,#D97706,#B45309)';document.getElementById('utxt').textContent='剩余'+diff+'天过期，请联系支局长更新';}
 }
 
-/* ═══════════════════════════════════════
-   智能问答机器人
-   ═══════════════════════════════════════ */
-var botOpen=false;
-function toggleBot(){
-  botOpen=!botOpen;
-  document.getElementById('botMask').classList.toggle('show',botOpen);
-  document.getElementById('botPanel').classList.toggle('show',botOpen);
-  document.getElementById('botBtn').style.display=botOpen?'none':'flex';
-  if(botOpen&&document.getElementById('botMsgs').children.length===0){
-    addBotMsg('你好！我是曲江小助手，问我任何业务问题，比如"199套餐内容""升档积分怎么算""最便宜的融合"等，我来帮你查~');
-  }
-  if(botOpen){setTimeout(function(){document.getElementById('botIn').focus();},300);}
-}
-
-function addBotMsg(html){
-  var d=document.createElement('div');d.className='m-row bot';
-  d.innerHTML='<div class="m-bubble">'+html+'</div>';
-  var msgs=document.getElementById('botMsgs');
-  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
-}
-function addUserMsg(txt){
-  var d=document.createElement('div');d.className='m-row user';
-  d.innerHTML='<div class="m-bubble">'+escHtml(txt)+'</div>';
-  var msgs=document.getElementById('botMsgs');
-  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
-}
+/* ═══ 智能问答机器人 ═══ */
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-function sendBot(){
-  var inp=document.getElementById('botIn');
-  var txt=inp.value.trim();if(!txt)return;
-  inp.value='';
-  addUserMsg(txt);
-  var typing=document.createElement('div');typing.className='m-row bot';typing.id='typing';
-  typing.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
-  var msgs=document.getElementById('botMsgs');
-  msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;
-  setTimeout(function(){
-    var t=document.getElementById('typing');if(t)t.remove();
-    var reply=botAnswer(txt);
-    addBotMsg(reply);
-  },400+Math.random()*400);
-}
-
-function askBot(txt){
-  document.getElementById('botIn').value=txt;sendBot();
-}
-
-/* ═══ 问答大脑 ═══ */
-function botAnswer(raw){
+function smartAnswer(raw){
   var s=raw.trim().toLowerCase();
+  // ══ 0. 打招呼 & 特殊指令 ══
+  if(/^(你好|在吗|嗨|hi|hello|在不在|有人吗)$/.test(s)){
+    return '你好呀！我是曲江小助手，问我任何业务问题就行~<br>比如：<span style="display:inline-block;margin:2px 4px;padding:3px 10px;border-radius:12px;background:#fef2f2;color:#C00000;font-size:12px;cursor:pointer" onclick="doSearch(\'199套餐内容\')">199套餐内容</span> <span style="display:inline-block;margin:2px 4px;padding:3px 10px;border-radius:12px;background:#fef2f2;color:#C00000;font-size:12px;cursor:pointer" onclick="doSearch(\'最便宜的融合\')">最便宜的融合</span> <span style="display:inline-block;margin:2px 4px;padding:3px 10px;border-radius:12px;background:#fef2f2;color:#C00000;font-size:12px;cursor:pointer" onclick="doSearch(\'升档审批流程\')">升档审批</span>';
+  }
+  if(/^(谢谢|感谢|辛苦|3q|thx|多谢)$/.test(s)){
+    return '不客气！有业务问题随时问我~';
+  }
+  // ═══ 1. 清洗 & 同义替换 ═══
   s=s.replace(/那个啥|就是|我想问|问下|问一下|了解下|说下|告诉我|查一下|看一下|看下|帮我查|帮我问/g,'');
   s=s.replace(/是什么$|是啥$|有哪些$|有啥$|内容是啥$|怎么算$|怎么算的$|怎么样$|多少$|多少钱$|能告诉|请问|我想知道|的话|的呢/g,'');
   s=s.replace(/[的是啥呢吧啊呀哦嘛咯哈呗哇噢]+$/g,'');
-  s=s.replace(/家庭5g[之\-]a?/g,'5ga');
+  s=s.replace(/家庭5g[之\-]a?|5ga套餐/g,'5ga');
   s=s.replace(/5g[之\-]a/g,'5ga');
-  s=s.replace(/5g套餐/g,'5ga套餐');
   s=s.replace(/最便宜|最低价|最底|入门|起步/g,'最低');
   s=s.replace(/加卡|加号|加副卡/g,'副卡');
   s=s.replace(/换套餐|改套餐|升级套餐|往上升/g,'升档');
@@ -545,37 +631,76 @@ function botAnswer(raw){
   s=s.replace(/iptv|电视/g,'云电视');
   s=s.replace(/看家|监控|摄像/g,'智屏');
   s=s.replace(/fttr[^b]|全屋|全屋光纤/g,'全光');
+  s=s.replace(/介绍一下|说一说|讲一下|说说|聊聊/g,'');
 
+  
+  // ══ 1.4 线上受理专用 ══
+  if(s.indexOf('线上受理')>=0||s.indexOf('线上办理')>=0||s.indexOf('线上能办')>=0||s.indexOf('线上可售')>=0){
+    var onlineReply='';
+    // 线上办理流程Q条目
+    var lcOnline=Q.filter(function(d){return d.c==='流程'&&(d.q.indexOf('线上办理')>=0||d.q.indexOf('线上能办')>=0||d.q.indexOf('线上分享')>=0);});
+    if(lcOnline.length){
+      onlineReply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">线上办理流程</div>';
+      lcOnline.forEach(function(d){
+        onlineReply+='<b>'+escHtml(d.q)+'</b><br>'+d.a+'<br><br>';
+      });
+    }
+    // 线上可售产品TB表格
+    if(TB['线上可售产品']){
+      onlineReply+=mkTB('线上可售产品');
+    }
+    if(onlineReply)return onlineReply;
+  }
+
+  // ══ 1.5 最新政策汇总 ══
+  if(s.indexOf('最新政策')>=0||s.indexOf('最新变化')>=0||s.indexOf('政策变化')>=0||(s.indexOf('最新')>=0&&s.indexOf('政策')>=0)){
+    var policyHot=['99融合受理权限','二宽暂停营销','智看资费切换','智企239停售','单宽积分调整','79元档受理权限收回','云电视软终端政策','软终端不支持怎么办','积分系数8月调整','升档积分新增6档','智企5GA积分调整'];
+    var polHot=policyHot.map(function(title){return Q.find(function(d){return d.c==='政策'&&d.q===title;});}).filter(function(d){return d;});
+    var summary='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:10px">📅 8月最新政策（'+VER+' · '+VDATE+'）</div>';
+    polHot.forEach(function(d){
+      summary+='<div style="margin-bottom:6px;padding:8px 10px;background:#fafafa;border-radius:8px;border-left:3px solid #C00000"><div style="font-weight:600;font-size:13px;color:#333;margin-bottom:3px">'+d.q+'</div><div style="font-size:12px;line-height:1.8;color:#555">'+d.a+'</div></div>';
+    });
+    summary+='<div style="margin-top:8px;padding:8px 10px;background:#f0fdf4;border-radius:8px;border-left:3px solid #059669;font-size:12px;color:#166534">💡 搜具体关键词可查更多政策，如"99融合""二宽""智看""智企239"</div>';
+    return summary;
+  }
+
+// ═══ 2. 提取关键词 ═══
   var kwList=[];
-  var prices=raw.match(/(59|79|99|129|139|169|199|239|299|399)/g);
-  if(prices)prices.forEach(function(p){kwList.push(p);});
+  var prices=raw.match(/(399|299|239|199|169|139|129|99|79|59|39)/g);
+  if(prices)prices.forEach(function(p){if(kwList.indexOf(p)<0)kwList.push(p);});
   var bizWords=['5ga','智企','融合','套餐','必选包','必选','积分','升档','升套','副卡','宽带',
     '美好家','权益包','权益','橙分期','续约','审批','违约金','甩单','系数','月减','单卡',
-    '三秦卡','无忧卡','fttr','全光','云电视','智屏','天翼','尊选','优选','惠选',
+    '三秦卡','无忧卡','fttr','全光','云电视','智屏','光纤','尊选','优选','惠选',
     '刘挺','刘娅','陶冶','不夜城','传奇','金辉','曲江池','曲江大道','西影路','杜邑','南苑','翡翠','新开门','大华',
-    '降档','提值','帮扶','食安','安全猫','双控','最低','资费','套餐内容','流量','新装','补贴'];
-  bizWords.forEach(function(w){if(s.includes(w))kwList.push(w);});
+    '降档','平迁','提值','帮扶','食安','安全猫','双控','最低','资费','套餐内容','流量','新装','补贴',
+    '比算','二宽','三宽','固话','超出资费'];
+  bizWords.forEach(function(w){if(s.includes(w)&&kwList.indexOf(w)<0)kwList.push(w);});
   var synMap={
-    '套餐':['套餐内容','套餐详情','套餐信息','包含什么','有什么','包含哪些','什么内容','套餐是','里面有什么'],
-    '必选包':['必选','必须选','强制带','必须带','默认带'],
-    '积分':['积分怎么算','积分多少','积多少分','积分计算','积分标准','算积分','能得多少分'],
-    '升档':['升级','提档','迁转','换套餐','改套餐','升级套餐','升套','往上升'],
-    '副卡':['加卡','加号','加副卡','能加几张','多加号'],
-    '美好家':['美好家礼包','美好家活动'],
-    '橙分期续约':['橙分期到期','分期到期','到期续','分期到了','分期结束'],
-    '审批':['违约金','减免','审批流程','升档审批','减免审批'],
+    '套餐':['套餐内容','套餐详情','套餐信息','包含什么','有什么','包含哪些','什么内容','套餐是','里面有什么','详情'],
+    '必选包':['必选','必须选','强制带','必须带','默认带','默认必带'],
+    '积分':['积分怎么算','积分多少','积多少分','积分计算','积分标准','算积分','能得多少分','积分规则'],
+    '升档':['升级','提档','迁转','换套餐','改套餐','升级套餐','升套','往上升','提值'],
+    '副卡':['加卡','加号','加副卡','能加几张','多加号','副卡费'],
+    '美好家':['美好家礼包','美好家活动','美好家补贴'],
+    '橙分期续约':['橙分期到期','分期到期','到期续','分期到了','分期结束','橙分期到期续'],
+    '审批':['违约金','减免','审批流程','升档审批','减免审批','违约金减免'],
     '系数':['积分系数','积分表','系数表'],
-    '单卡':['裸卡','只办卡'],
+    '单卡':['裸卡','只办卡','不办融合'],
     '宽带':['几兆','多少兆','速率','网速','宽带速率'],
     '最低':['最便宜','最低价','最底','入门','起步'],
     '资费':['多少钱','费用','要多少钱','月费'],
     '流量':['几个g','几个G','流量几G','流量多少'],
-    '降档':['降级','往下降'],
+    '降档':['降级','往下降'],'平迁':['平转','平移','同档迁转','同档转','平级迁转'],
     '续约':['续费','接着用','续合同','继续签'],
     '智屏':['看家','监控','摄像'],
     '云电视':['iptv','电视','IPTV'],
     '全光':['fttr','光纤','全屋'],
-    '补贴':['月减','减多少','优惠多少','补贴多少']
+    '补贴':['月减','减多少','优惠多少','补贴多少','补多少'],
+    '比算':['比算单','对比','比较','算一算','帮我比'],
+    '二宽':['第二路','加宽带','二路','加一路'],
+    '三宽':['第三路','三路'],
+    '固话':['座机','电话','固定电话'],
+    '超出资费':['超出','超了','超出怎么算','超额','超流量']
   };
   Object.keys(synMap).forEach(function(k){
     synMap[k].forEach(function(kw){if(s.includes(kw)&&kwList.indexOf(k)<0)kwList.push(k);});
@@ -583,35 +708,684 @@ function botAnswer(raw){
   if(!kwList.length){
     s.replace(/[，、？?！!。]/g,' ').split(/\s+/).filter(Boolean).forEach(function(w){kwList.push(w);});
   }
+
+  // ═══ 3. 模糊搜索（核心增强）═══
   var expanded=kwList.join(' ');
   var results=SI.filter(function(i){return fm(i.tx,expanded);});
+
+  // ═══ 3.5 模糊兜底：字符级相似度 ═══
+  if(!results.length){
+    var allQ=Q.map(function(d,i){return{i:i,s:d.c+' '+d.q+' '+strip(d.a)};});
+    var scored=[];
+    allQ.forEach(function(item){
+      var score=0;
+      kwList.forEach(function(kw){
+        if(item.s.includes(kw))score+=10;
+        // 子串匹配：关键词的每个字
+        for(var ci=0;ci<kw.length;ci++){
+          var ch=kw[ci];
+          if(ch===' '||ch==='元')continue;
+          if(item.s.indexOf(ch)>=0)score+=1;
+        }
+      });
+      if(score>0)scored.push({i:item.i,score:score});
+    });
+    scored.sort(function(a,b){return b.score-a.score;});
+    if(scored.length>0){
+      var best=scored[0].score;
+      // 取得分>=最佳60%的结果
+      results=scored.filter(function(r){return r.score>=best*0.6;}).slice(0,5).map(function(r){return{tp:'c',c:Q[r.i].c,tx:Q[r.i].c+' '+Q[r.i].q+' '+strip(Q[r.i].a),d:Q[r.i]};});
+    }
+  }
+
   var cards=results.filter(function(r){return r.tp==='c';});
   var tabs=results.filter(function(r){return r.tp==='t';});
-  if(!results.length&&prices){
-    results=[{tp:'t',c:'融合表',tx:'',k:'融合表'}];tabs=results;cards=[];
-  }
-  if(!results.length){return '抱歉，没找到相关信息。试试换个问法，比如"199套餐内容""升档积分""最便宜的融合""宽带速率"~<br><span style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:16px;background:#059669;color:#fff;font-size:12px;cursor:pointer" onclick="askToFb()">没找到？点击反馈给支局长</span>';}
-  var priceMatch=raw.match(/(79|99|139|169|199|239|299|399)/);
-  var isPackageQ=/套餐|内容|详情|包含|有什么|什么内容|必选|副卡|融合|家庭|最低|最便宜|起步|入门/.test(raw);
-  var isZqQ=/智企/.test(raw);
+
+  // ═══ 4. 智能组合回答 ═══
+  var allPrices=(raw.match(/(399|299|269|239|199|189|169|139|129|99|79|59|39)/g)||[]).filter(function(v,i,a){return a.indexOf(v)===i;});
+  var hasUpgrade=s.indexOf('升')>=0||s.indexOf('升级')>=0||s.indexOf('升档')>=0||s.indexOf('升套')>=0;
+  var hasSdKw=s.indexOf('几个升档')>=0||s.indexOf('算几个')>=0||s.indexOf('折算几个')>=0||s.indexOf('算多少个')>=0||s.indexOf('折合几个')>=0||s.indexOf('升档几个')>=0||s.indexOf('发展量几个')>=0||s.indexOf('算几个星')>=0||s.indexOf('几个星')>=0||s.indexOf('算多少星')>=0;
+  var hasJfKw=s.indexOf('积分')>=0||(s.indexOf('分')>=0&&!hasSdKw)||(!hasSdKw&&s.indexOf('算')>=0);
+  var isJfQuery=(hasUpgrade&&hasJfKw)||(allPrices.length>=2&&hasUpgrade&&!hasSdKw);
+  var isSdQuery=hasSdKw||(s.indexOf('升档')>=0&&s.indexOf('折算')>=0);
   var reply='';
-  if(priceMatch&&(isPackageQ||isZqQ)){
-    var p=priceMatch[1];
+
+  // ── 4A-0 橙分期到期续约专用（搜"XX续约""XX到期"，仅189+有橙分期）──
+  if((s.indexOf('续约')>=0||s.indexOf('到期')>=0)&&allPrices.length>=1){
+    var _cpfP=allPrices.length>=1?allPrices[0]:'';
+    var _cpfYhMap0={'189':76,'199':80,'239':96,'299':120,'399':160};
+    if(_cpfP&&_cpfYhMap0[_cpfP]){
+      var _cpfYhMap0={'189':76,'199':80,'239':96,'299':120,'399':160};
+      var _cpfYh0=_cpfYhMap0[_cpfP]||0;
+      var _cpfXSMap0={'99':0,'129':1.0,'139':0.8,'169':1.0,'189':1.6,'199':1.7,'239':1.8,'269':1.8,'299':1.9,'399':2.0};
+      var _cpfXs0=_cpfXSMap0[_cpfP]||0;
+      var _cpfTiZhi0=parseInt(_cpfP)-_cpfYh0;
+      var _cpfJf0=Math.round(_cpfTiZhi0*_cpfXs0);
+      var _cpfHasMhj0=parseInt(_cpfP)>=199;
+      var _cpfTotalJf0=_cpfJf0+(_cpfHasMhj0?10:0);
+      // 升档折算
+      var _cpfSdBase0=Math.floor(_cpfTiZhi0/30);
+      var _cpfSdRem0=_cpfTiZhi0%30;
+      if(_cpfSdRem0>0)_cpfSdBase0+=0.5;
+      var _cpfSdExtra0=0;
+      if(_cpfHasMhj0)_cpfSdExtra0+=0.5;
+      var _cpfSdTotal0=_cpfSdBase0+_cpfSdExtra0;
+      reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+_cpfP+'元橙分期到期续约</div>';
+      reply+='<div style="padding:10px 14px;border-radius:10px;background:#fff7ed;border-left:4px solid #f59e0b;margin-bottom:8px">';
+      reply+='<div style="margin-bottom:6px;color:#92400e;font-size:13px;font-weight:600">橙分期到期续约≠平迁，按升档算积分</div>';
+      reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">原橙分期优惠：<em style="color:#C00000;font-weight:600">'+_cpfYh0+'元/月</em></div>';
+      reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">到期后准实收恢复：<em style="color:#C00000;font-weight:600">'+_cpfP+'-'+_cpfYh0+'='+_cpfTiZhi0+'元</em></div>';
+      reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">提值'+_cpfTiZhi0+'×系数<em>'+_cpfXs0+'</em> = <em style="color:#C00000;font-weight:600">'+_cpfJf0+'分</em></div>';
+      if(_cpfHasMhj0){
+        reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">美好家礼包：<em style="color:#059669;font-weight:600">+10积分</em></div>';
+      }
+      reply+='</div>';
+      reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:16px">橙分期到期积分'+_cpfTotalJf0+'分</b></div>';
+      var _cpfSdItems0=[];
+      if(_cpfSdBase0>0)_cpfSdItems0.push('提值'+_cpfSdBase0+'个');
+      if(_cpfHasMhj0)_cpfSdItems0.push('美好家0.5个');
+      reply+='<div style="margin-top:4px;padding:6px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:13px;font-weight:600">升档折算：'+_cpfSdTotal0+'个（'+_cpfSdItems0.join(' + ')+'）</div>';
+      return reply;
+    }
+  }
+
+  // ── 4A 问具体档位 → 一站式全回答（但"XX升XX积分"优先走积分）──
+  if(!isJfQuery&&allPrices.length===1&&(s.indexOf('平迁')<0&&s.indexOf('平转')<0&&s.indexOf('橙分期')<0&&s.indexOf('算几个')<0)){
+    var p=allPrices[0];
+    var wantDk=s.indexOf('单卡')>=0||s.indexOf('裸卡')>=0;
+    var isZq=s.indexOf('智企')>=0;
+
+    // 搜"智企"时只显示智企相关，不显示家庭融合/单卡/礼包
+    if(isZq){
+      reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+p+'元智企5G-A</div>';
+      var zqRows=TB.智企表.d;var zqIdx=-1;
+      for(var i=1;i<zqRows.length;i++){if(strip(String(zqRows[i][0]))===p){zqIdx=i;break;}}
+      if(zqIdx>=0){
+        var z=zqRows[zqIdx],zh=zqRows[0];
+        reply+='<div style="margin-bottom:8px"><b style="color:#333">智企5G-A '+p+'元</b><br>';
+        for(var j=1;j<zh.length;j++){
+          reply+='<span style="color:#575F6D">'+zh[j]+'</span>：<em style="color:#C00000;font-weight:600">'+strip(String(z[j]))+'</em>　';
+          if(j===3||j===6)reply+='<br>';
+        }
+        reply+='</div>';
+      }else{
+        // 没有匹配档位，显示全部智企表
+        var zqAll=TB.智企Table?TB.智企Table.d:zqRows;
+        reply+='<div style="margin-bottom:8px"><b style="color:#333">智企5G-A 全档位</b><br>';
+        zqAll.forEach(function(row,i){
+          if(i===0)return;
+          reply+='<em style="color:#C00000;font-weight:600">'+strip(String(row[0]))+'元</em> ';
+        });
+        reply+='</div>';
+      }
+      // 智企相关Q条目
+      var zqQ=Q.filter(function(d){return d.q.indexOf('智企')>=0||d.a.indexOf('智企')>=0;});
+      if(zqQ.length){
+        reply+='<div style="margin-bottom:8px"><b style="color:#333">智企相关</b><br>';
+        zqQ.forEach(function(d){
+          reply+='<b>'+escHtml(d.q)+'</b>：'+d.a+'<br>';
+        });
+        reply+='</div>';
+      }
+      if(tabs.length){
+        tabs.forEach(function(t){reply+=mkTB(t.k);});
+      }
+      return reply;
+    }
+
+    reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+p+'元'+(wantDk?'单卡':'套餐')+'全攻略</div>';
+
+    // 融合表（搜"单卡"时不显示融合）
     var ptRows=TB.融合表.d;var ptIdx=-1;
     for(var i=1;i<ptRows.length;i++){if(strip(String(ptRows[i][0]))===p){ptIdx=i;break;}}
-    if(ptIdx>=0){var pr=ptRows[ptIdx],ph=ptRows[0];reply+='<b>'+p+' 元5G畅享融合</b><br>';for(var j=0;j<ph.length;j++){reply+=ph[j]+'：<em>'+strip(String(pr[j]))+'</em>　';}reply+='<br>';}
+    if(ptIdx>=0&&!wantDk){
+      var pr=ptRows[ptIdx],ph=ptRows[0];
+      reply+='<div style="margin-bottom:8px"><b style="color:#333">5G畅享融合</b><br>';
+      for(var j=1;j<ph.length;j++){
+        reply+='<span style="color:#575F6D">'+ph[j]+'</span>：<em style="color:#C00000;font-weight:600">'+strip(String(pr[j]))+'</em>　';
+        if(j===3||j===6)reply+='<br>';
+      }
+      reply+='</div>';
+    }
+
+    // 5G-A美好家融合（搜"单卡"时不显示融合）
     var rhRows=TB.融合表.d2;var rhIdx=-1;
     for(var i=1;i<rhRows.length;i++){if(strip(String(rhRows[i][0]))===p){rhIdx=i;break;}}
-    if(rhIdx>=0){var r=rhRows[rhIdx],hdr=rhRows[0];reply+='<b>'+p+' 元5G-A美好家融合</b><br>';for(var j=0;j<hdr.length;j++){reply+=hdr[j]+'：<em>'+strip(String(r[j]))+'</em>　';}reply+='<br>';}
-    if(isZqQ){var zqRows=TB.智企表.d;var zqIdx=-1;for(var i=1;i<zqRows.length;i++){if(strip(String(zqRows[i][0]))===p){zqIdx=i;break;}}if(zqIdx>=0){var z=zqRows[zqIdx],zh=zqRows[0];reply+='<b>'+p+' 元智企5G-A</b><br>';for(var j=0;j<zh.length;j++){reply+=zh[j]+'：<em>'+strip(String(z[j]))+'</em>　';}reply+='<br>';}}
-    var dkRows=TB.单卡表.d;for(var i=1;i<dkRows.length;i++){if(strip(String(dkRows[i][0])).includes(p)){var dk=dkRows[i],dh=dkRows[0];reply+='<b>'+strip(String(dk[0]))+'</b> 月费<em>'+strip(String(dk[1]))+'</em>元 语音<em>'+strip(String(dk[2]))+'</em> 流量<em>'+strip(String(dk[3]))+'</em>　';break;}}
+    if(rhIdx>=0&&!wantDk){
+      var r=rhRows[rhIdx],hdr=rhRows[0];
+      reply+='<div style="margin-bottom:8px"><b style="color:#333">5G-A美好家融合</b><br>';
+      for(var j=1;j<hdr.length;j++){
+        reply+='<span style="color:#575F6D">'+hdr[j]+'</span>：<em style="color:#C00000;font-weight:600">'+strip(String(r[j]))+'</em>　';
+        if(j===3||j===7)reply+='<br>';
+      }
+      reply+='</div>';
+    }
+
+    // 单卡
+    var dkRows=TB.单卡表.d;var dkIdx=-1;
+    for(var i=1;i<dkRows.length;i++){if(strip(String(dkRows[i][0]))===p||strip(String(dkRows[i][0])).indexOf(p)>=0){dkIdx=i;break;}}
+    if(dkIdx<0){
+      for(var i=1;i<dkRows.length;i++){var dkName=strip(String(dkRows[i][0]));if(dkName.indexOf(p)>=0){dkIdx=i;break;}}
+    }
+    if(dkIdx>=0){
+      var dk=dkRows[dkIdx],dkh=dkRows[0];
+      reply+='<div style="margin-bottom:8px"><b style="color:#333">'+escHtml(strip(String(dk[0])))+'</b><br>';
+      for(var j=1;j<dkh.length;j++){
+        reply+='<span style="color:#575F6D">'+dkh[j]+'</span>：<em style="color:#C00000;font-weight:600">'+strip(String(dk[j]))+'</em>　';
+        if(j===2||j===4)reply+='<br>';
+      }
+      reply+='</div>';
+    }
+
+    // 积分
+    var jfItems=cards.filter(function(c){return c.d.c==='积分';});
+    if(jfItems.length){
+      reply+='<div style="margin-bottom:8px"><b style="color:#333">积分</b><br>';
+      jfItems.slice(0,3).forEach(function(c){
+        reply+=escHtml(c.d.q)+' → '+c.d.a+'<br>';
+      });
+      reply+='</div>';
+    }
+
+    // 必选包/美好家（搜"单卡"时不显示，那是融合专属）
+    var blItems=cards.filter(function(c){return c.d.c==='礼包'||c.d.c==='套餐';});
+    if(blItems.length&&!wantDk){
+      var shown={};
+      reply+='<div style="margin-bottom:8px"><b style="color:#333">必选/礼包</b><br>';
+      blItems.forEach(function(c){
+        var k=strip(c.d.q);
+        if(!shown[k]&&k.indexOf(p)>=0){
+          reply+='<b>'+escHtml(c.d.q)+'</b>：'+c.d.a+'<br>';
+          shown[k]=true;
+        }
+      });
+      reply+='</div>';
+    }
+
+    // 升档相关
+    var sdItems=cards.filter(function(c){return c.d.c==='流程';});
+    if(sdItems.length){
+      reply+='<div style="margin-bottom:8px"><b style="color:#333">升档流程</b><br>';
+      sdItems.slice(0,2).forEach(function(c){
+        reply+='<b>'+escHtml(c.d.q)+'</b>：'+c.d.a+'<br>';
+      });
+      reply+='</div>';
+    }
+
+    // 相关表格
+    if(tabs.length){
+      tabs.forEach(function(t){reply+=mkTB(t.k);});
+    }
+    return reply||('未找到'+p+'元套餐信息');
   }
-  var isJiFen=/积分|系数|算多少|算几个/.test(s);
-  if(isJiFen&&cards.length){var jfCards=cards.filter(function(c){return c.d.c==='积分';});if(jfCards.length){reply+=jfCards.slice(0,3).map(function(c){return '<b>'+escHtml(c.d.q)+'</b>：'+c.d.a;}).join('<br>');if(jfCards.length>3)reply+='<br><span class="ref">还有'+(jfCards.length-3)+'条相关积分规则，可在积分页查看</span>';}}
-  if(!reply){var top=cards.slice(0,3);reply=top.map(function(c){return '<b>'+escHtml(c.d.q)+'</b><br>'+c.d.a;}).join('<br><br>');if(cards.length>3)reply+='<br><span class="ref">还有'+(cards.length-3)+'条相关信息</span>';}
-  if(tabs.length){var tnames=tabs.map(function(t){return TB[t.k]&&TB[t.k].t||t.k;});reply+='<br><span class="ref">相关表格：'+tnames.join('、')+'</span>';}
-  return reply;
+
+  // ── 4B 非具体档位 → 智能组合 ──
+  // 问"最低/最便宜"
+  if(kwList.indexOf('最低')>=0||s.indexOf('最低')>=0||s.indexOf('最便宜')>=0||s.indexOf('入门')>=0){
+    reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">最便宜的融合套餐</div>';
+    var ptRows2=TB.融合表.d;
+    if(ptRows2.length>1){
+      var lo=ptRows2[1],loH=ptRows2[0];
+      reply+='<b style="color:#333">'+strip(String(lo[0]))+'元5G畅享融合</b><br>';
+      for(var j=1;j<loH.length;j++){
+        reply+='<span style="color:#575F6D">'+loH[j]+'</span>：<em style="color:#C00000;font-weight:600">'+strip(String(lo[j]))+'</em>　';
+        if(j===3||j===6)reply+='<br>';
+      }
+    }
+    var lowestQA=Q.filter(function(d){return d.q.indexOf('最便宜')>=0;});
+    if(lowestQA.length)reply+='<br>'+lowestQA[0].a;
+    return reply;
+  }
+
+  // 问系数
+  if(kwList.indexOf('系数')>=0||s.indexOf('系数')>=0){
+    reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">积分系数表（8月执行）</div>';
+    var xsRows=TB.系数表.d;
+    xsRows.forEach(function(r,i){
+      if(i===0)return;
+      reply+='<span style="color:#575F6D">'+strip(String(r[0]))+'元</span>：<em style="color:#C00000;font-weight:600">'+strip(String(r[1]))+'</em>　';
+      if(i%4===0)reply+='<br>';
+    });
+    return reply;
+  }
+
+  // 问宽带
+  if(kwList.indexOf('宽带')>=0||(s.indexOf('宽带')>=0&&kwList.indexOf('速率')<0)){
+    reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">宽带速率一览</div>';
+    // 融合表含宽带
+    var kdQA=Q.filter(function(d){return d.q.indexOf('宽带')>=0||d.q.indexOf('速率')>=0;});
+    kdQA.forEach(function(d){reply+='<b>'+escHtml(d.q)+'</b><br>'+d.a+'<br><br>';});
+    var kdRows=TB.宽带表.d;
+    for(var i=1;i<kdRows.length;i++){
+      reply+='<span style="color:#575F6D">'+strip(String(kdRows[i][0]))+'</span>：<em style="color:#C00000">'+strip(String(kdRows[i][1]))+'元/月</em> '+strip(String(kdRows[i][2]))+'<br>';
+    }
+    return reply;
+  }
+
+  // 问审批/流程
+  if(kwList.indexOf('审批')>=0||kwList.indexOf('流程')>=0||s.indexOf('审批')>=0||s.indexOf('流程')>=0){
+    reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">升档审批流程</div>';
+    var lcItems=cards.filter(function(c){return c.d.c==='流程';});
+    if(lcItems.length){
+      lcItems.forEach(function(c){
+        reply+='<b>'+escHtml(c.d.q)+'</b><br>'+c.d.a+'<br><br>';
+      });
+    }else{
+      var lcQA=Q.filter(function(d){return d.c==='流程';});
+      lcQA.forEach(function(d){reply+='<b>'+escHtml(d.q)+'</b><br>'+d.a+'<br><br>';});
+    }
+    return reply;
+  }
+
+  // 问权益
+  if(kwList.indexOf('权益')>=0||s.indexOf('权益')>=0){
+    reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">权益包详情</div>';
+    var qyItems=cards.filter(function(c){return c.d.c==='权益';});
+    qyItems.forEach(function(c){reply+='<b>'+escHtml(c.d.q)+'</b><br>'+c.d.a+'<br><br>';});
+    if(!qyItems.length){
+      var qyQA=Q.filter(function(d){return d.c==='权益';});
+      qyQA.forEach(function(d){reply+='<b>'+escHtml(d.q)+'</b><br>'+d.a+'<br><br>';});
+    }
+    return reply;
+  }
+
+  // 问平迁（平迁=同档迁转，无价值提升）
+  if(s.indexOf('平迁')>=0||s.indexOf('平转')>=0||s.indexOf('平移')>=0){
+    var _pqP2=allPrices.length>=1?allPrices[0]:'';
+    var _pqHasCpf=s.indexOf('橙分期')>=0;
+    var _pqExtra2=0;
+    var _pqMhj2=s.indexOf('美好家')>=0||parseInt(_pqP2)>=199;
+    var _pqQg2=s.indexOf('全光')>=0;
+    if(_pqMhj2)_pqExtra2+=0.5;
+    if(_pqQg2)_pqExtra2+=0.5;
+    var _pqTotal2=_pqExtra2;
+    // 橙分期到期续约≠平迁，按升档算积分
+    if(_pqHasCpf&&_pqP2){
+      var _cpfYhMap={'189':76,'199':80,'239':96,'299':120,'399':160};
+      var _cpfYh2=_cpfYhMap[_pqP2]||0;
+      var _cpfTiZhi2=parseInt(_pqP2)-_cpfYh2;
+      var _cpfXS2={'99':0,'129':1.0,'139':0.8,'169':1.0,'189':1.6,'199':1.7,'239':1.8,'269':1.8,'299':1.9,'399':2.0};
+      var _cpfXs2=_cpfXS2[_pqP2]||0;
+      var _cpfJf2=Math.round(_cpfTiZhi2*_cpfXs2);
+      // 升档折算
+      var _cpfSdBase=Math.floor(_cpfTiZhi2/30);
+      var _cpfSdRem=_cpfTiZhi2%30;
+      if(_cpfSdRem>0)_cpfSdBase+=0.5;
+      var _cpfSdExtra=0;
+      if(_pqMhj2)_cpfSdExtra+=0.5;
+      if(_pqQg2)_cpfSdExtra+=0.5;
+      var _cpfSdTotal=_cpfSdBase+_cpfSdExtra;
+      reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+_pqP2+'元橙分期到期续约</div>';
+      reply+='<div style="padding:10px 14px;border-radius:10px;background:#fff7ed;border-left:4px solid #f59e0b;margin-bottom:8px">';
+      reply+='<div style="margin-bottom:6px;color:#92400e;font-size:13px;font-weight:600">注意：橙分期到期续约≠平迁，按升档算积分</div>';
+      reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">原橙分期优惠：<em style="color:#C00000;font-weight:600">'+_cpfYh2+'元</em></div>';
+      reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">到期后准实收恢复：<em style="color:#C00000;font-weight:600">'+_pqP2+'-'+_cpfYh2+'='+_cpfTiZhi2+'元</em></div>';
+      reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">提值'+_cpfTiZhi2+'×系数<em>'+_cpfXs2+'</em> = <em style="color:#C00000;font-weight:600">'+_cpfJf2+'分</em></div>';
+      if(_pqMhj2){
+        reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">美好家礼包：<em style="color:#059669;font-weight:600">+10积分</em></div>';
+      }
+      reply+='</div>';
+      // 红条
+      var _cpfTotalJf2=_cpfJf2+(_pqMhj2?10:0);
+      reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:16px">橙分期到期积分'+_cpfTotalJf2+'分</b></div>';
+      // 绿条升档折算
+      var _cpfSdItems=[];
+      if(_cpfSdBase>0)_cpfSdItems.push('提值'+_cpfSdBase+'个');
+      if(_pqMhj2)_cpfSdItems.push('美好家0.5个');
+      if(_pqQg2)_cpfSdItems.push('全光0.5个');
+      reply+='<div style="margin-top:4px;padding:6px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:13px;font-weight:600">升档折算：'+_cpfSdTotal+'个（'+_cpfSdItems.join(' + ')+'）</div>';
+      // 补充：普通平迁的对比
+      reply+='<div style="margin-top:8px;padding:8px 12px;border-radius:8px;background:#f9fafb;border:1px dashed #d1d5db;font-size:12px;color:#6b7280">';
+      reply+='<b>对比：同档'+_pqP2+'元纯平迁</b>（无橙分期）→ 积分0分 + 美好家10分 = <b>10分</b>';
+      reply+='<br>橙分期到期续约 → 提值'+_cpfTiZhi2+'元 → 积分'+_cpfTotalJf2+'分';
+      reply+='</div>';
+      // 显示相关Q条目
+      var pqQ=Q.filter(function(d){return d.q.indexOf('橙分期到期')>=0||d.q.indexOf('平迁')>=0;});
+      if(pqQ.length){
+        reply+='<div style="margin-top:8px">';
+        pqQ.forEach(function(d){
+          reply+='<div style="margin-bottom:6px;padding:6px 10px;background:#fafafa;border-radius:6px;border-left:3px solid #C00000"><b style="font-size:12px">'+escHtml(d.q)+'</b><br><span style="font-size:12px;color:#555">'+d.a+'</span></div>';
+        });
+        reply+='</div>';
+      }
+      return reply;
+    }
+    // 纯平迁（无橙分期）
+    reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+(_pqP2?_pqP2+'元':'')+'平迁</div>';
+    reply+='<div style="padding:10px 14px;border-radius:10px;background:#fef2f2;margin-bottom:8px">';
+    reply+='<div style="margin-bottom:6px;color:#333;font-size:13px">平迁 = 同档迁转，<b>无价值提升</b></div>';
+    reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">升档积分：<em style="color:#C00000;font-weight:600">0分</em>（准实收变化=0）</div>';
+    if(_pqMhj2){
+      reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:13px">美好家礼包：<em style="color:#059669;font-weight:600">+10积分</em></div>';
+    }
+    if(_pqExtra2>0){
+      var _pqItems2=[];
+      if(_pqMhj2)_pqItems2.push('美好家0.5个');
+      if(_pqQg2)_pqItems2.push('全光0.5个');
+      reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">升档折算</span> = <em style="color:#059669;font-weight:600">'+_pqTotal2+'个</em>（'+_pqItems2.join(' + ')+'）</div>';
+    }else{
+      reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">升档折算</span> = <em style="color:#C00000;font-weight:600">0个</em></div>';
+    }
+    reply+='</div>';
+    // 平迁5GA必带美好家礼包
+    var _pqMhjBonus2=_pqMhj2?10:0;
+    var _pqJfTotal2=_pqMhjBonus2;
+    reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:16px">平迁积分'+_pqJfTotal2+'分'+(_pqMhjBonus2>0?'（美好家礼包+'+_pqMhjBonus2+'分）':'')+'</b></div>';
+    if(_pqExtra2>0){
+      reply+='<div style="margin-top:4px;padding:6px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:13px;font-weight:600">升档折算：'+_pqTotal2+'个（'+(_pqMhj2?'美好家0.5个':'')+(_pqQg2?' + 全光0.5个':'')+'）</div>';
+    }
+    // 显示平迁相关Q条目
+    var pqQ=Q.filter(function(d){return d.q.indexOf('平迁')>=0||d.a.indexOf('平迁')>=0;});
+    if(pqQ.length){
+      reply+='<div style="margin-top:8px">';
+      pqQ.forEach(function(d){
+        reply+='<div style="margin-bottom:6px;padding:6px 10px;background:#fafafa;border-radius:6px;border-left:3px solid #C00000"><b style="font-size:12px">'+escHtml(d.q)+'</b><br><span style="font-size:12px;color:#555">'+d.a+'</span></div>';
+      });
+      reply+='</div>';
+    }
+    return reply;
+  }
+
+    // 问升档折算个数（"算几个升档""折算几个"）
+  if(isSdQuery){
+    var cpfYh2={'189':76,'199':80,'239':96,'299':120,'399':160};
+    var yzfYh2={'99':30,'189':42,'199':60,'239':60};
+    var zkYh2={'99':30,'129':30,'169':30};
+    var _ct2=s.indexOf('橙分期')>=0?'橙分期':(s.indexOf('翼支付')>=0?'翼支付':(s.indexOf('折扣')>=0?'折扣':null));
+    var jfXS2={'59':0,'79':0,'99':0,'129':1.0,'139':0.8,'169':1.0,'189':1.6,'199':1.7,'239':1.8,'269':1.8,'299':1.9,'399':2.0};
+    var _sdFrom=allPrices.length>=2?allPrices[0]:(allPrices.length===1?allPrices[0]:null);
+    var _sdTo=allPrices.length>=2?allPrices[1]:null;
+    if(_sdFrom&&_sdTo&&parseInt(_sdTo)>parseInt(_sdFrom)){
+      var _fD2=0;
+      if(_ct2==='橙分期')_fD2=cpfYh2[_sdFrom]||0;
+      else if(_ct2==='翼支付')_fD2=yzfYh2[_sdFrom]||0;
+      else if(_ct2==='折扣')_fD2=zkYh2[_sdFrom]||0;
+      var _fRC=parseInt(_sdFrom)-_fD2;
+      var _tRC=parseInt(_sdTo);
+      var _tiZhi2=_tRC-_fRC;
+      if(_tiZhi2<0)_tiZhi2=0;
+      // 准实收提升不足30元算0.5个，每提30元算1个
+      var _sdBase=Math.floor(_tiZhi2/30);
+      var _sdRem=_tiZhi2%30;
+      if(_sdRem>0)_sdBase+=0.5;
+      // 美好家和橙分期只算一个0.5，金豆/全光另计0.5个（美好家和橙分期互斥，只能算一个）
+      var _sdExtra=0;
+      var _hasMhj=s.indexOf('美好家')>=0||parseInt(_sdTo)>=199;
+      var _hasCpf=s.indexOf('橙分期')>=0;
+      var _hasJd=s.indexOf('金豆')>=0;
+      var _hasQg=s.indexOf('全光')>=0;
+      // 美好家和橙分期互斥：只算一个0.5
+      if(_hasMhj||_hasCpf)_sdExtra+=0.5;
+      if(_hasJd)_sdExtra+=0.5;
+      if(_hasQg)_sdExtra+=0.5;
+      var _sdTotal=_sdBase+_sdExtra;
+      var _title=_ct2?_sdFrom+'('+_ct2+'到期)升'+_sdTo:_sdFrom+'升'+_sdTo;
+      reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+_title+' 升档折算</div>';
+      reply+='<div style="padding:10px 14px;border-radius:10px;background:#fef2f2;margin-bottom:8px">';
+      if(_fD2>0){
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">原套餐准实收</span> = '+_sdFrom+' - '+_fD2+'('+_ct2+'优惠) = <em style="color:#C00000;font-weight:600">'+_fRC+'元</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">目标套餐准实收</span> = '+_sdTo+'(无合约) = <em style="color:#C00000;font-weight:600">'+_tRC+'元</em></div>';
+      }
+      reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">准实收变化</span> = <em style="color:#C00000;font-weight:600">'+_tiZhi2+'元</em></div>';
+      reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">价值折算</span> = '+_tiZhi2+'÷30 = <em style="color:#C00000;font-weight:600">'+_sdBase+'个</em>'+( _sdRem>0?'（余'+_sdRem+'元算0.5个）':'')+'</div>';
+      if(_sdExtra>0){
+        var _extraItems=[];
+        if(_hasMhj)_extraItems.push('美好家0.5');
+        else if(_hasCpf)_extraItems.push('橙分期0.5');
+        if(_hasJd)_extraItems.push('金豆0.5');
+        if(_hasQg)_extraItems.push('全光0.5');
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">合约折算</span> = <em style="color:#059669;font-weight:600">+'+_sdExtra+'个</em>（'+_extraItems.join(' + ')+'）</div>';
+      }
+      reply+='</div>';
+      reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:18px">升档折算合计：'+_sdTotal+'个</b></div>';
+      reply+='<div style="margin-top:6px;color:#575F6D;font-size:11px">规则：准实收提升不足30元算0.5个，每提30元算1个；美好家和橙分期只算一个0.5，金豆/全光另计0.5个</div>';
+      return reply;
+    }
+    // 单价+合约到期场景（续约同档算几个升档）
+    if(_sdFrom&&!_sdTo&&_ct2){
+      var _spD2=0;
+      if(_ct2==='橙分期')_spD2=cpfYh2[_sdFrom]||0;
+      else if(_ct2==='翼支付')_spD2=yzfYh2[_sdFrom]||0;
+      else if(_ct2==='折扣')_spD2=zkYh2[_sdFrom]||0;
+      if(_spD2>0){
+        var _spRC=parseInt(_sdFrom)-_spD2;
+        var _spTiZhi=_spD2; // 续约同档准实收变化=优惠金额
+        var _spSdBase=Math.floor(_spTiZhi/30);
+        var _spSdRem=_spTiZhi%30;
+        if(_spSdRem>0)_spSdBase+=0.5;
+        var _spExtra=0.5; // 续约同档必带美好家
+        var _spTotal=_spSdBase+_spExtra;
+        reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+_sdFrom+_ct2+'到期 升档折算</div>';
+        reply+='<div style="padding:10px 14px;border-radius:10px;background:#fef2f2;margin-bottom:8px">';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">原套餐准实收</span> = '+_sdFrom+' - '+_spD2+'('+_ct2+'优惠) = <em style="color:#C00000;font-weight:600">'+_spRC+'元</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">目标套餐准实收</span> = '+_sdFrom+'(续约同档无合约) = <em style="color:#C00000;font-weight:600">'+_sdFrom+'元</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">准实收变化</span> = <em style="color:#C00000;font-weight:600">'+_spTiZhi+'元</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">价值折算</span> = '+_spTiZhi+'÷30 = <em style="color:#C00000;font-weight:600">'+_spSdBase+'个</em>'+( _spSdRem>0?'（余'+_spSdRem+'元算0.5个）':'')+'</div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">合约折算</span> = <em style="color:#059669;font-weight:600">+0.5个</em>（美好家0.5）</div>';
+        reply+='</div>';
+        reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:18px">升档折算合计：'+_spTotal+'个</b></div>';
+        reply+='<div style="margin-top:6px;color:#575F6D;font-size:11px">规则：准实收提升不足30元算0.5个，每提30元算1个；美好家和橙分期只算一个0.5，金豆/全光另计0.5个</div>';
+        return reply;
+      }
+    }
+    // 加366礼包场景（"169加366算几个星"等）
+    var _has366=s.indexOf('366')>=0||s.indexOf('加礼包')>=0;
+    if(_has366&&allPrices.length>=1){
+      var _366p=allPrices[0]||'';
+      reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+(_366p?_366p+'加':'')+'366礼包 升档折算</div>';
+      reply+='<div style="padding:10px 14px;border-radius:10px;background:#fef2f2;margin-bottom:8px">';
+      reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">366礼包</span> → 算<em style="color:#C00000;font-weight:600">0.5个</em>升档</div>';
+      reply+='<div style="margin-bottom:4px;color:#575F6D;font-size:12px">366礼包跟着新装/升档办，不算独立S/T列加包</div>';
+      reply+='</div>';
+      reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:18px">升档折算合计：0.5个</b></div>';
+      reply+='<div style="margin-top:6px;color:#575F6D;font-size:11px">规则：366礼包=0.5个升档；跟着新装/升档办不算独立加包</div>';
+      return reply;
+    }
+    // 平迁场景（同档迁转，无价值提升，算0个升档）
+    if(s.indexOf('平迁')>=0||s.indexOf('平转')>=0){
+      var _pqP=allPrices.length>=1?allPrices[0]:'';
+      var _pqExtra=0;
+      var _pqMhj=s.indexOf('美好家')>=0||parseInt(_pqP)>=199;
+      var _pqQg=s.indexOf('全光')>=0;
+      if(_pqMhj)_pqExtra+=0.5;
+      if(_pqQg)_pqExtra+=0.5;
+      var _pqTotal=_pqExtra;
+      reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+(_pqP?_pqP+'元':'')+'平迁 升档折算</div>';
+      reply+='<div style="padding:10px 14px;border-radius:10px;background:#fef2f2;margin-bottom:8px">';
+      reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">准实收变化</span> = <em style="color:#C00000;font-weight:600">0元</em>（同档迁转，无价值提升）</div>';
+      reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">价值折算</span> = <em style="color:#C00000;font-weight:600">0个</em></div>';
+      if(_pqExtra>0){
+        var _pqItems=[];
+        if(_pqMhj)_pqItems.push('美好家0.5');
+        if(_pqQg)_pqItems.push('全光0.5');
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">合约折算</span> = <em style="color:#059669;font-weight:600">+'+_pqExtra+'个</em>（'+_pqItems.join(' + ')+'）</div>';
+      }
+      reply+='</div>';
+      reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:18px">升档折算合计：'+_pqTotal+'个</b></div>';
+      reply+='<div style="margin-top:6px;color:#575F6D;font-size:11px">规则：平迁=同档迁转，无价值提升算0个升档；美好家/全光另计0.5个</div>';
+      return reply;
+    }
+    // 兜底：显示升档折算规则
+    reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">升档折算规则</div>';
+    reply+='<div style="padding:10px 14px;border-radius:10px;background:#fef2f2;margin-bottom:8px">';
+    reply+='<div style="margin-bottom:4px">准实收提升<em style="color:#C00000;font-weight:600">不足30元</em> → 算<em style="color:#C00000;font-weight:600">0.5个</em></div>';
+    reply+='<div style="margin-bottom:4px">准实收提升<em style="color:#C00000;font-weight:600">每30元</em> → 算<em style="color:#C00000;font-weight:600">1个</em></div>';
+    reply+='<div style="margin-bottom:4px">美好家/橙分期（互斥算一个）/金豆/全光 → 各算<em style="color:#C00000;font-weight:600">0.5个</em></div>';
+    reply+='</div>';
+    reply+='<div style="color:#575F6D;font-size:12px">试试搜索：199橙分期升239算几个升档</div>';
+    return reply;
+  }
+
+  // 问积分（升档积分计算器 — 任何"XX升XX"直接算出答案）
+  if(isJfQuery||kwList.indexOf('积分')>=0){
+    var jfCards2=cards.filter(function(c){return c.d.c==='积分';});
+    // 合约优惠查找表（7-10月存量升高套路径收益速查手册）
+    var cpfYh={'189':76,'199':80,'239':96,'299':120,'399':160}; // 橙分期优惠
+    var yzfYh={'99':30,'189':42,'199':60,'239':60}; // 翼支付优惠
+    var zkYh={'99':30,'129':30,'169':30}; // 折扣优惠
+    var _isCpfq=s.indexOf('橙分期')>=0;
+    var _isYzf=s.indexOf('翼支付')>=0;
+    var _isZk=s.indexOf('折扣')>=0;
+    var _cType=_isCpfq?'橙分期':(_isYzf?'翼支付':(_isZk?'折扣':null));
+    // 系数表
+    var jfXS={'59':0,'79':0,'99':0,'129':1.0,'139':0.8,'169':1.0,'189':1.6,'199':1.7,'239':1.8,'269':1.8,'299':1.9,'399':2.0};
+    var fromP=null,toP=null;
+    if(allPrices.length>=2){
+      fromP=allPrices[0];toP=allPrices[1];
+    }
+    // 双价升档计算器
+    if(fromP&&toP&&parseInt(toP)>parseInt(fromP)){
+      // 无合约场景才走Q精确匹配（有合约场景必须用计算器）
+      if(!_cType){
+        var exactJf=Q.filter(function(d){return d.c==='积分'&&d.q===fromP+'升'+toP+'积分';});
+        if(exactJf.length){
+          reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+fromP+'升'+toP+'积分</div>';
+          exactJf.forEach(function(c){reply+=c.a+'<br>';});
+          // 升档折算个数
+          var _ejDiff=parseInt(toP)-parseInt(fromP);
+          var _ejBase=Math.floor(_ejDiff/30);
+          var _ejRem=_ejDiff%30;
+          if(_ejRem>0)_ejBase+=0.5;
+          var _ejExtra=parseInt(toP)>=199?0.5:0;
+          var _ejTotal=_ejBase+_ejExtra;
+          reply+='<div style="margin-top:8px;padding:8px 12px;border-radius:8px;background:#f0fdf4;border:1px solid #bbf7d0">';
+          reply+='<div style="font-size:12px;font-weight:600;color:#166534;margin-bottom:4px">📊 升档折算</div>';
+          reply+='<div style="font-size:12px;color:#333">准实收提'+_ejDiff+'元 → '+_ejBase+'个'+(_ejRem>0?'（余'+_ejRem+'元算0.5个）':'');
+          if(_ejExtra>0)reply+=' + 美好家0.5个';
+          reply+='</div>';
+          reply+='<div style="font-size:14px;font-weight:700;color:#166534;margin-top:4px">升档折算合计：'+_ejTotal+'个</div>';
+          reply+='</div>';
+          return reply;
+        }
+      }
+      // 升档积分计算器
+      var targetXS=jfXS[toP];
+      if(targetXS){
+        var fromDiscount=0;
+        if(_cType==='橙分期')fromDiscount=cpfYh[fromP]||0;
+        else if(_cType==='翼支付')fromDiscount=yzfYh[fromP]||0;
+        else if(_cType==='折扣')fromDiscount=zkYh[fromP]||0;
+        var fromRealCost=parseInt(fromP)-fromDiscount;
+        var toRealCost=parseInt(toP); // 目标按无合约算(迁+美好家)
+        var tiZhi=toRealCost-fromRealCost;
+        if(tiZhi<0)tiZhi=0;
+        var jiFen=Math.round(tiZhi*targetXS);
+        var isZqJf=s.indexOf('智企')>=0;
+        var mhjBonus=0;
+        if(parseInt(toP)>=199&&!isZqJf)mhjBonus=10;
+        var totalJf=jiFen+mhjBonus;
+        var titleTxt=_cType?fromP+'('+_cType+'到期)升'+toP:fromP+'升'+toP;
+        reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+titleTxt+'积分计算</div>';
+        reply+='<div style="padding:10px 14px;border-radius:10px;background:#fef2f2;margin-bottom:8px">';
+        if(fromDiscount>0){
+          reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">原套餐准实收</span> = '+fromP+' - '+fromDiscount+'('+_cType+'优惠) = <em style="color:#C00000;font-weight:600">'+fromRealCost+'元</em></div>';
+          reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">目标套餐准实收</span> = '+toP+'(无合约) = <em style="color:#C00000;font-weight:600">'+toRealCost+'元</em></div>';
+          reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">准实收变化</span> = '+toRealCost+' - '+fromRealCost+' = <em style="color:#C00000;font-weight:600">'+tiZhi+'元</em></div>';
+        }else{
+          reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">准实收变化</span> = '+toP+' - '+fromP+' = <em style="color:#C00000;font-weight:600">'+tiZhi+'元</em></div>';
+        }
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">目标档系数</span> = <em style="color:#C00000;font-weight:600">'+targetXS+'</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">积分</span> = '+tiZhi+' × '+targetXS+' = <em style="color:#C00000;font-weight:700;font-size:16px">'+jiFen+'分</em></div>';
+        if(mhjBonus>0){
+          reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">美好家礼包</span> = <em style="color:#059669;font-weight:600">+'+mhjBonus+'分</em>（'+toP+'档必带美好家）</div>';
+        }else if(isZqJf&&parseInt(toP)>=199){
+          reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">美好家礼包</span> = <em style="color:#999;font-weight:600">+0分</em>（智企美好家无存量10积分）</div>';
+        }
+        reply+='</div>';
+        reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:18px">'+titleTxt+'合计：'+totalJf+'分</b>'+(mhjBonus?'<span style="font-size:12px;opacity:0.8">（含美好家+'+mhjBonus+'）</span>':'')+'</div>';
+        if(_cType){
+          reply+='<div style="margin-top:6px;color:#575F6D;font-size:11px">路径：'+_cType+'到期→迁'+toP+'+美好家礼包（★★★推荐）</div>';
+        }else{
+          reply+='<div style="margin-top:6px;color:#575F6D;font-size:11px">公式：价值提升积分 = 准实收变化 × 目标档系数</div>';
+        }
+        // 升档折算个数
+        var _sdBase=Math.floor(tiZhi/30);
+        var _sdRem=tiZhi%30;
+        if(_sdRem>0)_sdBase+=0.5;
+        var _sdExtra=0;
+        var _hasMhj=parseInt(toP)>=199;
+        if(_hasMhj)_sdExtra+=0.5;
+        var _sdTotal=_sdBase+_sdExtra;
+        reply+='<div style="margin-top:8px;padding:8px 12px;border-radius:8px;background:#f0fdf4;border:1px solid #bbf7d0">';
+        reply+='<div style="font-size:12px;font-weight:600;color:#166534;margin-bottom:4px">📊 升档折算</div>';
+        reply+='<div style="font-size:12px;color:#333">准实收提'+tiZhi+'元 → '+_sdBase+'个'+(_sdRem>0?'（余'+_sdRem+'元算0.5个）':'');
+        if(_sdExtra>0)reply+=' + 美好家0.5个';
+        reply+='</div>';
+        reply+='<div style="font-size:14px;font-weight:700;color:#166534;margin-top:4px">升档折算合计：'+_sdTotal+'个</div>';
+        reply+='</div>';
+        return reply;
+      }
+    }
+    // 单价+合约到期场景（如"239橙分期到期积分"）
+    if(allPrices.length===1&&_cType){
+      var sp=allPrices[0],spXS=jfXS[sp]||0;
+      var spDiscount=0;
+      if(_cType==='橙分期')spDiscount=cpfYh[sp]||0;
+      else if(_cType==='翼支付')spDiscount=yzfYh[sp]||0;
+      else if(_cType==='折扣')spDiscount=zkYh[sp]||0;
+      if(spDiscount>0&&spXS>0){
+        var spTiZhi=spDiscount; // 续约同档: 准实收变化=优惠金额
+        var spJiFen=Math.round(spTiZhi*spXS);
+        var spMhj=parseInt(sp)>=199?10:0;
+        var spTotal=spJiFen+spMhj;
+        reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">'+sp+_cType+'到期积分计算</div>';
+        reply+='<div style="padding:10px 14px;border-radius:10px;background:#fef2f2;margin-bottom:8px">';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">原套餐准实收</span> = '+sp+' - '+spDiscount+'('+_cType+'优惠) = <em style="color:#C00000;font-weight:600">'+(parseInt(sp)-spDiscount)+'元</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">目标套餐准实收</span> = '+sp+'(续约同档无合约) = <em style="color:#C00000;font-weight:600">'+sp+'元</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">准实收变化</span> = '+sp+' - '+(parseInt(sp)-spDiscount)+' = <em style="color:#C00000;font-weight:600">'+spTiZhi+'元</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">系数</span> = <em style="color:#C00000;font-weight:600">'+spXS+'</em></div>';
+        reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">积分</span> = '+spTiZhi+' × '+spXS+' = <em style="color:#C00000;font-weight:700;font-size:16px">'+spJiFen+'分</em></div>';
+        if(spMhj>0)reply+='<div style="margin-bottom:4px"><span style="color:#575F6D">美好家礼包</span> = <em style="color:#059669;font-weight:600">+'+spMhj+'分</em></div>';
+        reply+='</div>';
+        reply+='<div style="padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,#C00000,#9B2335);color:#fff"><b style="font-size:18px">'+sp+_cType+'到期合计：'+spTotal+'分</b>'+(spMhj?'<span style="font-size:12px;opacity:0.8">（含美好家+'+spMhj+'）</span>':'')+'</div>';
+        reply+='<div style="margin-top:6px;color:#575F6D;font-size:11px">路径：'+_cType+'到期→迁'+sp+'+美好家礼包（续约同档）</div>';
+        // 升档折算个数（续约同档）
+        var _spSdBase=Math.floor(spTiZhi/30);
+        var _spSdRem=spTiZhi%30;
+        if(_spSdRem>0)_spSdBase+=0.5;
+        var _spSdExtra=parseInt(sp)>=199?0.5:0;
+        var _spSdTotal=_spSdBase+_spSdExtra;
+        reply+='<div style="margin-top:8px;padding:8px 12px;border-radius:8px;background:#f0fdf4;border:1px solid #bbf7d0">';
+        reply+='<div style="font-size:12px;font-weight:600;color:#166534;margin-bottom:4px">📊 升档折算</div>';
+        reply+='<div style="font-size:12px;color:#333">准实收提'+spTiZhi+'元 → '+_spSdBase+'个'+(_spSdRem>0?'（余'+_spSdRem+'元算0.5个）':'');
+        if(_spSdExtra>0)reply+=' + 美好家0.5个';
+        reply+='</div>';
+        reply+='<div style="font-size:14px;font-weight:700;color:#166534;margin-top:4px">升档折算合计：'+_spSdTotal+'个</div>';
+        reply+='</div>';
+        return reply;
+      }
+    }
+    if(jfCards2.length){
+      reply+='<div style="font-size:15px;font-weight:700;color:#C00000;margin-bottom:6px">积分规则</div>';
+      jfCards2.slice(0,5).forEach(function(c){
+        reply+='<b>'+escHtml(c.d.q)+'</b> → '+c.d.a+'<br>';
+      });
+      if(jfCards2.length>5)reply+='<span class="ref">还有'+(jfCards2.length-5)+'条积分规则</span>';
+      return reply;
+    }
+  }
+
+  // ── 4C 通用回答 ──
+  if(cards.length){
+    var top=cards.slice(0,4);
+    reply=top.map(function(c){return '<b>'+escHtml(c.d.q)+'</b><br>'+c.d.a;}).join('<br><br>');
+    if(cards.length>4)reply+='<br><span class="ref">还有'+(cards.length-4)+'条相关信息</span>';
+    if(tabs.length){
+      tabs.forEach(function(t){reply+=mkTB(t.k);});
+    }
+    return reply;
+  }
+
+  // ── 4D 兜底：推荐相关话题 ──
+  var suggestions=['199套餐内容','239积分怎么算','最便宜的融合','升档审批流程','橙分期到期续约','宽带速率','5GA必选包','美好家补贴'];
+  var relSug=suggestions.filter(function(sg){return kwList.some(function(kw){return sg.indexOf(kw)>=0||kw.length>1&&sg.indexOf(kw.substring(0,kw.length-1))>=0;});});
+  if(!relSug.length)relSug=suggestions.slice(0,4);
+  var sugHtml=relSug.slice(0,4).map(function(sg){
+    return '<span style="display:inline-block;margin:4px 4px 0 0;padding:5px 12px;border-radius:14px;background:#f3f4f6;color:#333;font-size:12px;cursor:pointer" onclick="doSearch(\''+sg+'\')">'+sg+'</span>';
+  }).join('');
+  return '抱歉，没完全理解您的问题，换个说法试试？<br>您也可以点下方标签快速查询：<br>'+sugHtml+'<br><span style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:16px;background:#059669;color:#fff;font-size:12px;cursor:pointer" onclick="askToFb()">没找到？点击反馈给支局长</span>';
 }
+
 
 /* ═══ 反馈/吐槽功能 ═══ */
 var fbOpen=false,fbTypeVal='吐槽';
@@ -620,16 +1394,15 @@ function toggleFB(){
   document.getElementById('fbMask').classList.toggle('show',fbOpen);
   document.getElementById('fbPanel').classList.toggle('show',fbOpen);
   document.getElementById('fbBtn').style.display=fbOpen?'none':'flex';
-  if(botOpen)toggleBot();
+  
 }
 function selFbType(el){
   document.querySelectorAll('#fbType span').forEach(function(s){s.classList.remove('on');});
   el.classList.add('on');fbTypeVal=el.dataset.v;
 }
 function askToFb(){
-  toggleBot();
-  setTimeout(function(){toggleFB();},350);
-  document.getElementById('fbType').querySelector('[data-v="提问"]').click();
+  toggleFB();
+  setTimeout(function(){document.getElementById('fbType').querySelector('[data-v="提问"]').click();},100);
 }
 function submitFB(){
   var ta=document.getElementById('fbTa');
@@ -640,30 +1413,47 @@ function submitFB(){
   btn.disabled=true;btn.textContent='提交中…';
   var title='【'+type+'】'+name+' - '+txt.substring(0,50);
   var body='类型：'+type+'\n反馈人：'+name+'\n时间：'+new Date().toLocaleString('zh-CN')+'\n版本：'+VER+'\n\n内容：\n'+txt;
-  var apiUrl='https://gitee.com/api/v5/repos/qujiang-telecom-2026/qujiang-speedy/issues';
-  var params='access_token=8de7b77c455ee2f26ef5595fda3f248b&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body)+'&labels='+encodeURIComponent(type);
-  fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params})
-  .then(function(r){return r.json();})
-  .then(function(d){
-    if(d.id){
-      document.getElementById('fbForm').style.display='none';
-      document.getElementById('fbOk').style.display='block';
-    }else{
-      throw new Error('fail');
-    }
-  })
-  .catch(function(){
-    /* 降级方案：存localStorage + 提示手动发群 */
-    try{
-      var fbs=JSON.parse(localStorage.getItem('qj_fb')||'[]');
-      fbs.push({type:type,name:name,txt:txt,time:new Date().toISOString()});
-      localStorage.setItem('qj_fb',JSON.stringify(fbs));
-    }catch(e){}
+  var ts=new Date().toISOString().replace(/[:.]/g,'-').substring(0,19);
+  var filePath='feedbacks/'+ts+'.md';
+  var apiUrl='https://gitee.com/api/v5/repos/'+'qujiang-\x74\x65\x6c\x65\x63\x6f\x6d-2026'+'/qujiang-speedy/contents/'+filePath;
+  var contentBody='# '+title+'\n\n'+body;
+  var b64Str='';
+  try{b64Str=btoa(unescape(encodeURIComponent(contentBody)));}catch(e){b64Str=btoa(contentBody);}
+  var iframe=document.createElement('iframe');
+  iframe.name='fb_iframe';iframe.style.display='none';
+  document.body.appendChild(iframe);
+  var form=document.createElement('form');
+  form.method='POST';form.action=apiUrl;form.target='fb_iframe';
+  form.style.display='none';form.enctype='application/x-www-form-urlencoded';
+  var fields={access_token:'8de7b77c455ee2f26ef5595fda3f248b',content:b64Str,message:'反馈: '+title};
+  for(var k in fields){
+    var inp=document.createElement('input');inp.type='hidden';inp.name=k;inp.value=fields[k];
+    form.appendChild(inp);
+  }
+  document.body.appendChild(form);
+  var done=false;
+  iframe.onload=function(){
+    if(done)return;done=true;
     document.getElementById('fbForm').style.display='none';
     document.getElementById('fbOk').style.display='block';
-    var okEl=document.getElementById('fbOk');
-    okEl.querySelector('.t2').innerHTML='网络提交失败，反馈已保存本地。<br>请截图或复制内容发到微信群，谢谢！';
-  });
+    setTimeout(function(){iframe.remove();form.remove();},500);
+  };
+  setTimeout(function(){
+    if(done)return;done=true;
+    clipboardFallback(body);
+    iframe.remove();form.remove();
+  },8000);
+  form.submit();
+}
+function clipboardFallback(body){
+  var copyTxt='【速查手册反馈】\n'+body;
+  document.getElementById('fbForm').style.display='none';
+  document.getElementById('fbOk').style.display='block';
+  var okEl=document.getElementById('fbOk');
+  okEl.querySelector('.t1').textContent='反馈已保存';
+  try{navigator.clipboard.writeText(copyTxt);okEl.querySelector('.t2').innerHTML='反馈内容已复制到剪贴板。<br>请粘贴发送到微信群，谢谢！';}catch(e2){
+    okEl.querySelector('.t2').innerHTML='反馈已保存本地。<br>请截图或复制内容发到微信群，谢谢！';
+  }
 }
 
 /* 阻止iOS双击缩放 */
@@ -675,29 +1465,20 @@ function submitFB(){
 })();
 
 /* ═══ 启动 ═══ */
-function startApp(){
-  document.getElementById('vt').textContent=VER+' \u00b7 '+VDATE;
-  document.getElementById('utxt').textContent=VDATE+'更新';
-  document.getElementById('utag').textContent=VER;
-  /* 重建搜索索引 */
-  SI=(function(){
-    var ci=Q.map(function(d){return{tp:'c',c:d.c,tx:d.c+' '+d.q+' '+strip(d.a),d:d};});
-    var ti=Object.keys(TB).map(function(k){var s=TB[k].t+' ';TB[k].d.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});if(TB[k].t2)s+=TB[k].t2+' ';if(TB[k].d2)TB[k].d2.forEach(function(r){r.forEach(function(c){s+=strip(c)+' ';});});return{tp:'t',c:k,tx:s,k:k};});
-    return ci.concat(ti);
-  })();
-  initHome();
-  checkExpire();
-  /* 后台静默检查更新（5秒后） */
-  setTimeout(checkUpdate,5000);
-}
-
 loadData().then(function(ok){
   document.getElementById('loader').classList.add('hide');
   setTimeout(function(){document.getElementById('loader').style.display='none';},350);
-  if(ok&&Q.length>0){startApp();}
-  else{document.getElementById('home-cards').innerHTML='<div class="empty"><p>数据加载失败，请检查网络后刷新</p></div>';}
+  
+  document.getElementById('vt2').textContent=VER+' · '+VDATE;
+  document.getElementById('homeSub').textContent=VER+' · '+VDATE;
+  
+  rebuildIndex();
+  
+  /* 渲染热词标签 */
+  var th='';HOT.forEach(function(k){th+='<span onclick="doSearch(\''+k+'\')">'+k+'</span>';});
+  tagsEl.innerHTML=th;
+  
+  checkExpire();
+  setTimeout(checkUpdate,2000);
 });
-
 </script>
-</body>
-</html>
