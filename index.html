@@ -1298,7 +1298,29 @@ function smartAnswer(raw){
         }else{
           reply+='<div style="margin-top:6px;color:#575F6D;font-size:11px">公式：价值提升积分 = 准实收变化 × 目标档系数</div>';
         }
-        // 升档折算个数
+        // 目标套餐内容展示
+        var pkgInfo={
+          '39':'三秦卡39单卡：39元/月，100分钟+20G通用+30G定向，无法办副卡',
+          '59':'三秦卡59单卡：59元/月，200分钟+30G通用+50G定向，无法办副卡',
+          '99':'99单卡：99元/月，400分钟+20GB，副卡最多2张（99融合已下线）',
+          '129':'129单卡：129元/月，500分钟+30GB，副卡最多2张',
+          '139':'139融合：139元/月，200分+60GB+500M宽带+1路IPTV，副卡10元/张最多4张首张免费',
+          '169':'169融合：169元/月，300分+80GB+1000M宽带+1路IPTV，副卡10元/张最多4张首张免费',
+          '189':'189融合：189元/月，600分+90GB+1000M宽带+1路IPTV',
+          '199':'199融合(5G-A)：199元/月，1000分+100G（满5卡150G）+1000M全光宽带+2路IPTV(含1路云电视)，副卡前2张免费最多9张，含卫星权益',
+          '239':'239融合(5G-A)：239元/月，1000分+120G（满5卡400G）+1500M全光宽带+2路IPTV，副卡前2张免费最多9张，含卫星权益',
+          '299':'299融合(5G-A)：299元/月，1500分+150G（满5卡500G）+2000M全光宽带+2路IPTV，副卡前2张免费最多9张，含卫星权益',
+          '399':'399融合(5G-A)：399元/月，2000分+200G（满5卡600G）+2000M全光宽带+2路IPTV，副卡前2张免费最多9张，含卫星权益',
+          '599':'599融合：599元/月，3000分+300G，副卡最多20张，含卫星权益'
+        };
+        var _pkgTxt=pkgInfo[toP];
+        if(_pkgTxt){
+          reply+='<div style="margin-top:8px;padding:8px 12px;border-radius:8px;background:#eef2ff;border:1px solid #c7d2fe">';
+          reply+='<div style="font-size:12px;font-weight:600;color:#3730a3;margin-bottom:4px">📦 '+toP+'元档套餐内容</div>';
+          reply+='<div style="font-size:12px;color:#333;line-height:1.7">'+_pkgTxt+'</div>';
+          reply+='</div>';
+        }
+        // 升档折算
         var _sdBase=Math.floor(tiZhi/30);
         var _sdRem=tiZhi%30;
         if(_sdRem>0)_sdBase+=0.5;
