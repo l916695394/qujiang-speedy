@@ -198,6 +198,15 @@ iframe~div{display:none!important}
 .sbar .cls{display:none;width:22px;height:22px;border-radius:50%;background:#ddd;line-height:22px;text-align:center;font-size:13px;color:#fff;cursor:pointer;flex-shrink:0}
 .sbar.has-txt .cls{display:block}
 
+/* ═══ 功能入口：动态考试 / 倒三角打分 ═══ */
+.entry-row{display:flex;gap:10px;justify-content:center;max-width:500px;width:100%;margin:-6px 0 14px}
+.entry-row a{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 12px;border-radius:24px;font-size:14px;font-weight:600;text-decoration:none;background:#fff;border:1.5px solid #f0f0f0;color:#444;box-shadow:0 1px 6px rgba(0,0,0,.04);transition:all .15s;white-space:nowrap}
+.entry-row a:active{transform:scale(.97)}
+.entry-row a .e-ico{display:inline-flex;width:22px;height:22px;border-radius:6px;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.e-exam .e-ico{background:#2563eb}
+.e-score .e-ico{background:#C00000}
+.home.folded .entry-row{display:none}
+
 /* ═══ 热词标签 ═══ */
 .tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:500px;transition:all .2s}
 .home.folded .tags{display:none}
@@ -367,6 +376,10 @@ var _hmt = _hmt || [];
       <input id="si" type="search" placeholder="搜套餐、积分、流程…" autocomplete="off">
       <span class="cls" id="scls">×</span>
     </div>
+  </div>
+  <div class="entry-row">
+    <a class="e-exam" href="https://qujiangportal.pythonanywhere.com/go/exam" target="_blank" rel="noopener"><span class="e-ico">✎</span>动态考试</a>
+    <a class="e-score" href="https://qujiangportal.pythonanywhere.com/go/score" target="_blank" rel="noopener"><span class="e-ico">▼</span>逆向打分</a>
   </div>
   <div class="tags" id="tags"></div>
   <div class="results" id="results"></div>
